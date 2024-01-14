@@ -1,5 +1,6 @@
 import { Suspense } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, createBrowserRouter } from "react-router-dom"
+import MainLayout from "./layouts/MainLayout"
 
 const AuthGuard = () => {
 
@@ -11,3 +12,24 @@ const AuthGuard = () => {
     </div>
   )
 }
+
+const routes = createBrowserRouter([
+  {
+    path: '/',
+    element: <AuthGuard />,
+    children: [
+      {
+        element: <MainLayout />,
+        children: [
+          {
+            path: '',
+            index: true,
+            element: <div>Summary Page</div>
+          }
+        ]
+      }
+    ]
+  }
+])
+
+export default routes

@@ -5,6 +5,10 @@ import './index.css'
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { ThemeProvider } from '@mui/material/styles';
+import { RouterProvider } from 'react-router-dom';
+import routes from './router.tsx';
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './app/store.ts';
 
 export const muiCache = createCache({
   key: 'mui',
@@ -16,7 +20,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
      <CacheProvider value={muiCache}>
       <ThemeProvider theme={{}}>
-        <App />
+        <ReduxProvider store={store}>
+          <RouterProvider router={routes} />
+        </ReduxProvider>
 
       </ThemeProvider>
      </CacheProvider>
