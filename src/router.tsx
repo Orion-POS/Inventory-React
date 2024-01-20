@@ -1,6 +1,8 @@
-import { Suspense } from "react"
+import React, { Suspense } from "react"
 import { Outlet, createBrowserRouter } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout"
+
+const SummaryPage = React.lazy(() => import('./pages/Summary/SummaryPage.tsx'))
 
 const AuthGuard = () => {
 
@@ -24,7 +26,7 @@ const routes = createBrowserRouter([
           {
             path: '',
             index: true,
-            element: <div>Summary Page</div>
+            element: <SummaryPage />
           }
         ]
       }
