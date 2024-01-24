@@ -11,7 +11,7 @@ import {
 } from '@carbon/icons-react';
 import { css } from '@emotion/react';
 import { Suspense, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useMatches } from 'react-router-dom';
 
 const MainLayout = () => {
   return (
@@ -37,9 +37,23 @@ const MainLayout = () => {
 };
 
 const HeadNav = () => {
+  const matches = useMatches();
+  let crumbs = matches
+    // first get rid of any matches that don't have handle and crumb
+    .filter((match) => Boolean(match.handle?.crumb))
+    // now map them into an array of elements, passing the loader
+    // data to each one
+    .map((match) => match.handle.crumb(match.data));
+  console.log(crumbs, '<< CEKMATCHES');
+
   return (
     <div className="h-14 flex-shrink-0 flex items-center bg-white pl-6 shadow-sm">
-      <span className="font-bold ">Summaryyy</span>
+      {
+        crumbs.map(label => (
+          <span className="font-bold capitalize">{label}</span>
+
+        ))
+      }
     </div>
   );
 };

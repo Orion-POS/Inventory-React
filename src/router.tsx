@@ -26,11 +26,17 @@ const routes = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <SummaryPage />
+            element: <SummaryPage />,
+            handle: {
+              crumb: () => 'summary'
+            }
           },
           {
             path: 'setup',
-            element: <SetupPage />
+            element: <SetupPage />,
+            handle: {
+              crumb: () => 'setup'
+            }
           }
         ]
       }
