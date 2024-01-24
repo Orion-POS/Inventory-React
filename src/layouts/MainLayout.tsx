@@ -9,20 +9,27 @@ import {
   Receipt,
   Store
 } from '@carbon/icons-react';
+import { css } from '@emotion/react';
 import { Suspense, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
   return (
-    <div className="w-screen h-screen bg-gray-300 flex">
+    <div className="w-screen h-screen bg-white flex">
       <SideDrawer />
-      <div className="flex-1">
+      <div className="flex-grow h-ful gap2  flex flex-col">
         <HeadNav />
-        <div className='px-4 py-4'>
-          <Suspense fallback={<p>Loading ...</p>}>
-            <Outlet />
-          </Suspense>
+        <div className="px-4 flex-grow py-4 flex  flex-col h-[40px]  overflow-y-auto">
+          <div
+            className="flex flex-col rounded-md px-3 py-4 min-h-[93%]  border-gray-200"
+            css={css`
+              border: 1px solid gray;
+            `}>
+              <Suspense fallback={<p>Loading ...</p>}>
+                <Outlet />
+              </Suspense>
 
+            </div>
         </div>
       </div>
     </div>
@@ -30,7 +37,11 @@ const MainLayout = () => {
 };
 
 const HeadNav = () => {
-  return <div className='h-16 flex items-center bg-white pl-6'>Head Nav</div>;
+  return (
+    <div className="h-14 flex-shrink-0 flex items-center bg-white pl-6 shadow-sm">
+      <span className="font-bold ">Summaryyy</span>
+    </div>
+  );
 };
 
 const SideDrawer = () => {
@@ -48,7 +59,8 @@ const SideDrawer = () => {
       label: 'Setup',
       key: 2,
       icon: <Gui size={20} />,
-      children: []
+      children: [],
+      url: 'setup'
     },
     {
       label: 'Stock Management',
@@ -97,9 +109,12 @@ const SideDrawer = () => {
     }
   ];
   return (
-    <div className={`flex flex-col top-0 min-w-f z-10 bg-white ${expandDrawer ? 'w-64' : 'w-20'}`}>
+    <div
+      className={`flex flex-col h-fll  shadow-lg top-0 min-w-f z-10 bg-white ${
+        expandDrawer ? 'w-64' : 'w-20'
+      }`}>
       <div className="flex w-full items-center justify-between pr-2 relative">
-        <div className="flex w-full h-10 overflow-clip items-center bg-red-50  px-4 py-3">
+        <div className="flex w-full h-8 overflow-clip items-center bg-red-50  px-4 py-3">
           <span className="font-bold text-lg text-brand-500">LOGO</span>
           {/* <Divider orientation='vertical' /> */}
           {expandDrawer ? (
@@ -130,11 +145,13 @@ const SideDrawer = () => {
                   ? ' bg-brand-50'
                   : ''
               } ${expandDrawer ? '' : 'w-fit'}`}
-              onClick={() => setActiveMenu(item.key)}>
-              <div className={`flex gap-2 ${expandDrawer ? 'flex-grow' : 'flex-shrink'}`}>
-                {item.icon ?? null}
-                {expandDrawer ? item.label : null}
-              </div>
+              >
+                <Link onClick={() => setActiveMenu(item.key)} to={item.url} className='no-underline text-black'>
+                  <div className={`flex gap-2 ${expandDrawer ? 'flex-grow' : 'flex-shrink'}`}>
+                    {item.icon ?? null}
+                    {expandDrawer ? item.label : null}
+                  </div>
+                </Link>
               {item.children.length ? (
                 item.key !== activeMenu ? (
                   <ChevronRight size={20} />

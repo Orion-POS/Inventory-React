@@ -3,6 +3,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout"
 
 const SummaryPage = React.lazy(() => import('./pages/Summary/SummaryPage.tsx'))
+const SetupPage = React.lazy(() => import('./pages/Setup/index.tsx'))
 
 const AuthGuard = () => {
 
@@ -25,8 +26,11 @@ const routes = createBrowserRouter([
         children: [
           {
             path: '',
-            index: true,
             element: <SummaryPage />
+          },
+          {
+            path: 'setup',
+            element: <SetupPage />
           }
         ]
       }
