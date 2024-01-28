@@ -1,29 +1,15 @@
 import { Box, Tab, Tabs, Typography, css } from '@mui/material';
 import React, { useState } from 'react';
+import { a11yProps } from './helpers';
+import { TabPanelProps, VerticalTabsMenuProps } from './types';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-interface ItemMenuProps {
-  key: string | number;
-  label: string;
-  children: React.ReactNode;
-}
-
-interface VerticalTabsMenuProps {
-  items: ItemMenuProps[];
-}
-
-function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
       role="tabpanel"
-      className='w-full'
+      className="w-full"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
@@ -35,13 +21,6 @@ function TabPanel(props: TabPanelProps) {
       )}
     </div>
   );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`
-  };
 }
 
 export const VerticalTabsMenu: React.FC<VerticalTabsMenuProps> = ({ items }) => {
@@ -56,9 +35,9 @@ export const VerticalTabsMenu: React.FC<VerticalTabsMenuProps> = ({ items }) => 
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }}
       css={css`
         .Mui-selected {
-          color: #05445F;
-          background-color: #A5F9DD;
-          border-right: 4px solid #05445F;
+          color: #05445f;
+          background-color: #a5f9dd;
+          border-right: 4px solid #05445f;
           font-weight: 500;
           border-radius: 8px 0px 0px 8px;
         }

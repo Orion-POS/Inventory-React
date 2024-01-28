@@ -3,11 +3,13 @@ import {
   ColumnDef,
   Row,
   RowData,
+  SortingState,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 interface BasicTableProps<T> {
   data: T[];
@@ -44,11 +46,17 @@ function getRowGroup<T extends RowData>(row: Row<T>, tg?: TableGroup) {
 
 export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>) {
   const columns = useMemo(() => tableColumns, [tableColumns]);
+  const [sorting, setSorting] = useState<SortingState>([])
 
   const table = useReactTable<any>({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel()
+    state: {
+      sorting
+    },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -84,7 +92,12 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
                   width: header.getSize()
                 }}>
                 {header.isPlaceholder ? null : (
-                  <div> {flexRender(header.column.columnDef.header, header.getContext())}</div>
+                  <div {...{
+                    className: header.column.getCanSort()
+                      ? 'cursor-pointer select-none'
+                      : '',
+                    onClick: header.column.getToggleSortingHandler(),
+                  }}> {flexRender(header.column.columnDef.header, header.getContext())}</div>
                 )}
               </th>
             ))}

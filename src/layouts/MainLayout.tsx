@@ -10,8 +10,9 @@ import {
   Store
 } from '@carbon/icons-react';
 import { css } from '@emotion/react';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, Outlet, useMatches } from 'react-router-dom';
+import useGetCrumbs from '../hooks/useGetCrumbs';
 
 const MainLayout = () => {
   return (
@@ -28,7 +29,6 @@ const MainLayout = () => {
               <Suspense fallback={<p>Loading ...</p>}>
                 <Outlet />
               </Suspense>
-
             </div>
         </div>
       </div>
@@ -37,14 +37,8 @@ const MainLayout = () => {
 };
 
 const HeadNav = () => {
-  const matches = useMatches();
-  let crumbs = matches
-    // first get rid of any matches that don't have handle and crumb
-    .filter((match) => Boolean(match.handle?.crumb))
-    // now map them into an array of elements, passing the loader
-    // data to each one
-    .map((match) => match.handle.crumb(match.data));
-  console.log(crumbs, '<< CEKMATCHES');
+  const crumbs = useGetCrumbs()
+  // console.log(crumbs, '<< CEKMATCHES');
 
   return (
     <div className="h-14 flex-shrink-0 flex items-center bg-white pl-6 shadow-sm">
@@ -59,19 +53,21 @@ const HeadNav = () => {
 };
 
 const SideDrawer = () => {
-  const [activeMenu, setActiveMenu] = useState(1);
+  const [activeMenu, setActiveMenu] = useState(0);
   const [expandDrawer, setExpandDrawer] = useState(true);
+  const crumbs = useGetCrumbs()
 
   const menu = [
     {
       label: 'Summary',
-      key: 1,
+      key: 0,
       icon: <ChartMultitype size={20} />,
-      children: []
+      children: [],
+      url: 'summary'
     },
     {
       label: 'Setup',
-      key: 2,
+      key: 1,
       icon: <Gui size={20} />,
       children: [],
       url: 'setup'
@@ -79,7 +75,7 @@ const SideDrawer = () => {
     {
       label: 'Stock Management',
       icon: <Box size={20} />,
-      key: 3,
+      key: 2,
       children: [
         {
           label: 'Used Stock',
@@ -105,23 +101,24 @@ const SideDrawer = () => {
     },
     {
       label: 'Transaction',
-      key: 4,
+      key: 3,
       icon: <Receipt size={20} />,
       children: []
     },
     {
       label: 'Suppliers',
       icon: <Store size={20} />,
-      key: 5,
+      key: 4,
       children: []
     },
     {
       label: 'Assets',
       icon: <DataCenter size={20} />,
-      key: 6,
+      key: 5,
       children: []
     }
   ];
+
   return (
     <div
       className={`flex flex-col h-fll  shadow-lg top-0 min-w-f z-10 bg-white ${

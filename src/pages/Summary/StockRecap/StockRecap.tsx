@@ -3,7 +3,7 @@ const StockRecap = () => {
 
   return (
     <div>
-
+      stock recap
     </div>
   )
 }
