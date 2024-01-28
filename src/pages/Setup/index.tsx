@@ -1,11 +1,9 @@
-import { Outlet, useLocation, useMatches, useNavigate } from 'react-router-dom';
-import { VerticalTabsMenu } from '../../components/navs';
-import ItemCategory from './ItemCategory';
+import { Box, Tab, Tabs, css } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { ItemMenuProps } from '../../components/navs/TabsMenu/types';
-import { Box, Tab, Tabs, Typography, css } from '@mui/material';
-import { TabPanel } from '../../components/navs/TabsMenu';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { a11yProps } from '../../components/navs/TabsMenu/helpers';
+import { ItemMenuProps } from '../../components/navs/TabsMenu/types';
+import ItemCategory from './ItemCategory';
 
 const SetupPage = () => {
   const [activeIdxTabs, setActiveIdxTabs] = useState<undefined | number>(undefined);
@@ -84,12 +82,8 @@ const SetupPage = () => {
           <p>Loading...</p>
         ) : (
           <div className="w-full">
-            <Box sx={{ p: 3 }}>
-              <Typography>
-                {MENU_ITEMS[activeIdxTabs]?.label}
-
-                <Outlet />
-              </Typography>
+            <Box sx={{ px: 3, pt: 0, pb: 2 }}>
+              <Outlet />
             </Box>
           </div>
         )}

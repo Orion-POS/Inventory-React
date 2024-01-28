@@ -27,7 +27,7 @@ const routes = createBrowserRouter([
         element: <MainLayout />,
         children: [
           {
-            path: '',
+            path: 'summary',
             element: <SummaryPage />,
             handle: {
               crumb: () => 'summary'
@@ -90,9 +90,13 @@ const routes = createBrowserRouter([
             }
           }
         ]
+      },
+      {
+        path: '',
+        element: <Navigate to={'summary'} />
       }
     ]
-  }
+  },
 ]);
 
 export default routes;

@@ -15,6 +15,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "react/react-in-jsx-scope": "off",
+    "unused-imports/no-unused-imports": "error"
   },
   "settings": {
     "react": {
