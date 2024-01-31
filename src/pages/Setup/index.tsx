@@ -48,10 +48,10 @@ const SetupPage = () => {
   }, [pathname]);
 
   return (
-    <div className=" h-full">
+    <div className="bg-blue-00 overflow-auto h-full">
       <div className="flex h-full w-full">
         {/* TABS LIST MENU */}
-        <div className="flex flex-col border-r-2 w-1/3 bg-white">
+        <div className="flex flex-col border-r-2 w-1/6 bg-white">
           {MENU_ITEMS.map((it, idx) => (
             <div
               onClick={() => handleOnChange(idx)}
@@ -64,7 +64,7 @@ const SetupPage = () => {
             </div>
           ))}
         </div>
-        <div className="w-full px-3">
+        <div className="px-3 w-full overflow-auto">
           <Outlet />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { ChevronSort, ChevronSortDown, ChevronSortUp } from '@carbon/icons-react';
 import {
   ColumnDef,
   Row,
@@ -16,26 +16,6 @@ interface BasicTableProps<T> {
   tableColumns: ColumnDef<T>[];
 }
 type TableGroup = 'center' | 'left' | 'right';
-
-const tableCss = {
-  table: css({
-    width: '100%',
-    borderCollapse: 'collapse',
-    'th, td': {
-      borderCollapse: 'collapse'
-    },
-    th: {
-      backgroundColor: '#F5FFFE',
-      borderTop: '1px solid #d8d8d8',
-      borderBottom: '1px solid #d8d8d8',
-      padding: '4px 8px'
-    },
-    td: {
-      padding: '4px 8px',
-      borderBottom: '1px solid #d8d8d8'
-    }
-  })
-};
 
 function getRowGroup<T extends RowData>(row: Row<T>, tg?: TableGroup) {
   if (tg === 'left') return row.getLeftVisibleCells();
@@ -95,11 +75,26 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
                 {header.isPlaceholder ? null : (
                   <div
                     {...{
-                      className: header.column.getCanSort() ? 'cursor-pointer select-none' : '',
+                      className: `${
+                        header.column.getCanSort() ? 'cursor-pointer select-none' : ''
+                      } w-full flex px-2 capitalize items-center justify-between`,
                       onClick: header.column.getToggleSortingHandler()
                     }}>
                     {' '}
                     {flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.column.getCanSort() ? (
+                      <div className="h-full bg-primar justify-self-end">
+                        {header.column.getIsSorted() ? (
+                          header.column.getIsSorted() === 'asc' ? (
+                            <ChevronSortUp />
+                          ) : (
+                            <ChevronSortDown />
+                          )
+                        ) : (
+                          <ChevronSort />
+                        )}
+                      </div>
+                    ) : null}
                   </div>
                 )}
               </th>
@@ -116,7 +111,9 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
                 style={{
                   width: cell.column.getSize()
                 }}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                <div className="px-2">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </div>
               </td>
             ))}
           </tr>
