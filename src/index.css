@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+  @apply h-screen;
+}
  
 @layer base {
   :root {

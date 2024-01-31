@@ -10,11 +10,9 @@ const StockRecap = React.lazy(() => import('./pages/Summary/StockRecap/StockReca
 
 const AuthGuard = () => {
   return (
-    <div>
-      <Suspense fallback={<p>Loading ...</p>}>
-        <Outlet />
-      </Suspense>
-    </div>
+    <Suspense fallback={<p>Loading ...</p>}>
+      <Outlet />
+    </Suspense>
   );
 };
 
@@ -58,6 +56,55 @@ const routes = createBrowserRouter([
                 element: <ItemCategory />,
                 handle: {
                   crumb: () => 'Item Category'
+                }
+              },
+              {
+                path: 'item-libraries',
+
+                element: <ItemCategory />,
+                handle: {
+                  crumb: () => 'Item Libraries'
+                }
+              },
+              {
+                path: 'transaction-type',
+
+                element: <ItemCategory />,
+                handle: {
+                  crumb: () => 'Transaction Type'
+                }
+              },
+              {
+                path: '*',
+                element: <Navigate to={'item-category'} />
+              }
+            ]
+          },
+          {
+            path: 'stock-management',
+            element: <SetupPage />,
+            handle: {
+              crumb: () => 'Stock Management'
+            },
+            children: [
+              {
+                path: '',
+                element: <Navigate to={'used-stock'} />
+              },
+              {
+                path: 'used-stock',
+
+                element: <ItemCategory />,
+                handle: {
+                  crumb: () => 'Used Stock'
+                }
+              },
+              {
+                path: 'uom-category',
+
+                element: <ItemCategory />,
+                handle: {
+                  crumb: () => 'UoM Category'
                 }
               },
               {
