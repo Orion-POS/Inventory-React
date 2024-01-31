@@ -1,3 +1,4 @@
+import { DialogContentProps, DialogProps } from '@radix-ui/react-dialog';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -8,12 +9,13 @@ import {
   DialogTitle
 } from '../ui/dialog';
 
-interface BasicModalProps {
+interface BasicModalProps extends DialogProps, DialogContentProps {
   children: React.ReactNode;
   open: boolean;
   title: string;
   onClose: () => void;
   disableClickOutside?: boolean;
+  description?: string;
   overideFooter?: React.ReactNode;
 }
 
@@ -23,7 +25,8 @@ const BasicModal: React.FC<BasicModalProps> = ({
   children,
   title,
   disableClickOutside = false,
-  overideFooter
+  overideFooter,
+  description
 }) => {
   // const [open, setOpen] = useState(false)
   return (
@@ -41,9 +44,11 @@ const BasicModal: React.FC<BasicModalProps> = ({
         className="sm:max-w-[425px] md:min-w-[600px] lg:max-w-[50%]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          {description ? (
+            <DialogDescription>
+              Make changes to your profile here. Click save when you're done.
+            </DialogDescription>
+          ) : null}
         </DialogHeader>
         <div className="grid gap-3 py-4">{children}</div>
         <DialogFooter>
