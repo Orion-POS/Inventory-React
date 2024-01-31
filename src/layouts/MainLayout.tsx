@@ -10,8 +10,8 @@ import {
   Store
 } from '@carbon/icons-react';
 import { css } from '@emotion/react';
-import { Suspense, useEffect, useState } from 'react';
-import { Link, Outlet, useMatches } from 'react-router-dom';
+import { Suspense, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import useGetCrumbs from '../hooks/useGetCrumbs';
 
 const MainLayout = () => {
@@ -26,10 +26,10 @@ const MainLayout = () => {
             css={css`
               border: 1px solid gray;
             `}>
-              <Suspense fallback={<p>Loading ...</p>}>
-                <Outlet />
-              </Suspense>
-            </div>
+            <Suspense fallback={<p>Loading ...</p>}>
+              <Outlet />
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>
@@ -37,17 +37,14 @@ const MainLayout = () => {
 };
 
 const HeadNav = () => {
-  const crumbs = useGetCrumbs()
+  const crumbs = useGetCrumbs();
   // console.log(crumbs, '<< CEKMATCHES');
 
   return (
     <div className="h-14 flex-shrink-0 flex items-center bg-white pl-6 shadow-sm">
-      {
-        crumbs.map(label => (
-          <span className="font-bold capitalize">{label}</span>
-
-        ))
-      }
+      {crumbs.map(label => (
+        <span className="font-bold capitalize">{label}</span>
+      ))}
     </div>
   );
 };
@@ -55,7 +52,7 @@ const HeadNav = () => {
 const SideDrawer = () => {
   const [activeMenu, setActiveMenu] = useState(0);
   const [expandDrawer, setExpandDrawer] = useState(true);
-  const crumbs = useGetCrumbs()
+  const crumbs = useGetCrumbs();
 
   const menu = [
     {
@@ -125,7 +122,7 @@ const SideDrawer = () => {
         expandDrawer ? 'w-64' : 'w-20'
       }`}>
       <div className="flex w-full items-center justify-between pr-2 relative">
-        <div className="flex w-full h-8 overflow-clip items-center bg-red-50  px-4 py-3">
+        <div className="flex w-full h-14 overflow-clip items-center  px-4 py-3">
           <span className="font-bold text-lg text-brand-500">LOGO</span>
           {/* <Divider orientation='vertical' /> */}
           {expandDrawer ? (
@@ -138,7 +135,7 @@ const SideDrawer = () => {
 
         <div
           onClick={() => setExpandDrawer(!expandDrawer)}
-          className="rounded-md absolute -right-1 h-fit py-3 cursor-pointer text-white bg-brand-500 hover:bg-brand-400 flex items-center">
+          className="rounded-md absolute -right-3 h-fit py-3 cursor-pointer text-white bg-brand-500 hover:bg-brand-400 flex items-center">
           {expandDrawer ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
         </div>
       </div>
@@ -155,14 +152,16 @@ const SideDrawer = () => {
                   : activeMenu === item.key && item.children.length
                   ? ' bg-brand-50'
                   : ''
-              } ${expandDrawer ? '' : 'w-fit'}`}
-              >
-                <Link onClick={() => setActiveMenu(item.key)} to={item.url} className='no-underline text-black'>
-                  <div className={`flex gap-2 ${expandDrawer ? 'flex-grow' : 'flex-shrink'}`}>
-                    {item.icon ?? null}
-                    {expandDrawer ? item.label : null}
-                  </div>
-                </Link>
+              } ${expandDrawer ? '' : 'w-fit'}`}>
+              <Link
+                onClick={() => setActiveMenu(item.key)}
+                to={item.url}
+                className="no-underline text-black">
+                <div className={`flex gap-2 ${expandDrawer ? 'flex-grow' : 'flex-shrink'}`}>
+                  {item.icon ?? null}
+                  {expandDrawer ? item.label : null}
+                </div>
+              </Link>
               {item.children.length ? (
                 item.key !== activeMenu ? (
                   <ChevronRight size={20} />

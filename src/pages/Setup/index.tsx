@@ -1,7 +1,5 @@
-import { Box, Tab, Tabs, css } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { a11yProps } from '../../components/navs/TabsMenu/helpers';
 import { ItemMenuProps } from '../../components/navs/TabsMenu/types';
 import ItemCategory from './ItemCategory';
 
@@ -38,8 +36,6 @@ const SetupPage = () => {
     }
   ];
 
-  console.log(MENU_ITEMS[activeIdxTabs], activeIdxTabs, '<< CEKPATH');
-
   const handleOnChange = (indexTabs: number) => {
     navigate(MENU_ITEMS[indexTabs].value);
   };
@@ -53,41 +49,25 @@ const SetupPage = () => {
 
   return (
     <div className=" h-full">
-      <Box
-        sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }}
-        css={css`
-          .Mui-selected {
-            color: #05445f;
-            background-color: #a5f9dd;
-            border-right: 4px solid #05445f;
-            font-weight: 500;
-            border-radius: 8px 0px 0px 8px;
-          }
-          .MuiTabs-indicator {
-            width: 0;
-          }
-        `}>
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={activeIdxTabs}
-          onChange={(e, val) => handleOnChange(val)}
-          aria-label="Vertical Tabs Menu"
-          sx={{ borderRight: 1, borderColor: 'divider', height: '100%', width: '240px' }}>
+      <div className="flex h-full w-full">
+        {/* TABS LIST MENU */}
+        <div className="flex flex-col border-r-2 w-1/3 bg-white">
           {MENU_ITEMS.map((it, idx) => (
-            <Tab label={it.label} {...a11yProps(idx)} />
+            <div
+              onClick={() => handleOnChange(idx)}
+              className={`p-3 my-1 cursor-pointer hover:bg-brand-100 transition-colors ease-in rounded-s-lg ${
+                idx === activeIdxTabs
+                  ? 'bg-brand-100 font-medium text-brand-900 border-r-4 border-brand-900'
+                  : ''
+              }`}>
+              <span>{it.label}</span>
+            </div>
           ))}
-        </Tabs>
-        {activeIdxTabs === undefined ? (
-          <p>Loading...</p>
-        ) : (
-          <div className="w-full">
-            <Box sx={{ px: 3, pt: 0, pb: 2 }}>
-              <Outlet />
-            </Box>
-          </div>
-        )}
-      </Box>
+        </div>
+        <div className="w-full px-3">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 };

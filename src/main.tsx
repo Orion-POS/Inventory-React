@@ -1,15 +1,13 @@
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
-import { RouterProvider } from 'react-router-dom';
-import routes from './router.tsx';
 import { Provider as ReduxProvider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
 import { store } from './app/store.ts';
-import { theme } from './config/theme.ts';
+import './index.css';
 import ThemeProviders from './providers/ThemeProviders.tsx';
+import routes from './router.tsx';
 
 export const muiCache = createCache({
   key: 'mui',
