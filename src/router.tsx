@@ -96,7 +96,7 @@ const routes = createBrowserRouter([
         element: <Navigate to={'summary'} />
       }
     ]
-  },
+  }
 ]);
 
 export default routes;

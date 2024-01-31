@@ -1,20 +1,9 @@
-import { Search } from "@carbon/icons-react"
-import { Input, InputAdornment, TextField, TextFieldProps } from "@mui/material"
-import React from "react"
+import { Search } from '@carbon/icons-react';
+import React from 'react';
+import { InputText } from '.';
 
-const SearchField: React.FC<TextFieldProps> = () => {
+const SearchField: React.FC = () => {
+  return <InputText iconEnd={<Search />} placeholder="Search" />;
+};
 
-  return (
-    <div>
-      <TextField variant="outlined" size="small" InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <Search />
-          </InputAdornment>
-        )
-      }} />
-    </div>
-  )
-}
-
-export default SearchField
+export default SearchField;

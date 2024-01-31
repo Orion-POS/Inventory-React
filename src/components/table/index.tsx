@@ -46,7 +46,7 @@ function getRowGroup<T extends RowData>(row: Row<T>, tg?: TableGroup) {
 
 export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>) {
   const columns = useMemo(() => tableColumns, [tableColumns]);
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable<any>({
     data,
@@ -56,13 +56,13 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
     },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: getSortedRowModel()
   });
 
   return (
     <table
       className="bgred-300 w-full"
-      css={(theme) => ({
+      css={theme => ({
         width: '100%',
         borderCollapse: 'collapse',
         'th, td': {
@@ -73,7 +73,8 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
           backgroundColor: '#F5FFFE',
           borderTop: '1px solid #d8d8d8',
           borderBottom: '1px solid #d8d8d8',
-          padding: '4px 8px'
+          padding: '4px 8px',
+          zIndex: 10
         },
         td: {
           padding: '4px 8px',
@@ -92,12 +93,14 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
                   width: header.getSize()
                 }}>
                 {header.isPlaceholder ? null : (
-                  <div {...{
-                    className: header.column.getCanSort()
-                      ? 'cursor-pointer select-none'
-                      : '',
-                    onClick: header.column.getToggleSortingHandler(),
-                  }}> {flexRender(header.column.columnDef.header, header.getContext())}</div>
+                  <div
+                    {...{
+                      className: header.column.getCanSort() ? 'cursor-pointer select-none' : '',
+                      onClick: header.column.getToggleSortingHandler()
+                    }}>
+                    {' '}
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </div>
                 )}
               </th>
             ))}
