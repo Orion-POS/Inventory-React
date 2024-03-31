@@ -66,7 +66,7 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
           <tr key={headerGroup.id}>
             {headerGroup.headers.map(header => (
               <th
-                className="relative"
+                className="relative text-nowrap"
                 colSpan={header.colSpan}
                 key={header.id}
                 style={{

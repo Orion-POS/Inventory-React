@@ -48,18 +48,19 @@ const SideDrawer = () => {
 
         {
           label: 'Adjustment',
-          key: 'adjustment'
+          key: 'adjustment',
+          url: '/stock-management/adjustment'
         },
 
         {
           label: 'Stock Opname',
-
-          key: 'stock-opname'
+          key: 'stock-opname',
+          url: '/stock-management/stock-opname'
         },
         {
           label: 'Wasted Stock',
-
-          key: 'wasted-stock'
+          key: 'wasted-stock',
+          url: '/stock-management/wasted-stock'
         }
       ]
     },
@@ -67,19 +68,22 @@ const SideDrawer = () => {
       label: 'Transaction',
       key: 3,
       icon: <Receipt size={20} />,
-      children: []
+      children: [],
+      url: 'transaction'
     },
     {
       label: 'Suppliers',
       icon: <Store size={20} />,
       key: 4,
-      children: []
+      children: [],
+      url: 'suppliers'
     },
     {
       label: 'Assets',
       icon: <DataCenter size={20} />,
       key: 5,
-      children: []
+      children: [],
+      url: 'assets'
     }
   ];
 

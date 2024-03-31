@@ -2,6 +2,13 @@ import React, { Suspense } from 'react';
 import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import ItemCategory from './pages/Setup/ItemCategory.tsx';
+import UsedStcok from './pages/stock-management/UsedStock.tsx';
+import Adjustment from './pages/stock-management/Adjustment.tsx';
+import StockOpname from './pages/stock-management/StockOpname.tsx';
+import WastedStock from './pages/stock-management/WastedStock.tsx';
+import Transaction from './pages/Transaction/Transaction.tsx';
+import Suppliers from './pages/Suppliers/Suppliers.tsx';
+import Assets from './pages/Assets/Assets.tsx';
 
 const SummaryPage = React.lazy(() => import('./pages/Summary/SummaryPage.tsx'));
 const SetupPage = React.lazy(() => import('./pages/Setup/index.tsx'));
@@ -82,7 +89,7 @@ const routes = createBrowserRouter([
           },
           {
             path: 'stock-management',
-            element: <SetupPage />,
+            // element: <SetupPage />,
             handle: {
               crumb: () => 'Stock Management'
             },
@@ -94,40 +101,61 @@ const routes = createBrowserRouter([
               {
                 path: 'used-stock',
 
-                element: <ItemCategory />,
+                element: <UsedStcok />,
                 handle: {
                   crumb: () => 'Used Stock'
                 }
               },
               {
-                path: 'uom-category',
+                path: 'adjustment',
 
-                element: <ItemCategory />,
+                element: <Adjustment />,
                 handle: {
-                  crumb: () => 'UoM Category'
+                  crumb: () => 'Adjustment'
                 }
               },
               {
-                path: 'item-libraries',
+                path: 'stock-opname',
 
-                element: <ItemCategory />,
+                element: <StockOpname />,
                 handle: {
-                  crumb: () => 'Item Libraries'
+                  crumb: () => 'Stock Opname'
                 }
               },
               {
-                path: 'transaction-type',
+                path: 'wasted-stock',
 
-                element: <ItemCategory />,
+                element: <WastedStock />,
                 handle: {
-                  crumb: () => 'Transaction Type'
+                  crumb: () => 'Wasted Stock'
                 }
               },
               {
                 path: '*',
-                element: <Navigate to={'item-category'} />
+                element: <Navigate to={'stock-management'} />
               }
             ]
+          },
+          {
+            path: 'transaction',
+            element: <Transaction />,
+            handle: {
+              crumb: () => 'Transaction'
+            }
+          },
+          {
+            path: 'suppliers',
+            element: <Suppliers />,
+            handle: {
+              crumb: () => 'Suppliers'
+            }
+          },
+          {
+            path: 'assets',
+            element: <Assets />,
+            handle: {
+              crumb: () => 'Assets'
+            }
           },
           {
             path: 'stock-recap',
