@@ -16,7 +16,7 @@ const UsedStcok = () => {
       <div className="flex flex-col gap-2">
         <div className="w-100 flex justify-between">
           <Button size={'sm'} onClick={() => setOpenModal(true)}>
-            Add New Stock
+            Add Used Stock
           </Button>
           <Button size={'sm'} variant={'ghost'}>
             Import / Export Data
@@ -121,7 +121,7 @@ const UsedStcok = () => {
       <BasicModal
         open={openModal}
         disableClickOutside
-        title="Create item category"
+        title="Add Used Stock"
         onClose={() => setOpenModal(false)}>
         <InputText label="Category name" className="w-full" />
         <SelectDropdown
@@ -137,7 +137,7 @@ const UsedStcok = () => {
             }
           ]}
         />
-        <Textarea label="Description (optional)" />
+        <Textarea label="Notes (optional)" placeholder="Input your notes" />
       </BasicModal>
     </div>
   );

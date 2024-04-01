@@ -1,4 +1,3 @@
-import { adjustmentData } from '@/__dummy__/sampleAdjustment';
 import { stockOpnameData } from '@/__dummy__/sampleStokcOpname';
 import { InputText } from '@/components/forms';
 import SelectDropdown from '@/components/forms/Select';
@@ -8,10 +7,24 @@ import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import formatPrice from '@/utils/formatPrice';
 import { Search } from '@carbon/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 
 const StockOpname = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState<Number>(1);
+
+  const monthList = Array.from({ length: 12 }, (_, index) => ({
+    label: dayjs().month(index).format('MMMM'),
+    value: index + 1
+  }));
+
+  useEffect(() => {
+    setSelectedMonth(dayjs().month() + 1);
+  }, []);
+
+  console.log(selectedMonth);
+
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
       {/* TOOLBAR */}
@@ -26,9 +39,36 @@ const StockOpname = () => {
         </div>
         <div className="flex justify-between items-center ">
           <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <SelectDropdown placeholder="Select Month" menuItems={monthList} />
             <SelectDropdown
-              placeholder="Select"
+              placeholder="Item Category"
+              menuItems={[
+                {
+                  label: 'Item A',
+                  value: 1
+                },
+                {
+                  label: 'Item B',
+                  value: 2
+                }
+              ]}
+            />
+            <SelectDropdown
+              placeholder="Item Library"
+              menuItems={[
+                {
+                  label: 'Item A',
+                  value: 1
+                },
+                {
+                  label: 'Item B',
+                  value: 2
+                }
+              ]}
+            />
+            <SelectDropdown
+              placeholder="More Filters"
               menuItems={[
                 {
                   label: 'Item A',
@@ -56,21 +96,11 @@ const StockOpname = () => {
             cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
           },
           {
-            id: 'date',
-            accessorKey: 'date',
-            header: () => <span className="w-full text-start">Date</span>,
-            cell: ({ getValue }) => (
-              <span className="w-full text-nowrap">
-                {new Date(getValue() as Date).toLocaleString()}
-              </span>
-            )
-          },
-          {
             id: 'name',
             accessorKey: 'name',
             header: () => <span className="w-full text-start">Item Name</span>,
             cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
-        },
+          },
           {
             id: 'final_stock',
             accessorKey: 'final_stock',
@@ -87,21 +117,23 @@ const StockOpname = () => {
             id: 'average_price',
             accessorKey: 'average_price',
             header: () => <span className="w-full text-start">Average Price</span>,
-            cell: ({ getValue }) => <span className="w-full">{formatPrice(getValue() as number)}</span>
+            cell: ({ getValue }) => (
+              <span className="w-full">{formatPrice(getValue() as number)}</span>
+            )
           },
           {
             id: 'total_amounts',
             accessorKey: 'total_amounts',
             header: () => <span className="w-full text-start">Total Amounts</span>,
             cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
-          },
+          }
         ]}
       />
 
       <BasicModal
         open={openModal}
         disableClickOutside
-        title="Create item category"
+        title="Add Stock Opname"
         onClose={() => setOpenModal(false)}>
         <InputText label="Category name" className="w-full" />
         <SelectDropdown
@@ -117,7 +149,7 @@ const StockOpname = () => {
             }
           ]}
         />
-        <Textarea label="Description (optional)" />
+        <Textarea label="Notes (optional)" placeholder="Input your notes" />
       </BasicModal>
     </div>
   );

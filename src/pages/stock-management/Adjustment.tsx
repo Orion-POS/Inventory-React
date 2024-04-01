@@ -105,7 +105,7 @@ const Adjustment = () => {
       <BasicModal
         open={openModal}
         disableClickOutside
-        title="Create item category"
+        title="Add Stock Adjustment"
         onClose={() => setOpenModal(false)}>
         <InputText label="Category name" className="w-full" />
         <SelectDropdown
@@ -121,7 +121,7 @@ const Adjustment = () => {
             }
           ]}
         />
-        <Textarea label="Description (optional)" />
+        <Textarea label="Notes (optional)" placeholder="Input your notes" />
       </BasicModal>
     </div>
   );
