@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import ItemCategory from './pages/Setup/ItemCategory.tsx';
+import UoMCategory from './pages/Setup/UoMCategory.tsx';
 
 const SummaryPage = React.lazy(() => import('./pages/Summary/SummaryPage.tsx'));
 const SetupPage = React.lazy(() => import('./pages/Setup/index.tsx'));
@@ -53,9 +54,9 @@ const routes = createBrowserRouter([
               {
                 path: 'uom-category',
 
-                element: <ItemCategory />,
+                element: <UoMCategory />,
                 handle: {
-                  crumb: () => 'Item Category'
+                  crumb: () => 'UoM Category'
                 }
               },
               {

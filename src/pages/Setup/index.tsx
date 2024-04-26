@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ItemMenuProps } from '../../components/navs/TabsMenu/types';
 import ItemCategory from './ItemCategory';
+import UoMCategory from './UoMCategory';
+
+/* THIS WAS UNUSED ANYMORE BUT KEEP IT HERE FOR A WHILE IN CASE ITS NEEDED */
 
 const SetupPage = () => {
   const [activeIdxTabs, setActiveIdxTabs] = useState<undefined | number>(undefined);
@@ -20,7 +23,7 @@ const SetupPage = () => {
       key: 1,
       label: 'UoM Category',
       value: 'uom-category',
-      children: <div>UoM Category</div>
+      children: <UoMCategory />
     },
     {
       key: 2,
