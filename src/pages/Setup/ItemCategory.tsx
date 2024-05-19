@@ -1,15 +1,23 @@
 import { earningsData } from '@/__dummy__/sampleDataTable';
-import { InputText } from '@/components/forms';
 import SelectDropdown from '@/components/forms/Select';
-import Textarea from '@/components/forms/TextArea';
 import BasicModal from '@/components/modals/Modal';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
-import { Search } from '@carbon/icons-react';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const ItemCategory = () => {
   const [openModal, setOpenModal] = useState(false);
+  const formFilter = useForm({
+    defaultValues: {
+      search: '',
+      filterCategory: []
+    }
+  });
 
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
@@ -24,23 +32,42 @@ const ItemCategory = () => {
           </Button>
         </div>
         <div className="flex justify-between items-center ">
-          <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" />
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Filter by category:</span>
-            <SelectDropdown
-              placeholder="Select"
-              menuItems={[
-                {
-                  label: 'Item A',
-                  value: 1
-                },
-                {
-                  label: 'Item B',
-                  value: 2
-                }
-              ]}
+          <Form {...formFilter}>
+            <FormField
+              name="search"
+              control={formFilter.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input iconEnd={<Search />} placeholder="Search" className=" w-64" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
+            <FormField
+              name="filterCategory"
+              control={formFilter.control}
+              render={({ field }) => (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">Filter by category:</span>
+                  <SelectDropdown
+                    placeholder="Select"
+                    menuItems={[
+                      {
+                        label: 'Item A',
+                        value: 1
+                      },
+                      {
+                        label: 'Item B',
+                        value: 2
+                      }
+                    ]}
+                    {...field}
+                  />
+                </div>
+              )}
+            />
+          </Form>
         </div>
       </div>
 
@@ -85,29 +112,111 @@ const ItemCategory = () => {
           }
         ]}
       />
-      <BasicModal
-        open={openModal}
-        disableClickOutside
-        title="Create item category"
-        onClose={() => setOpenModal(false)}>
-        <InputText label="Category name" className="w-full" />
-        <SelectDropdown
-          label="Transaction Type"
-          menuItems={[
-            {
-              label: 'Bahan Makanan',
-              value: 'bahan makanan'
-            },
-            {
-              label: 'Bahan Minuman',
-              value: 'bahan minuman'
-            }
-          ]}
-        />
-        <Textarea label="Description (optional)" />
-      </BasicModal>
+
+      <ModalAddNewItemCategory openModal={openModal} setOpenModal={setOpenModal} />
     </div>
   );
 };
 
 export default ItemCategory;
+
+const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
+  const form = useForm({
+    defaultValues: {
+      categoryName: '',
+      transactionType: '',
+      desc: ''
+    }
+  });
+
+  const onSubmitNewCategory = data => {
+    console.log(data, '<< CEKDATA');
+  };
+  return (
+    <BasicModal
+      open={openModal}
+      disableClickOutside
+      title="Create item category"
+      onSubmit={form.handleSubmit(onSubmitNewCategory)}
+      onClose={() => setOpenModal(false)}>
+      <Form {...form}>
+        {/* <form onSubmit={form.handleSubmit(onSubmitNewCategory)}> */}
+
+        {/* 
+        <Form formData={[
+          {
+            fieldname: "username",
+            type: "text",
+            validations: {},
+            label: "",
+            width: ""
+          },
+          [
+            {
+
+            },
+            {
+
+            }
+          ]
+        ]} onChange={} />
+        
+        */}
+
+        {/* 
+        <div>
+        <InputForm type="text" validations={{}} name="" onChange={} label="" />
+        <InputForm type="text" validations={{}} name="" onChange={} label="" />
+        </div>
+          <InputForm type="text" validations={{}} name="" onChange={} label="" />
+          <InputForm type="text" validations={{}} name="" onChange={} label="" />
+        
+        */}
+        <FormField
+          control={form.control}
+          name="categoryName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category Name</FormLabel>
+              <FormControl>
+                <Input label="Category name" className="w-full" useFormProps={field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="transactionType"
+          render={({ field }) => (
+            <SelectDropdown
+              label="Transaction Type"
+              menuItems={[
+                {
+                  label: 'Bahan Makanan',
+                  value: 'bahan makanan'
+                },
+                {
+                  label: 'Bahan Minuman',
+                  value: 'bahan minuman'
+                }
+              ]}
+              {...field}
+            />
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="desc"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Textarea label="Description (optional)" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        {/* </form> */}
+      </Form>
+    </BasicModal>
+  );
+};

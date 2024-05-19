@@ -2,6 +2,9 @@ import React, { Suspense } from 'react';
 import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import ItemCategory from './pages/Setup/ItemCategory.tsx';
+import ItemLibraries from './pages/Setup/ItemLibraries.tsx';
+import TransactionType from './pages/Setup/TransactionType.tsx';
+import UoMCategory from './pages/Setup/UoMCategory.tsx';
 
 const SummaryPage = React.lazy(() => import('./pages/Summary/SummaryPage.tsx'));
 const SetupPage = React.lazy(() => import('./pages/Setup/index.tsx'));
@@ -53,15 +56,15 @@ const routes = createBrowserRouter([
               {
                 path: 'uom-category',
 
-                element: <ItemCategory />,
+                element: <UoMCategory />,
                 handle: {
-                  crumb: () => 'Item Category'
+                  crumb: () => 'UoM Category'
                 }
               },
               {
                 path: 'item-libraries',
 
-                element: <ItemCategory />,
+                element: <ItemLibraries />,
                 handle: {
                   crumb: () => 'Item Libraries'
                 }
@@ -69,7 +72,7 @@ const routes = createBrowserRouter([
               {
                 path: 'transaction-type',
 
-                element: <ItemCategory />,
+                element: <TransactionType />,
                 handle: {
                   crumb: () => 'Transaction Type'
                 }

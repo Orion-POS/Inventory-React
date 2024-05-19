@@ -14,9 +14,10 @@ interface BasicModalProps extends DialogProps, DialogContentProps {
   open: boolean;
   title: string;
   onClose: () => void;
+  onSubmit?: () => void;
   disableClickOutside?: boolean;
   description?: string;
-  overideFooter?: React.ReactNode;
+  overideFooter?: React.ReactNode | null;
 }
 
 const BasicModal: React.FC<BasicModalProps> = ({
@@ -26,7 +27,8 @@ const BasicModal: React.FC<BasicModalProps> = ({
   title,
   disableClickOutside = false,
   overideFooter,
-  description
+  description,
+  onSubmit
 }) => {
   // const [open, setOpen] = useState(false)
   return (
@@ -51,18 +53,20 @@ const BasicModal: React.FC<BasicModalProps> = ({
           ) : null}
         </DialogHeader>
         <div className="grid gap-3 py-4">{children}</div>
-        <DialogFooter>
-          {Boolean(overideFooter) ? (
-            overideFooter
-          ) : (
-            <>
-              <Button type="submit" variant={'outline'} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="submit">Save changes</Button>
-            </>
-          )}
-        </DialogFooter>
+        {overideFooter === null ? null : (
+          <DialogFooter>
+            {Boolean(overideFooter) ? (
+              overideFooter
+            ) : (
+              <>
+                <Button type="submit" variant={'outline'} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button onClick={onSubmit}>Save changes</Button>
+              </>
+            )}
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );
