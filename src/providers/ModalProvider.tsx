@@ -61,7 +61,7 @@ export const ModalProvider = ({ children }) => {
         open={showModal}
         onClose={closeModal}
         title={modalContent?.title ?? ''}
-        disableClickOutside={modalContent?.disableClickOutside}
+        disableClickOutside={modalContent?.modalOptions?.disableClickOutside}
         overideFooter={modalContent?.modalOptions?.overideFooter}>
         {modalContent?.content(closeModal)}
       </BasicModal>

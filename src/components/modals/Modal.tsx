@@ -14,6 +14,7 @@ interface BasicModalProps extends DialogProps, DialogContentProps {
   open: boolean;
   title: string;
   onClose: () => void;
+  onSubmit?: () => void;
   disableClickOutside?: boolean;
   description?: string;
   overideFooter?: React.ReactNode | null;
@@ -26,7 +27,8 @@ const BasicModal: React.FC<BasicModalProps> = ({
   title,
   disableClickOutside = false,
   overideFooter,
-  description
+  description,
+  onSubmit
 }) => {
   // const [open, setOpen] = useState(false)
   return (
@@ -60,7 +62,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
                 <Button type="submit" variant={'outline'} onClick={onClose}>
                   Cancel
                 </Button>
-                <Button type="submit">Save changes</Button>
+                <Button onClick={onSubmit}>Save changes</Button>
               </>
             )}
           </DialogFooter>

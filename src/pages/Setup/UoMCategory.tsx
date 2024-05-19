@@ -1,29 +1,26 @@
 import { earningsData } from '@/__dummy__/sampleDataTable';
-import { InputText } from '@/components/forms';
-import SelectDropdown from '@/components/forms/Select';
-import Textarea from '@/components/forms/TextArea';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/providers/ModalProvider';
-import { Search } from '@carbon/icons-react';
 import { useState } from 'react';
 
 const UoMCategory = () => {
   // const [openModal, setOpenModal] = useState(false);
   const { openModal } = useModal();
 
+  const handleSubmit = data => {
+    console.log(data, '<< DATA SUBMITTED');
+  };
   const handleOpenModal = () => {
-    const handleSubmit = data => {
-      console.log(data, '<< DATA SUBMITTED');
-    };
     openModal({
       title: 'Add New UoM Category',
       content: onCloseModal => (
         <ModalContentAddUoM onCloseModal={onCloseModal} onSubmit={handleSubmit} />
-      ),
-      modalOptions: {
-        overideFooter: null
-      }
+      )
+      // modalOptions: {
+      //   overideFooter: 'TEST'
+      //   // renderCustomFooter: () => <span>custom</span>
+      // }
     });
   };
 
@@ -40,7 +37,7 @@ const UoMCategory = () => {
           </Button>
         </div>
         <div className="flex justify-between items-center ">
-          <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" />
+          {/* <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" /> */}
           {/* <div className="flex items-center gap-2">
             <span className="text-sm">Filter by category:</span>
             <SelectDropdown
@@ -115,7 +112,7 @@ const ModalContentAddUoM = ({ onCloseModal, onSubmit }) => {
 
   return (
     <div className="bg-mary flex flex-col gap-4">
-      <InputText
+      {/* <InputText
         label="Category name"
         className="w-full"
         value={textContent}
@@ -133,17 +130,17 @@ const ModalContentAddUoM = ({ onCloseModal, onSubmit }) => {
             value: 'bahan minuman'
           }
         ]}
-      />
-      <Textarea label="Description (optional)" />
+      /> */}
+      {/* <Textarea label="Description (optional)" /> */}
 
-      <div className=" self-end mt-5 gap-2 flex">
+      {/* <div className=" self-end mt-5 gap-2 flex">
         <Button type="submit" variant={'outline'} onClick={() => onCloseModal()}>
           Cancel
         </Button>
         <Button type="submit" onClick={() => onSubmit(textContent)}>
           Save changes
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
