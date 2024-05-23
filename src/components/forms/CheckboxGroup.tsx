@@ -3,7 +3,10 @@ import { Checkbox } from '../ui/checkbox';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '../ui/form';
 
 interface SingleCheckboxProps {
-  item: any;
+  item: {
+    id: string;
+    label: string;
+  };
   field: ControllerRenderProps;
 }
 
