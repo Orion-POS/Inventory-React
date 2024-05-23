@@ -23,6 +23,7 @@ const SelectDropdown: React.FC<SelectDropdownProps & ControllerRenderProps> = ({
   menuItems,
   footer,
   placeholder,
+  customFooter,
   ...field
 }) => {
   return (

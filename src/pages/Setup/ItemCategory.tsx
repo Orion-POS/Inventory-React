@@ -154,38 +154,6 @@ const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
       onSubmit={form.handleSubmit(onSubmitNewCategory)}
       onClose={() => setOpenModal(false)}>
       <Form {...form}>
-        {/* <form onSubmit={form.handleSubmit(onSubmitNewCategory)}> */}
-
-        {/* 
-        <Form formData={[
-          {
-            fieldname: "username",
-            type: "text",
-            validations: {},
-            label: "",
-            width: ""
-          },
-          [
-            {
-
-            },
-            {
-
-            }
-          ]
-        ]} onChange={} />
-        
-        */}
-
-        {/* 
-        <div>
-        <InputForm type="text" validations={{}} name="" onChange={} label="" />
-        <InputForm type="text" validations={{}} name="" onChange={} label="" />
-        </div>
-          <InputForm type="text" validations={{}} name="" onChange={} label="" />
-          <InputForm type="text" validations={{}} name="" onChange={} label="" />
-        
-        */}
         <FormField
           control={form.control}
           name="categoryName"
@@ -207,6 +175,11 @@ const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
                   value: 'bahan minuman'
                 }
               ]}
+              footer={
+                <div>
+                  <Button variant={'outline'}>+ Add new type</Button>
+                </div>
+              }
               {...field}
             />
           )}

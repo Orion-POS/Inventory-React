@@ -1,8 +1,10 @@
 import { earningsData } from '@/__dummy__/sampleDataTable';
+import { InputText } from '@/components/forms';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
+import { Form, FormField } from '@/components/ui/form';
 import { useModal } from '@/providers/ModalProvider';
-import { useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 
 const UoMCategory = () => {
   // const [openModal, setOpenModal] = useState(false);
@@ -104,14 +106,59 @@ const UoMCategory = () => {
 export default UoMCategory;
 
 const ModalContentAddUoM = ({ onCloseModal, onSubmit }) => {
-  const [textContent, setContentText] = useState('');
+  const form = useForm({
+    defaultValues: {
+      itemName: '',
+      properties: [
+        {
+          unit: '',
+          type: '',
+          ratio: 1.0,
+          rounding: 0.01,
+          active: true,
+          default: true
+        }
+      ]
+    }
+  });
 
-  const handleOnChangeText = e => {
-    setContentText(e.target.value);
-  };
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: 'properties'
+  });
 
   return (
     <div className="bg-mary flex flex-col gap-4">
+      <Form {...form}>
+        <FormField
+          control={form.control}
+          name="itemName"
+          render={({ field }) => <InputText label="Item name" className="w-full" {...field} />}
+        />
+        <div className="flex flex-col gap-3">
+          {fields.map((item, idx) => (
+            <div className="flex gap-3">
+              <InputText
+                label="Unit"
+                value={item.unit}
+                {...form.register(`properties.${idx}.unit`)}
+              />
+              <InputText label="Type" {...form.register(`properties.${idx}.type`)} />
+              {/* <div>
+                <F
+              <Input type="number" label="Type" {...form.register(`properties.${idx}.type`)} />
+                </div> */}
+            </div>
+          ))}
+        </div>
+        {/* <FormField
+          control={form.control}
+          name="properties"
+          render={({ field }) => (
+           
+          )}
+        /> */}
+      </Form>
       {/* <InputText
         label="Category name"
         className="w-full"
