@@ -1,5 +1,3 @@
-import InputText from "./InputText";
+import InputText from './InputText';
 
-export {
-  InputText
-}
+export { InputText };

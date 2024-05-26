@@ -1,17 +1,17 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { UseFormReturn } from 'react-hook-form';
+import { ControllerRenderProps } from 'react-hook-form';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   iconEnd?: React.ReactNode;
   iconStart?: boolean;
-  useFormProps: UseFormReturn;
+  // useFormProps: UseFormReturn;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, iconEnd, iconStart, useFormProps, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps & Omit<ControllerRenderProps, 'ref'>>(
+  ({ className, type, iconEnd, iconStart, ...props }, ref) => {
     return (
       <div className="text-sm font- relative flex flex-col gap-2  ">
         <input
@@ -21,7 +21,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
           ref={ref}
-          {...useFormProps}
+          {...props}
         />
         {iconEnd ? (
           <span className="absolute top-0 right-0 rounded-e-md w-10 text-gray-200 flex focus-visible:text-gray-400 items-center justify-center border-l border-gray-200 h-full">

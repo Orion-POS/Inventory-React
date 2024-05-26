@@ -43,7 +43,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
             e.preventDefault();
           }
         }}
-        className="sm:max-w-[425px] md:min-w-[600px] lg:max-w-[50%]">
+        className="sm:max-w-[425px] md:min-w-[600px] lg:max-w-[80%]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description ? (
@@ -52,7 +52,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
             </DialogDescription>
           ) : null}
         </DialogHeader>
-        <div className="grid gap-3 py-4">{children}</div>
+        <div className="grid gap-3 py-4 max-h-[70vh] overflow-y-auto">{children}</div>
         {overideFooter === null ? null : (
           <DialogFooter>
             {Boolean(overideFooter) ? (

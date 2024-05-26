@@ -1,10 +1,12 @@
 import { earningsData } from '@/__dummy__/sampleDataTable';
+import { InputText } from '@/components/forms';
+import { ComboboxForm } from '@/components/forms/ComboBox';
+// import { InputText } from '@/components/forms/InputText';
 import SelectDropdown from '@/components/forms/Select';
 import BasicModal from '@/components/modals/Modal';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
@@ -39,7 +41,12 @@ const ItemCategory = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input iconEnd={<Search />} placeholder="Search" className=" w-64" {...field} />
+                    <InputText
+                      iconEnd={<Search />}
+                      placeholder="Search"
+                      className=" w-64"
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -48,23 +55,30 @@ const ItemCategory = () => {
               name="filterCategory"
               control={formFilter.control}
               render={({ field }) => (
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">Filter by category:</span>
-                  <SelectDropdown
-                    placeholder="Select"
-                    menuItems={[
-                      {
-                        label: 'Item A',
-                        value: 1
-                      },
-                      {
-                        label: 'Item B',
-                        value: 2
-                      }
-                    ]}
-                    {...field}
-                  />
-                </div>
+                <ComboboxForm
+                  data={[
+                    {
+                      label: 'A',
+                      value: 'a'
+                    },
+                    {
+                      label: 'b',
+                      value: 'b'
+                    },
+                    {
+                      label: 's',
+                      value: 's'
+                    },
+                    {
+                      label: 'd',
+                      value: 'd'
+                    }
+                  ]}
+                  placeholder="Select options"
+                  variant="inverted"
+                  renderAs="check-only"
+                  {...field}
+                />
               )}
             />
           </Form>
@@ -140,49 +154,10 @@ const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
       onSubmit={form.handleSubmit(onSubmitNewCategory)}
       onClose={() => setOpenModal(false)}>
       <Form {...form}>
-        {/* <form onSubmit={form.handleSubmit(onSubmitNewCategory)}> */}
-
-        {/* 
-        <Form formData={[
-          {
-            fieldname: "username",
-            type: "text",
-            validations: {},
-            label: "",
-            width: ""
-          },
-          [
-            {
-
-            },
-            {
-
-            }
-          ]
-        ]} onChange={} />
-        
-        */}
-
-        {/* 
-        <div>
-        <InputForm type="text" validations={{}} name="" onChange={} label="" />
-        <InputForm type="text" validations={{}} name="" onChange={} label="" />
-        </div>
-          <InputForm type="text" validations={{}} name="" onChange={} label="" />
-          <InputForm type="text" validations={{}} name="" onChange={} label="" />
-        
-        */}
         <FormField
           control={form.control}
           name="categoryName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category Name</FormLabel>
-              <FormControl>
-                <Input label="Category name" className="w-full" useFormProps={field} />
-              </FormControl>
-            </FormItem>
-          )}
+          render={({ field }) => <InputText label="Category name" className="w-full" {...field} />}
         />
         <FormField
           control={form.control}
@@ -200,6 +175,11 @@ const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
                   value: 'bahan minuman'
                 }
               ]}
+              footer={
+                <div>
+                  <Button variant={'outline'}>+ Add new type</Button>
+                </div>
+              }
               {...field}
             />
           )}
