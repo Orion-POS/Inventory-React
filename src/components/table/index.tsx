@@ -28,7 +28,7 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
   const columns = useMemo(() => tableColumns, [tableColumns]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const table = useReactTable<any>({
+  const table = useReactTable<TData>({
     data,
     columns,
     state: {

@@ -1,7 +1,8 @@
-import { earningsData } from '@/__dummy__/sampleDataTable';
+import { uOMCategories, UoMCategoryEntity } from '@/__dummy__/sampleUoMCategory';
 import { InputText } from '@/components/forms';
 import InputNumber from '@/components/forms/InputNumber';
 import { BasicTable } from '@/components/table';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -63,12 +64,12 @@ const UoMCategory = () => {
       </div>
 
       {/* END OF TOOLBAR */}
-      <BasicTable
-        data={earningsData}
+      <BasicTable<UoMCategoryEntity>
+        data={uOMCategories}
         tableColumns={[
           {
-            id: 'num',
-            accessorKey: 'num',
+            id: 'id',
+            accessorKey: 'id',
             size: 10,
             header: () => <span className=" w-full text-start">No</span>,
             cell: ({ getValue }) => <span className="w-full ">{getValue() as string}</span>
@@ -81,11 +82,18 @@ const UoMCategory = () => {
             cell: ({ getValue }) => <span>{getValue() as string}</span>
           },
           {
-            id: 'uom',
-            accessorKey: 'uom',
+            id: 'properties',
+            accessorKey: 'properties',
             header: () => <span className=" w-full text-start">UoM</span>,
             size: 200,
-            cell: ({ getValue }) => <span>{getValue() as string}</span>
+            cell: ({ getValue }) => (
+              <div className="flex gap-2">
+                {getValue().map(it => (
+                  // <span>{it.unit}</span>
+                  <Badge variant={it.default ? 'default' : 'outline'}>{it.unit}</Badge>
+                ))}
+              </div>
+            )
           },
           {
             id: 'actions',
