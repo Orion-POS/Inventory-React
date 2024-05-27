@@ -30,12 +30,8 @@ const BasicModal: React.FC<BasicModalProps> = ({
   description,
   onSubmit
 }) => {
-  // const [open, setOpen] = useState(false)
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      {/* <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger> */}
       <DialogContent
         onCloseAutoFocus={() => {}}
         onPointerDownOutside={e => {
@@ -46,11 +42,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
         className="sm:max-w-[425px] md:min-w-[600px] lg:max-w-[80%]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description ? (
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
-          ) : null}
+          {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
         <div className="grid gap-3 py-4 max-h-[70vh] overflow-y-auto">{children}</div>
         {overideFooter === null ? null : (
@@ -62,7 +54,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
                 <Button type="submit" variant={'outline'} onClick={onClose}>
                   Cancel
                 </Button>
-                <Button onClick={onSubmit}>Save changes</Button>
+                <Button onClick={onSubmit}>Save</Button>
               </>
             )}
           </DialogFooter>
