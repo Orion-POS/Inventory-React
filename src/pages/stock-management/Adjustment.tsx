@@ -27,8 +27,8 @@ const Adjustment = () => {
 
   const handleOpenModal = () => {
     openModal({
-      title: 'Add New UoM Category',
-      content: () => <ModalContentAddUoM onSubmit={handleSubmit} />,
+      title: 'Add New Adjustment',
+      content: () => <ModalContentAddAdjustment onSubmit={handleSubmit} />,
       modalOptions: {
         // overideFooter: 'TEST',
       }
@@ -165,7 +165,7 @@ const Adjustment = () => {
 
 export default Adjustment;
 
-const ModalContentAddUoM = ({ onSubmit }) => {
+const ModalContentAddAdjustment = ({ onSubmit }) => {
   const form = useForm({
     defaultValues: {
       itemName: '',

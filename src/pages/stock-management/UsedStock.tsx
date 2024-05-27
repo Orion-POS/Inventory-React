@@ -1,6 +1,7 @@
 import { usedStocksData } from '@/__dummy__/sampleUsedStock';
 import { InputText } from '@/components/forms';
 import { ComboboxForm } from '@/components/forms/ComboBox';
+import DatePicker from '@/components/forms/DatePicker';
 import InputNumber from '@/components/forms/InputNumber';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { useModal } from '@/providers/ModalProvider';
 import { Search } from '@carbon/icons-react';
+import { format } from 'date-fns';
 import { Trash } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
@@ -27,8 +29,8 @@ const UsedStcok = () => {
 
   const handleOpenModal = () => {
     openModal({
-      title: 'Add New UoM Category',
-      content: () => <ModalContentAddUoM onSubmit={handleSubmit} />,
+      title: 'Add New Used Stock',
+      content: () => <ModalContentAddUsedStock onSubmit={handleSubmit} />,
       modalOptions: {
         // overideFooter: 'TEST',
       }
@@ -46,7 +48,7 @@ const UsedStcok = () => {
             Import / Export Data
           </Button>
         </div>
-        <div className="flex justify-between items-center ">
+        <div className="flex justify-between items-center flex-wrap">
           <Form {...formFilter}>
             <FormField
               name="search"
@@ -64,36 +66,43 @@ const UsedStcok = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="filterCategory"
-              control={formFilter.control}
-              render={({ field }) => (
-                <ComboboxForm
-                  data={[
-                    {
-                      label: 'A',
-                      value: 'a'
-                    },
-                    {
-                      label: 'b',
-                      value: 'b'
-                    },
-                    {
-                      label: 's',
-                      value: 's'
-                    },
-                    {
-                      label: 'd',
-                      value: 'd'
-                    }
-                  ]}
-                  placeholder="Select options"
-                  variant="inverted"
-                  renderAs="check-only"
-                  {...field}
-                />
-              )}
-            />
+            <div className="flex gap-2 items-center flex-wrap">
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="Select options"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({}) => <DatePicker />}
+              />
+            </div>
           </Form>
         </div>
       </div>
@@ -112,9 +121,20 @@ const UsedStcok = () => {
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
+              id: 'date',
+              accessorKey: 'date',
+              header: () => <span className="w-full text-start">Date</span>,
+              cell: ({ getValue }) => {
+                const date = new Date(getValue() as string); // Assuming date is a string
+                return (
+                  <span className="w-full text-nowrap">{format(date, 'dd/MM/yyyy HH:mm')}</span>
+                );
+              }
+            },
+            {
               id: 'category',
               accessorKey: 'category',
-              header: () => <span className="w-full text-start">Category Name</span>,
+              header: () => <span className="w-full text-start">Item Category</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
@@ -122,16 +142,6 @@ const UsedStcok = () => {
               accessorKey: 'name',
               header: () => <span className="w-full text-start">Item Name</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
-            },
-            {
-              id: 'date',
-              accessorKey: 'date',
-              header: () => <span className="w-full text-start">Date</span>,
-              cell: ({ getValue }) => (
-                <span className="w-full text-nowrap">
-                  {new Date(getValue() as Date).toLocaleString()}
-                </span>
-              )
             },
             {
               id: 'in_stock',
@@ -183,7 +193,7 @@ const UsedStcok = () => {
 
 export default UsedStcok;
 
-const ModalContentAddUoM = ({ onSubmit }) => {
+const ModalContentAddUsedStock = ({ onSubmit }) => {
   const form = useForm({
     defaultValues: {
       itemName: '',

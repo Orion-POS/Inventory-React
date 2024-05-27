@@ -27,8 +27,8 @@ const WastedStock = () => {
 
   const handleOpenModal = () => {
     openModal({
-      title: 'Add New UoM Category',
-      content: () => <ModalContentAddUoM onSubmit={handleSubmit} />,
+      title: 'Add New WastedStock',
+      content: () => <ModalContentAddWastedStock onSubmit={handleSubmit} />,
       onSubmit: () => {
         console.log('Form submitted!');
       },
@@ -162,7 +162,7 @@ const WastedStock = () => {
 
 export default WastedStock;
 
-const ModalContentAddUoM = ({ onSubmit }) => {
+const ModalContentAddWastedStock = ({ onSubmit }) => {
   const form = useForm({
     defaultValues: {
       itemName: '',

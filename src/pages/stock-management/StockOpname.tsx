@@ -34,8 +34,8 @@ const StockOpname = () => {
 
   const handleOpenModal = () => {
     openModal({
-      title: 'Add New UoM Category',
-      content: () => <ModalContentAddUoM onSubmit={handleSubmit} />,
+      title: 'Add New Stock Opname',
+      content: () => <ModalContentAddStockOpname onSubmit={handleSubmit} />,
       modalOptions: {
         // overideFooter: 'TEST',
       }
@@ -141,7 +141,7 @@ const StockOpname = () => {
 
 export default StockOpname;
 
-const ModalContentAddUoM = ({ onSubmit }) => {
+const ModalContentAddStockOpname = ({ onSubmit }) => {
   const form = useForm({
     defaultValues: {
       itemName: '',
