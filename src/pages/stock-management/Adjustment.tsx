@@ -7,7 +7,7 @@ import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { AdjustmentTypes } from '@/models/itemModel';
+import { AdjustmentTypes } from '@/types/itemTypes';
 import { useModal } from '@/providers/ModalProvider';
 import getUniqueOptions from '@/utils/getUniqueOption';
 import { Search } from '@carbon/icons-react';
@@ -133,13 +133,13 @@ const Adjustment = () => {
               id: 'id',
               size: 50,
               accessorKey: 'id',
-              header: () => <span className="w-full text-start">ID</span>,
+              header: () => <span className="w-full text-start">No</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
               id: 'category',
               accessorKey: 'category',
-              header: () => <span className="w-full text-start">Category Name</span>,
+              header: () => <span className="w-full text-start">Item Category</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {

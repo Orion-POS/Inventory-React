@@ -1,4 +1,4 @@
-import { AdjustmentTypes } from '@/models/itemModel';
+import { AdjustmentTypes } from '@/types/itemTypes';
 
 export const adjustmentData: AdjustmentTypes[] = [
   {

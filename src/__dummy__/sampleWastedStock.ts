@@ -1,4 +1,4 @@
-import { WastedStockTypes } from "@/models/itemModel";
+import { WastedStockTypes } from "@/types/itemTypes";
 
 export const wastedStockData: WastedStockTypes[] = [
   {

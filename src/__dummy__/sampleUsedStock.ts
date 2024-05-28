@@ -1,4 +1,4 @@
-import { UsedStockTypes } from '@/models/itemModel';
+import { UsedStockTypes } from '@/types/itemTypes';
 
 export const usedStocksData: UsedStockTypes[] = [
   {

@@ -14,7 +14,7 @@ import { ComboboxForm } from '@/components/forms/ComboBox';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import getUniqueOptions from '@/utils/getUniqueOption';
-import { StockOpnameTypes } from '@/models/itemModel';
+import { StockOpnameTypes } from '@/types/itemTypes';
 
 interface FilterFormData {
   search?: string;
@@ -200,7 +200,7 @@ const StockOpname = () => {
               id: 'id',
               size: 50,
               accessorKey: 'id',
-              header: () => <span className="w-full text-start">ID</span>,
+              header: () => <span className="w-full text-start">No</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {

@@ -1,4 +1,4 @@
-import { StockOpnameTypes } from '@/models/itemModel';
+import { StockOpnameTypes } from '@/types/itemTypes';
 
 export const stockOpnameData: StockOpnameTypes[] = [
   {
