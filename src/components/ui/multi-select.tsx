@@ -51,7 +51,7 @@ export interface MultiSelectFormFieldProps
   animation?: number;
   onValueChange: (value: string[]) => void;
   renderAs?: 'checkbox' | 'check-only';
-  overrideCloseButton: React.ReactNode | null;
+  overrideCloseButton?: React.ReactNode | null;
 }
 
 const MultiSelectFormField = React.forwardRef<HTMLButtonElement, MultiSelectFormFieldProps>(

@@ -21,14 +21,10 @@ const WastedStock = () => {
     }
   });
 
-  const handleSubmit = (data: any) => {
-    console.log(data, '<< DATA SUBMITTED');
-  };
-
   const handleOpenModal = () => {
     openModal({
       title: 'Add New WastedStock',
-      content: () => <ModalContentAddWastedStock onSubmit={handleSubmit} />,
+      content: () => <ModalContentAddWastedStock />,
       onSubmit: () => {
         console.log('Form submitted!');
       },
@@ -67,36 +63,98 @@ const WastedStock = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="filterCategory"
-              control={formFilter.control}
-              render={({ field }) => (
-                <ComboboxForm
-                  data={[
-                    {
-                      label: 'A',
-                      value: 'a'
-                    },
-                    {
-                      label: 'b',
-                      value: 'b'
-                    },
-                    {
-                      label: 's',
-                      value: 's'
-                    },
-                    {
-                      label: 'd',
-                      value: 'd'
-                    }
-                  ]}
-                  placeholder="Select options"
-                  variant="inverted"
-                  renderAs="check-only"
-                  {...field}
-                />
-              )}
-            />
+            <div className="flex flex-wrap items-center gap-3">
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="Item Category"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="Item Library"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="More Filters"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+            </div>
           </Form>
         </div>
       </div>
@@ -162,7 +220,7 @@ const WastedStock = () => {
 
 export default WastedStock;
 
-const ModalContentAddWastedStock = ({ onSubmit }) => {
+const ModalContentAddWastedStock = () => {
   const form = useForm({
     defaultValues: {
       itemName: '',

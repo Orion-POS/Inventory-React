@@ -18,7 +18,7 @@ const StockOpname = () => {
 
   const monthList = Array.from({ length: 12 }, (_, index) => ({
     label: dayjs().month(index).format('MMMM'),
-    value: index + 1
+    value: (index + 1).toString()
   }));
 
   const formFilter = useForm({
@@ -28,14 +28,10 @@ const StockOpname = () => {
     }
   });
 
-  const handleSubmit = (data: any) => {
-    console.log(data, '<< DATA SUBMITTED');
-  };
-
   const handleOpenModal = () => {
     openModal({
       title: 'Add New Stock Opname',
-      content: () => <ModalContentAddStockOpname onSubmit={handleSubmit} />,
+      content: () => <ModalContentAddStockOpname />,
       modalOptions: {
         // overideFooter: 'TEST',
       }
@@ -71,19 +67,111 @@ const StockOpname = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="filterCategory"
-              control={formFilter.control}
-              render={({ field }) => (
-                <ComboboxForm
-                  data={monthList}
-                  placeholder="Select Month"
-                  variant="inverted"
-                  renderAs="check-only"
-                  {...field}
-                />
-              )}
-            />
+            <div className="flex flex-wrap items-center gap-3">
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={monthList}
+                    placeholder="Select Month"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="Item Category"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="Item Library"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={[
+                      {
+                        label: 'A',
+                        value: 'a'
+                      },
+                      {
+                        label: 'b',
+                        value: 'b'
+                      },
+                      {
+                        label: 's',
+                        value: 's'
+                      },
+                      {
+                        label: 'd',
+                        value: 'd'
+                      }
+                    ]}
+                    placeholder="More Filters"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+            </div>
           </Form>
         </div>
       </div>
@@ -141,7 +229,7 @@ const StockOpname = () => {
 
 export default StockOpname;
 
-const ModalContentAddStockOpname = ({ onSubmit }) => {
+const ModalContentAddStockOpname = () => {
   const form = useForm({
     defaultValues: {
       itemName: '',

@@ -1,4 +1,4 @@
-import { usedStocksData } from '@/__dummy__/sampleUsedStock';
+import { UsedStockTypes, usedStocksData } from '@/__dummy__/sampleUsedStock';
 import { InputText } from '@/components/forms';
 import { ComboboxForm } from '@/components/forms/ComboBox';
 import DatePicker from '@/components/forms/DatePicker';
@@ -11,31 +11,71 @@ import { useModal } from '@/providers/ModalProvider';
 import { Search } from '@carbon/icons-react';
 import { format } from 'date-fns';
 import { Trash } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+
+interface FilterFormData {
+  search?: string;
+  filterCategory?: string[];
+  date?: Date | null;
+}
 
 const UsedStcok = () => {
   const { openModal } = useModal();
+  const [filteredData, setFilteredData] = useState<UsedStockTypes[]>(usedStocksData);
 
-  const formFilter = useForm({
+  const uniqueCategories = usedStocksData
+    .map(item => item.category)
+    .filter((value, index, self) => self.indexOf(value) === index);
+
+  const usedStocksCategory = uniqueCategories.map(category => ({
+    label: category,
+    value: category
+  }));
+
+  const formFilter = useForm<FilterFormData>({
     defaultValues: {
       search: '',
-      filterCategory: []
+      filterCategory: [],
+      date: null
     }
   });
-
-  const handleSubmit = (data: any) => {
-    console.log(data, '<< DATA SUBMITTED');
-  };
 
   const handleOpenModal = () => {
     openModal({
       title: 'Add New Used Stock',
-      content: () => <ModalContentAddUsedStock onSubmit={handleSubmit} />,
+      content: () => <ModalContentAddUsedStock />,
       modalOptions: {
         // overideFooter: 'TEST',
       }
     });
   };
+
+  const filterData = (data: FilterFormData) => {
+    const search = (data.search ?? '').toLowerCase();
+    const filterCategory = data.filterCategory ?? [];
+
+    let result = usedStocksData;
+
+    if (search) {
+      result = result.filter(
+        item =>
+          item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search)
+      );
+    }
+
+    if (filterCategory.length > 0) {
+      result = result.filter(item => filterCategory.includes(item.category));
+    }
+
+    setFilteredData(result);
+  };
+
+  useEffect(() => {
+    const subscription = formFilter.watch(data => filterData(data));
+    return () => subscription.unsubscribe();
+  }, [formFilter]);
+
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
       {/* TOOLBAR */}
@@ -66,42 +106,21 @@ const UsedStcok = () => {
                 </FormItem>
               )}
             />
-            <div className="flex gap-2 items-center flex-wrap">
+            <div className="flex gap-3 items-center flex-wrap">
               <FormField
                 name="filterCategory"
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
-                    data={[
-                      {
-                        label: 'A',
-                        value: 'a'
-                      },
-                      {
-                        label: 'b',
-                        value: 'b'
-                      },
-                      {
-                        label: 's',
-                        value: 's'
-                      },
-                      {
-                        label: 'd',
-                        value: 'd'
-                      }
-                    ]}
-                    placeholder="Select options"
+                    data={usedStocksCategory}
+                    placeholder="Item Category"
                     variant="inverted"
                     renderAs="check-only"
                     {...field}
                   />
                 )}
               />
-              <FormField
-                name="filterCategory"
-                control={formFilter.control}
-                render={({}) => <DatePicker />}
-              />
+              <FormField name="date" control={formFilter.control} render={({}) => <DatePicker />} />
             </div>
           </Form>
         </div>
@@ -111,7 +130,7 @@ const UsedStcok = () => {
       {/* TABLE */}
       <div className="w-full overflow-scroll">
         <BasicTable
-          data={usedStocksData}
+          data={filteredData}
           tableColumns={[
             {
               id: 'id',
@@ -172,7 +191,7 @@ const UsedStcok = () => {
               header: () => <span className="text-center w-full">Actions</span>,
               enableSorting: false,
               // size: 40,
-              cell: ({ getValue }) => (
+              cell: () => (
                 <div className="w-fll flex justify-center gap-2">
                   <Button size={'sm'} variant={'ghost'} className="text-gray-500">
                     Edit
@@ -193,7 +212,7 @@ const UsedStcok = () => {
 
 export default UsedStcok;
 
-const ModalContentAddUsedStock = ({ onSubmit }) => {
+const ModalContentAddUsedStock = () => {
   const form = useForm({
     defaultValues: {
       itemName: '',

@@ -1,6 +1,7 @@
-import { adjustmentData } from '@/__dummy__/sampleAdjustment';
+import { AdjustmentTypes, adjustmentData } from '@/__dummy__/sampleAdjustment';
 import { InputText } from '@/components/forms';
 import { ComboboxForm } from '@/components/forms/ComboBox';
+import DatePicker from '@/components/forms/DatePicker';
 import InputNumber from '@/components/forms/InputNumber';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
@@ -9,31 +10,71 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { useModal } from '@/providers/ModalProvider';
 import { Search } from '@carbon/icons-react';
 import { Trash } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+
+interface FilterFormData {
+  search?: string;
+  filterCategory?: string[];
+  date?: Date | null;
+}
 
 const Adjustment = () => {
   const { openModal } = useModal();
+  const [filteredData, setFilteredData] = useState<AdjustmentTypes[]>(adjustmentData);
 
-  const formFilter = useForm({
+  const uniqueCategories = adjustmentData
+    .map(item => item.category)
+    .filter((value, index, self) => self.indexOf(value) === index);
+
+  const adjustmentCategory = uniqueCategories.map(category => ({
+    label: category,
+    value: category
+  }));
+
+  const formFilter = useForm<FilterFormData>({
     defaultValues: {
       search: '',
-      filterCategory: []
+      filterCategory: [],
+      date: null
     }
   });
-
-  const handleSubmit = (data: any) => {
-    console.log(data, '<< DATA SUBMITTED');
-  };
 
   const handleOpenModal = () => {
     openModal({
       title: 'Add New Adjustment',
-      content: () => <ModalContentAddAdjustment onSubmit={handleSubmit} />,
+      content: () => <ModalContentAddAdjustment />,
       modalOptions: {
         // overideFooter: 'TEST',
       }
     });
   };
+
+  const filterData = (data: FilterFormData) => {
+    const search = (data.search ?? '').toLowerCase();
+    const filterCategory = data.filterCategory ?? [];
+
+    let result = adjustmentData;
+
+    if (search) {
+      result = result.filter(
+        item =>
+          item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search)
+      );
+    }
+
+    if (filterCategory.length > 0) {
+      result = result.filter(item => filterCategory.includes(item.category));
+    }
+
+    setFilteredData(result);
+  };
+
+  useEffect(() => {
+    const subscription = formFilter.watch(data => filterData(data));
+    return () => subscription.unsubscribe();
+  }, [formFilter]);
+
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
       {/* TOOLBAR */}
@@ -64,36 +105,22 @@ const Adjustment = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="filterCategory"
-              control={formFilter.control}
-              render={({ field }) => (
-                <ComboboxForm
-                  data={[
-                    {
-                      label: 'A',
-                      value: 'a'
-                    },
-                    {
-                      label: 'b',
-                      value: 'b'
-                    },
-                    {
-                      label: 's',
-                      value: 's'
-                    },
-                    {
-                      label: 'd',
-                      value: 'd'
-                    }
-                  ]}
-                  placeholder="Select options"
-                  variant="inverted"
-                  renderAs="check-only"
-                  {...field}
-                />
-              )}
-            />
+            <div className="flex gap-3 items-center flex-wrap">
+              <FormField name="date" control={formFilter.control} render={({}) => <DatePicker />} />
+              <FormField
+                name="filterCategory"
+                control={formFilter.control}
+                render={({ field }) => (
+                  <ComboboxForm
+                    data={adjustmentCategory}
+                    placeholder="Item Category"
+                    variant="inverted"
+                    renderAs="check-only"
+                    {...field}
+                  />
+                )}
+              />
+            </div>
           </Form>
         </div>
       </div>
@@ -101,7 +128,7 @@ const Adjustment = () => {
       {/* END OF TOOLBAR */}
       <div className="w-full overflow-scroll">
         <BasicTable
-          data={adjustmentData}
+          data={filteredData}
           tableColumns={[
             {
               id: 'id',
@@ -165,7 +192,7 @@ const Adjustment = () => {
 
 export default Adjustment;
 
-const ModalContentAddAdjustment = ({ onSubmit }) => {
+const ModalContentAddAdjustment = () => {
   const form = useForm({
     defaultValues: {
       itemName: '',
