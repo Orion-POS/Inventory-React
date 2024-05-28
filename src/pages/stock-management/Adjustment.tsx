@@ -1,4 +1,4 @@
-import { AdjustmentTypes, adjustmentData } from '@/__dummy__/sampleAdjustment';
+import { adjustmentData } from '@/__dummy__/sampleAdjustment';
 import { InputText } from '@/components/forms';
 import { ComboboxForm } from '@/components/forms/ComboBox';
 import DatePicker from '@/components/forms/DatePicker';
@@ -7,7 +7,9 @@ import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { AdjustmentTypes } from '@/models/itemModel';
 import { useModal } from '@/providers/ModalProvider';
+import getUniqueOptions from '@/utils/getUniqueOption';
 import { Search } from '@carbon/icons-react';
 import { Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -16,27 +18,20 @@ import { useFieldArray, useForm } from 'react-hook-form';
 interface FilterFormData {
   search?: string;
   filterCategory?: string[];
-  date?: Date | null;
+  filterDate?: Date | null;
 }
 
 const Adjustment = () => {
   const { openModal } = useModal();
   const [filteredData, setFilteredData] = useState<AdjustmentTypes[]>(adjustmentData);
 
-  const uniqueCategories = adjustmentData
-    .map(item => item.category)
-    .filter((value, index, self) => self.indexOf(value) === index);
-
-  const adjustmentCategory = uniqueCategories.map(category => ({
-    label: category,
-    value: category
-  }));
+  const adjustmentCategory = getUniqueOptions(adjustmentData, 'category');
 
   const formFilter = useForm<FilterFormData>({
     defaultValues: {
       search: '',
       filterCategory: [],
-      date: null
+      filterDate: null
     }
   });
 
@@ -106,7 +101,11 @@ const Adjustment = () => {
               )}
             />
             <div className="flex gap-3 items-center flex-wrap">
-              <FormField name="date" control={formFilter.control} render={({}) => <DatePicker />} />
+              <FormField
+                name="filterDate"
+                control={formFilter.control}
+                render={({}) => <DatePicker />}
+              />
               <FormField
                 name="filterCategory"
                 control={formFilter.control}

@@ -12,19 +12,37 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Trash } from 'lucide-react';
 import { ComboboxForm } from '@/components/forms/ComboBox';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import getUniqueOptions from '@/utils/getUniqueOption';
+import { StockOpnameTypes } from '@/models/itemModel';
+
+interface FilterFormData {
+  search?: string;
+  filterCategory?: string[];
+  filterItem?: string[];
+  filterMonth?: string;
+  filterMore?: any;
+}
 
 const StockOpname = () => {
   const { openModal } = useModal();
+  const [filteredData, setFilteredData] = useState<StockOpnameTypes[]>(stockOpnameData);
+
+  const stockOpnameCategory = getUniqueOptions(stockOpnameData, 'category');
+  const stockOpnameItems = getUniqueOptions(stockOpnameData, 'name');
 
   const monthList = Array.from({ length: 12 }, (_, index) => ({
     label: dayjs().month(index).format('MMMM'),
     value: (index + 1).toString()
   }));
 
-  const formFilter = useForm({
+  const formFilter = useForm<FilterFormData>({
     defaultValues: {
       search: '',
-      filterCategory: []
+      filterCategory: [],
+      filterItem: [],
+      filterMonth: '1',
+      filterMore: []
     }
   });
 
@@ -37,6 +55,37 @@ const StockOpname = () => {
       }
     });
   };
+
+  const filterData = (data: FilterFormData) => {
+    const search = (data.search ?? '').toLowerCase();
+    const filterCategory = data.filterCategory ?? [];
+    const filterItem = data.filterItem ?? [];
+
+    let result = stockOpnameData;
+
+    if (search) {
+      result = result.filter(
+        item =>
+          item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search)
+      );
+    }
+
+    if (filterCategory.length > 0) {
+      result = result.filter(item => filterCategory.includes(item.category));
+    }
+
+    if (filterItem.length > 0) {
+      result = result.filter(item => filterItem.includes(item.name));
+    }
+
+    setFilteredData(result);
+  };
+
+  useEffect(() => {
+    const subscription = formFilter.watch(data => filterData(data));
+    return () => subscription.unsubscribe();
+  }, [formFilter]);
+
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
       {/* TOOLBAR */}
@@ -69,7 +118,7 @@ const StockOpname = () => {
             />
             <div className="flex flex-wrap items-center gap-3">
               <FormField
-                name="filterCategory"
+                name="filterMonth"
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
@@ -86,24 +135,7 @@ const StockOpname = () => {
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
-                    data={[
-                      {
-                        label: 'A',
-                        value: 'a'
-                      },
-                      {
-                        label: 'b',
-                        value: 'b'
-                      },
-                      {
-                        label: 's',
-                        value: 's'
-                      },
-                      {
-                        label: 'd',
-                        value: 'd'
-                      }
-                    ]}
+                    data={stockOpnameCategory}
                     placeholder="Item Category"
                     variant="inverted"
                     renderAs="check-only"
@@ -112,28 +144,11 @@ const StockOpname = () => {
                 )}
               />
               <FormField
-                name="filterCategory"
+                name="filterItem"
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
-                    data={[
-                      {
-                        label: 'A',
-                        value: 'a'
-                      },
-                      {
-                        label: 'b',
-                        value: 'b'
-                      },
-                      {
-                        label: 's',
-                        value: 's'
-                      },
-                      {
-                        label: 'd',
-                        value: 'd'
-                      }
-                    ]}
+                    data={stockOpnameItems}
                     placeholder="Item Library"
                     variant="inverted"
                     renderAs="check-only"
@@ -142,7 +157,7 @@ const StockOpname = () => {
                 )}
               />
               <FormField
-                name="filterCategory"
+                name="filterMore"
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
@@ -179,13 +194,19 @@ const StockOpname = () => {
       {/* END OF TOOLBAR */}
       <div className="w-full overflow-scroll">
         <BasicTable
-          data={stockOpnameData}
+          data={filteredData}
           tableColumns={[
             {
               id: 'id',
               size: 50,
               accessorKey: 'id',
               header: () => <span className="w-full text-start">ID</span>,
+              cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
+            },
+            {
+              id: 'category',
+              accessorKey: 'category',
+              header: () => <span className="w-full text-start">Item Category</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {

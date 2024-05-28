@@ -1,17 +1,10 @@
-export interface StockOpnameTypes {
-  id: number;
-  date: Date;
-  name: string;
-  final_stock: number;
-  uom: string;
-  average_price: number;
-  total_amounts: number;
-}
+import { StockOpnameTypes } from '@/models/itemModel';
 
 export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 1,
-    date: new Date(2024, 2, 30), // 30 Maret 2024
+    date: new Date(2024, 2, 30),
+    category: 'Makanan',
     name: 'Beras',
     final_stock: 100,
     uom: 'kg',
@@ -21,6 +14,7 @@ export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 2,
     date: new Date(2024, 2, 30),
+    category: 'Minuman',
     name: 'Teh Hijau',
     final_stock: 50,
     uom: 'bks',
@@ -30,6 +24,7 @@ export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 3,
     date: new Date(2024, 2, 30),
+    category: 'Peralatan Masak',
     name: 'Piring',
     final_stock: 200,
     uom: 'buah',
@@ -38,7 +33,8 @@ export const stockOpnameData: StockOpnameTypes[] = [
   },
   {
     id: 4,
-    date: new Date(2024, 2, 31), // 31 Maret 2024
+    date: new Date(2024, 2, 31),
+    category: 'Bahan Pokok',
     name: 'Gula',
     final_stock: 80,
     uom: 'kg',
@@ -48,6 +44,7 @@ export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 5,
     date: new Date(2024, 2, 31),
+    category: 'Minuman',
     name: 'Kopi Bubuk',
     final_stock: 40,
     uom: 'bks',
@@ -57,6 +54,7 @@ export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 6,
     date: new Date(2024, 2, 31),
+    category: 'Peralatan Masak',
     name: 'Sendok Garpu',
     final_stock: 150,
     uom: 'set',
@@ -65,7 +63,8 @@ export const stockOpnameData: StockOpnameTypes[] = [
   },
   {
     id: 7,
-    date: new Date(2024, 3, 1), // 1 April 2024
+    date: new Date(2024, 3, 1),
+    category: 'Makanan',
     name: 'Telur',
     final_stock: 120,
     uom: 'butir',
@@ -75,6 +74,7 @@ export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 8,
     date: new Date(2024, 3, 1),
+    category: 'Minuman',
     name: 'Air Mineral',
     final_stock: 60,
     uom: 'botol',
@@ -84,6 +84,7 @@ export const stockOpnameData: StockOpnameTypes[] = [
   {
     id: 9,
     date: new Date(2024, 3, 1),
+    category: 'Peralatan Masak',
     name: 'Panci',
     final_stock: 80,
     uom: 'buah',
@@ -92,7 +93,8 @@ export const stockOpnameData: StockOpnameTypes[] = [
   },
   {
     id: 10,
-    date: new Date(2024, 3, 2), // 2 April 2024
+    date: new Date(2024, 3, 2),
+    category: 'Makanan',
     name: 'Daging Sapi',
     final_stock: 90,
     uom: 'kg',

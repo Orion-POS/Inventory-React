@@ -6,24 +6,40 @@ import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { WastedStockTypes } from '@/models/itemModel';
 import { useModal } from '@/providers/ModalProvider';
+import getUniqueOptions from '@/utils/getUniqueOption';
 import { Search } from '@carbon/icons-react';
 import { Trash } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+
+interface FilterFormData {
+  search?: string;
+  filterCategory?: string[];
+  filterItem?: string[];
+  filterMore?: any;
+}
 
 const WastedStock = () => {
   const { openModal } = useModal();
+  const [filteredData, setFilteredData] = useState<WastedStockTypes[]>(wastedStockData);
 
-  const formFilter = useForm({
+  const wastedStockCategory = getUniqueOptions(wastedStockData, 'category');
+  const wastedStockItems = getUniqueOptions(wastedStockData, 'name');
+
+  const formFilter = useForm<FilterFormData>({
     defaultValues: {
       search: '',
-      filterCategory: []
+      filterCategory: [],
+      filterItem: [],
+      filterMore: null
     }
   });
 
   const handleOpenModal = () => {
     openModal({
-      title: 'Add New WastedStock',
+      title: 'Add New Wasted Stock',
       content: () => <ModalContentAddWastedStock />,
       onSubmit: () => {
         console.log('Form submitted!');
@@ -33,6 +49,37 @@ const WastedStock = () => {
       }
     });
   };
+
+  const filterData = (data: FilterFormData) => {
+    const search = (data.search ?? '').toLowerCase();
+    const filterCategory = data.filterCategory ?? [];
+    const filterItem = data.filterItem ?? [];
+
+    let result = wastedStockData;
+
+    if (search) {
+      result = result.filter(
+        item =>
+          item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search)
+      );
+    }
+
+    if (filterCategory.length > 0) {
+      result = result.filter(item => filterCategory.includes(item.category));
+    }
+
+    if (filterItem.length > 0) {
+      result = result.filter(item => filterItem.includes(item.name));
+    }
+
+    setFilteredData(result);
+  };
+
+  useEffect(() => {
+    const subscription = formFilter.watch(data => filterData(data));
+    return () => subscription.unsubscribe();
+  }, [formFilter]);
+
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
       {/* TOOLBAR */}
@@ -69,24 +116,7 @@ const WastedStock = () => {
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
-                    data={[
-                      {
-                        label: 'A',
-                        value: 'a'
-                      },
-                      {
-                        label: 'b',
-                        value: 'b'
-                      },
-                      {
-                        label: 's',
-                        value: 's'
-                      },
-                      {
-                        label: 'd',
-                        value: 'd'
-                      }
-                    ]}
+                    data={wastedStockCategory}
                     placeholder="Item Category"
                     variant="inverted"
                     renderAs="check-only"
@@ -95,28 +125,11 @@ const WastedStock = () => {
                 )}
               />
               <FormField
-                name="filterCategory"
+                name="filterItem"
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
-                    data={[
-                      {
-                        label: 'A',
-                        value: 'a'
-                      },
-                      {
-                        label: 'b',
-                        value: 'b'
-                      },
-                      {
-                        label: 's',
-                        value: 's'
-                      },
-                      {
-                        label: 'd',
-                        value: 'd'
-                      }
-                    ]}
+                    data={wastedStockItems}
                     placeholder="Item Library"
                     variant="inverted"
                     renderAs="check-only"
@@ -125,7 +138,7 @@ const WastedStock = () => {
                 )}
               />
               <FormField
-                name="filterCategory"
+                name="filterMore"
                 control={formFilter.control}
                 render={({ field }) => (
                   <ComboboxForm
@@ -162,13 +175,19 @@ const WastedStock = () => {
       {/* END OF TOOLBAR */}
       <div className="w-full overflow-scroll">
         <BasicTable
-          data={wastedStockData}
+          data={filteredData}
           tableColumns={[
             {
-              id: 'sku',
+              id: 'id',
               size: 50,
-              accessorKey: 'sku',
-              header: () => <span className="w-full text-start">SKU</span>,
+              accessorKey: 'id',
+              header: () => <span className="w-full text-start">ID</span>,
+              cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
+            },
+            {
+              id: 'category',
+              accessorKey: 'category',
+              header: () => <span className="w-full text-start">Item Category</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {

@@ -1,13 +1,4 @@
-export interface UsedStockTypes {
-  id: number;
-  date: Date;
-  category: string;
-  name: string;
-  in_stock: number;
-  used_stock: number;
-  current_stock: number;
-  uom: string;
-}
+import { UsedStockTypes } from '@/models/itemModel';
 
 export const usedStocksData: UsedStockTypes[] = [
   {

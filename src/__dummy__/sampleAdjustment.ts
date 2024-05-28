@@ -1,13 +1,4 @@
-export interface AdjustmentTypes {
-  id: number;
-  date: Date;
-  category: string;
-  name: string;
-  in_stock: number;
-  actual_stock: number;
-  adjustment_stock: number;
-  uom: string;
-}
+import { AdjustmentTypes } from '@/models/itemModel';
 
 export const adjustmentData: AdjustmentTypes[] = [
   {
