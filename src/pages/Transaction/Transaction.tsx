@@ -87,7 +87,7 @@ const Transaction = () => {
       <div className="flex flex-col gap-2">
         <div className="w-100 flex justify-between">
           <Button size={'sm'} onClick={handleOpenModal}>
-            Add Stock Adjustment
+            Add Transaction
           </Button>
           <Button size={'sm'} variant={'ghost'}>
             Import / Export Data
