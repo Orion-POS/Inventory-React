@@ -3,18 +3,19 @@ import { InputText } from '@/components/forms';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import formatPrice from '@/utils/formatPrice';
-import { Search } from '@carbon/icons-react';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Search, SearchLocate } from '@carbon/icons-react';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { useModal } from '@/providers/ModalProvider';
-import { useFieldArray, useForm } from 'react-hook-form';
-import InputNumber from '@/components/forms/InputNumber';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Trash } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 import { ComboboxForm } from '@/components/forms/ComboBox';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import getUniqueOptions from '@/utils/getUniqueOption';
 import { StockOpnameTypes } from '@/types/itemTypes';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Textarea from '@/components/forms/TextArea';
+import InputNumber from '@/components/forms/InputNumber';
 
 interface FilterFormData {
   search?: string;
@@ -49,10 +50,8 @@ const StockOpname = () => {
   const handleOpenModal = () => {
     openModal({
       title: 'Add New Stock Opname',
-      content: () => <ModalContentAddStockOpname />,
-      modalOptions: {
-        // overideFooter: 'TEST',
-      }
+      content: onCloseModal => <ModalContentAddStockOpname onCloseModal={onCloseModal} />,
+      modalOptions: {}
     });
   };
 
@@ -190,7 +189,6 @@ const StockOpname = () => {
           </Form>
         </div>
       </div>
-
       {/* END OF TOOLBAR */}
       <div className="w-full overflow-scroll">
         <BasicTable
@@ -250,142 +248,144 @@ const StockOpname = () => {
 
 export default StockOpname;
 
-const ModalContentAddStockOpname = () => {
+const ModalContentAddStockOpname = ({ onCloseModal }: { onCloseModal: () => void }) => {
+  const { openModal } = useModal();
+  const formSchema = z.object({
+    itemName: z.string().min(2, {
+      message: 'Username must be at least 2 characters.'
+    }),
+    inStock: z.number(),
+    actualStock: z.number(),
+    difference: z.number(),
+    uom: z.string(),
+    notes: z.string().optional()
+  });
+
   const form = useForm({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       itemName: '',
-      properties: [
-        {
-          unit: '',
-          type: '',
-          ratio: 1.0,
-          rounding: 0.01,
-          active: true,
-          default: true
-        }
-      ]
+      inStock: 12,
+      actualStock: 0,
+      difference: 12,
+      uom: 'Sack',
+      notes: ''
     }
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'properties'
-  });
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    openModal({
+      title: 'Confirmation',
+      content: () => (
+        <div>
+          <p>Are you sure you want to submit the form?</p>
+          <div className=" mt-5 gap-2 flex">
+            <Button type="button" variant={'outline'} onClick={() => onCloseModal()}>
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                console.log(values);
+                onCloseModal();
+              }}>
+              Submit
+            </Button>
+          </div>
+        </div>
+      ),
+      modalOptions: {}
+    });
+  };
+
+  const calculateDifference = (inStock: number, actualStock: number) => {
+    return inStock - actualStock;
+  };
+
+  useEffect(() => {
+    const subscription = form.watch(values => {
+      const inStock = values.inStock ?? 0;
+      const actualStock = values.actualStock ?? 0;
+      const difference = calculateDifference(inStock, actualStock);
+      form.setValue('difference', difference);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form.watch, form.setValue]);
 
   return (
     <div className="bg-mary flex flex-col gap-4">
       <Form {...form}>
-        <FormField
-          control={form.control}
-          name="itemName"
-          render={({ field }) => <InputText label="Item name" className="w-full" {...field} />}
-        />
-        <div className="flex flex-col gap-3">
-          {/**
-           * USING NESTED FORM.
-           * @tutorial https://github.com/shadcn-ui/ui/discussions/2807
-           *
-           */}
-          <div className="max-h-[200px] flex flex-col overflow-y-auto px-1">
-            {fields.map((item, idx) => (
-              <div className="flex gap-3" key={idx}>
-                {/* <div className="w-full"> */}
-                <FormField
-                  key={item.id}
-                  name={`properties.${idx}.unit`}
-                  control={form.control}
-                  render={({ field }) => (
-                    <InputText
-                      className="w-full"
-                      label={idx > 0 ? '' : 'Unit'}
-                      key={item.id}
-                      {...field}
-                    />
-                  )}
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="itemName"
+              render={({ field }) => (
+                <InputText
+                  label="Item name"
+                  className="w-full"
+                  iconEnd={<SearchLocate className="text-gray-400 h-6 w-6 flex-shrink-0" />}
+                  {...field}
                 />
-                {/* </div> */}
-                <FormField
-                  key={item.id}
-                  name={`properties.${idx}.type`}
-                  control={form.control}
-                  render={({ field }) => (
-                    <InputText label={idx > 0 ? '' : 'Type'} key={item.id} {...field} />
-                  )}
-                />
-                <FormField
-                  key={item.id}
-                  name={`properties.${idx}.ratio`}
-                  control={form.control}
-                  render={({ field }) => (
-                    <InputNumber label={idx > 0 ? '' : 'Ratio'} key={item.id} {...field} />
-                  )}
-                />
-                <FormField
-                  key={item.id}
-                  name={`properties.${idx}.rounding`}
-                  control={form.control}
-                  render={({ field }) => (
-                    <InputNumber label={idx > 0 ? '' : 'Rounding'} key={item.id} {...field} />
-                  )}
-                />
-                <FormField
-                  key={item.id}
-                  name={`properties.${idx}.active`}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-3 items-center">
-                      {idx > 0 ? null : (
-                        <FormLabel className="font-medium text-sm">Active</FormLabel>
-                      )}
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  key={item.id}
-                  name={`properties.${idx}.default`}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-3 items-center">
-                      {idx > 0 ? null : (
-                        <FormLabel className="font-medium text-sm">Default</FormLabel>
-                      )}
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                {idx > 0 ? (
-                  <Button className="w-5 h-5" onClick={() => remove(idx)}>
-                    <Trash className="w-5 h-5" />
-                  </Button>
-                ) : (
-                  <div className="w-5 h-5" />
+              )}
+            />
+            <div className="grid grid-cols-4 gap-4">
+              <FormField
+                control={form.control}
+                name="inStock"
+                render={({ field }) => (
+                  <InputNumber label="In Stock" disabled className="w-full" {...field} />
                 )}
-              </div>
-            ))}
+              />
+              <FormField
+                control={form.control}
+                name="actualStock"
+                render={({ field }) => (
+                  <InputNumber label="Actual Stock" className="w-full" {...field} />
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="difference"
+                render={({ field }) => (
+                  <InputNumber
+                    label="Difference"
+                    readOnly
+                    className={`w-full ${field.value < 0 ? 'text-red-500' : 'text-green-500'}`}
+                    {...field}
+                  />
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="uom"
+                render={({ field }) => (
+                  <InputText disabled label="UoM" className="w-full" {...field} />
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <Textarea label="Notes" subLabel="Optional" className="w-full" {...field} />
+              )}
+            />
           </div>
-
-          <Button
-            className="w-28"
-            variant={'outline'}
-            onClick={() =>
-              append({
-                unit: '',
-                active: false,
-                default: false,
-                ratio: 1.0,
-                rounding: 0.01,
-                type: ''
-              })
-            }>
-            + Add UoM
-          </Button>
-        </div>
+        </form>
       </Form>
+      <div className=" self-end mt-5 gap-2 flex">
+        <Button type="button" variant={'outline'} onClick={() => onCloseModal()}>
+          Cancel
+        </Button>
+        <Button
+          type="button"
+          // disabled={!form.formState.isValid}
+          onClick={form.handleSubmit(onSubmit)}>
+          Save changes
+        </Button>
+      </div>
     </div>
   );
 };

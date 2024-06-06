@@ -26,7 +26,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
   children,
   title,
   disableClickOutside = false,
-  overideFooter,
+  overideFooter=null,
   description,
   onSubmit
 }) => {
@@ -44,7 +44,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
           <DialogTitle>{title}</DialogTitle>
           {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
-        <div className="grid gap-3 py-4 max-h-[70vh] overflow-y-auto">{children}</div>
+        <div className="grid gap-3 py-4 px-1 max-h-[70vh] overflow-y-auto">{children}</div>
         {overideFooter === null ? null : (
           <DialogFooter>
             {Boolean(overideFooter) ? (

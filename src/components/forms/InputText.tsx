@@ -38,7 +38,7 @@ const InputText: React.FC<InputProps & InputTextProps & ControllerRenderProps> =
         </div>
       </FormControl>
       {description ? <FormDescription>{description}</FormDescription> : null}
-      <FormMessage />
+      <FormMessage className='text-xs' />
     </FormItem>
   );
 };
