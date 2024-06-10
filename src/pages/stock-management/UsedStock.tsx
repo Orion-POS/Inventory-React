@@ -5,18 +5,18 @@ import DatePicker from '@/components/forms/DatePicker';
 import InputNumber from '@/components/forms/InputNumber';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { UsedStockTypes } from '@/types/itemTypes';
 import { useModal } from '@/providers/ModalProvider';
 import getUniqueOptions from '@/utils/getUniqueOption';
-import { Search } from '@carbon/icons-react';
+import { Search, SearchLocate } from '@carbon/icons-react';
 import { format } from 'date-fns';
 import { Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { css } from '@emotion/react';
 
 interface FilterFormData {
   search?: string;
@@ -214,26 +214,24 @@ export default UsedStcok;
 const ModalContentAddUsedStock = ({ onCloseModal }: { onCloseModal: () => void }) => {
   const { openModal } = useModal();
   const formSchema = z.object({
-    itemName: z.string().min(2, {
-      message: 'Username must be at least 2 characters.'
-    }),
     properties: z
       .array(
         z.object({
+          itemName: z.string().min(2, {
+            message: 'Item Name must be at least 2 characters.'
+          }),
+          inStock: z.number().min(0, {
+            message: 'In Stock must be at 0.'
+          }),
+          actualStock: z.number().min(1, {
+            message: 'Actual Stock must be at least 1.'
+          }),
+          stockOut: z.number().min(1, {
+            message: 'Stock Out must be at least 1.'
+          }),
           unit: z.string().min(2, {
             message: 'Unit must be at least 2 characters.'
-          }),
-          type: z.string().min(2, {
-            message: 'Type must be at least 2 characters.'
-          }),
-          ratio: z.number().min(0.01, {
-            message: 'Ratio must be at least 0.01.'
-          }),
-          rounding: z.number().min(0.01, {
-            message: 'Rounding must be at least 0.01.'
-          }),
-          active: z.boolean(),
-          default: z.boolean()
+          })
         })
       )
       .optional()
@@ -242,15 +240,13 @@ const ModalContentAddUsedStock = ({ onCloseModal }: { onCloseModal: () => void }
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      itemName: '',
       properties: [
         {
-          unit: '',
-          type: '',
-          ratio: 1.0,
-          rounding: 0.01,
-          active: true,
-          default: true
+          itemName: '',
+          inStock: 1.0,
+          actualStock: 1.0,
+          stockOut: 1.0,
+          unit: ''
         }
       ]
     }
@@ -265,11 +261,83 @@ const ModalContentAddUsedStock = ({ onCloseModal }: { onCloseModal: () => void }
     openModal({
       title: 'Confirmation',
       content: () => (
-        <div>
-          <p>Are you sure you want to submit the form?</p>
-          <div className=" mt-5 gap-2 flex">
+        <div className="w-full ">
+          <div className="w-full flex flex-col gap-4 justify-center items-center">
+            <h1
+              css={css`
+                color: var(--Primary-900, #05445f);
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px; /* 150% */
+                text-align: left;
+                width: 100%;
+              `}>
+              Review your list:
+            </h1>
+            <BasicTable
+              data={values.properties ?? []}
+              tableColumns={[
+                {
+                  id: 'itemName',
+                  accessorKey: 'itemName',
+                  header: () => <span className="w-full text-start">Item Name</span>,
+                  cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
+                },
+                {
+                  id: 'inStock',
+                  accessorKey: 'inStock',
+                  header: () => <span className="w-full text-start">In Stock</span>,
+                  cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
+                },
+                {
+                  id: 'actualStock',
+                  accessorKey: 'actualStock',
+                  header: () => <span className="w-full text-start">Actual Stock</span>,
+                  cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
+                },
+                {
+                  id: 'stockOut',
+                  accessorKey: 'stockOut',
+                  header: () => <span className="w-full text-start">Stock Out</span>,
+                  cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
+                },
+                {
+                  id: 'unit',
+                  accessorKey: 'unit',
+                  header: () => <span className="w-full text-start">Unit</span>,
+                  cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
+                }
+              ]}
+            />
+            <h1
+              css={css`
+                color: var(--Primary-900, #05445f);
+                font-family: Inter;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 28px; /* 140% */
+              `}>
+              Are you sure you want to submit the form?
+            </h1>
+            <p
+              css={css`
+                color: var(--Grey-Darker, var(--Colors-base-black, #acacac));
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px; /* 142.857% */
+              `}>
+              Note: This operation will change the current stock item and you will unable to cancel
+              or edit.
+            </p>
+          </div>
+          <div className="mt-4 gap-5 flex justify-end">
             <Button type="button" variant={'outline'} onClick={() => onCloseModal()}>
-              Cancel
+              No
             </Button>
             <Button
               type="button"
@@ -277,7 +345,7 @@ const ModalContentAddUsedStock = ({ onCloseModal }: { onCloseModal: () => void }
                 console.log(values);
                 onCloseModal();
               }}>
-              Submit
+              Yes
             </Button>
           </div>
         </div>
@@ -290,110 +358,99 @@ const ModalContentAddUsedStock = ({ onCloseModal }: { onCloseModal: () => void }
     <div className="bg-mary flex flex-col gap-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="itemName"
-            render={({ field }) => <InputText label="Item name" className="w-full" {...field} />}
-          />
           <div className="flex flex-col gap-3">
-            <div className="max-h-[200px] flex flex-col overflow-y-auto px-1 gap-3">
+            <div className="w-full max-h-[200px] flex flex-col overflow-y-auto px-1 py-2 gap-4">
               {fields.map((item, idx) => (
-                <div className="grid grid-cols-5 gap-3 items-start" key={item.id}>
+                <div className="w-full flex flex-1 gap-4 items-start" key={item.id}>
+                  <FormField
+                    key={item.id}
+                    name={`properties.${idx}.itemName`}
+                    control={form.control}
+                    render={({ field }) => (
+                      <InputText
+                        containerClassName="flex-1"
+                        label={idx > 0 ? '' : 'Item Name'}
+                        key={item.id}
+                        iconEnd={<SearchLocate className="text-gray-400 h-6 w-6 flex-shrink-0" />}
+                        {...field}
+                      />
+                    )}
+                  />
+                  <FormField
+                    key={item.id}
+                    name={`properties.${idx}.inStock`}
+                    control={form.control}
+                    render={({ field }) => (
+                      <InputNumber
+                        containerClassName="basis-[100px] shrink-0 grow-0"
+                        label={idx > 0 ? '' : 'In Stock'}
+                        key={item.id}
+                        {...field}
+                      />
+                    )}
+                  />
+                  <FormField
+                    key={item.id}
+                    name={`properties.${idx}.actualStock`}
+                    control={form.control}
+                    render={({ field }) => (
+                      <InputNumber
+                        containerClassName="basis-[100px] shrink-0 grow-0"
+                        label={idx > 0 ? '' : 'Actual Stock'}
+                        key={item.id}
+                        {...field}
+                      />
+                    )}
+                  />
+                  <FormField
+                    key={item.id}
+                    name={`properties.${idx}.stockOut`}
+                    control={form.control}
+                    render={({ field }) => (
+                      <InputNumber
+                        containerClassName="basis-[100px] shrink-0 grow-0"
+                        label={idx > 0 ? '' : 'Stock Out'}
+                        key={item.id}
+                        {...field}
+                      />
+                    )}
+                  />
                   <FormField
                     key={item.id}
                     name={`properties.${idx}.unit`}
                     control={form.control}
                     render={({ field }) => (
                       <InputText
-                        className="w-full"
-                        label={idx > 0 ? '' : 'Unit'}
+                        containerClassName="basis-[100px] shrink-0 grow-0"
+                        label={idx > 0 ? '' : 'UoM'}
                         key={item.id}
                         {...field}
                       />
                     )}
                   />
-                  {/* </div> */}
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.type`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputText label={idx > 0 ? '' : 'Type'} key={item.id} {...field} />
+                  <div className={`h-full flex flex-col gap-3 items-center min-w-[50px]`}>
+                    {idx > 0 ? (
+                      <Button className="px-2 m-0" type="button" onClick={() => remove(idx)}>
+                        <Trash className="w-5 h-5 text-white" />
+                      </Button>
+                    ) : (
+                      <div className="w-5 h-5 m-0 p-0" />
                     )}
-                  />
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.ratio`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputNumber label={idx > 0 ? '' : 'Ratio'} key={item.id} {...field} />
-                    )}
-                  />
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.rounding`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputNumber label={idx > 0 ? '' : 'Rounding'} key={item.id} {...field} />
-                    )}
-                  />
-                  <div className="h-full grid grid-cols-3 items-center">
-                    <FormField
-                      key={item.id}
-                      name={`properties.${idx}.active`}
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col gap-3 items-center min-w-[50px]">
-                          {idx > 0 ? null : (
-                            <FormLabel className="font-medium text-sm">Active</FormLabel>
-                          )}
-                          <FormControl>
-                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      key={item.id}
-                      name={`properties.${idx}.default`}
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col gap-3 items-center min-w-[50px]">
-                          {idx > 0 ? null : (
-                            <FormLabel className="font-medium text-sm">Default</FormLabel>
-                          )}
-                          <FormControl>
-                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <div className="min-w-[50px] flex items-center justify-center">
-                      {idx > 0 ? (
-                        <Button className="p-2 m-0" type="button" onClick={() => remove(idx)}>
-                          <Trash className="w-5 h-5 text-white" />
-                        </Button>
-                      ) : (
-                        <div className="w-5 h-5 m-0 p-0" />
-                      )}
-                    </div>
                   </div>
                 </div>
               ))}
             </div>
-
             <Button
               className="w-28"
               variant={'outline'}
               type="button"
               onClick={() =>
                 append({
-                  unit: '',
-                  active: false,
-                  default: false,
-                  ratio: 1.0,
-                  rounding: 0.01,
-                  type: ''
+                  itemName: '',
+                  inStock: 1.0,
+                  actualStock: 1.0,
+                  stockOut: 1.0,
+                  unit: ''
                 })
               }>
               + Add UoM

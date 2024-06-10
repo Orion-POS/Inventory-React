@@ -14,6 +14,7 @@ interface InputTextProps {
   iconStart?: boolean;
   description?: string;
   key?: string;
+  containerClassName?: string;
 }
 
 const InputText: React.FC<InputProps & InputTextProps & ControllerRenderProps> = ({
@@ -22,10 +23,11 @@ const InputText: React.FC<InputProps & InputTextProps & ControllerRenderProps> =
   placeholder,
   description,
   key,
+  containerClassName,
   ...field
 }) => {
   return (
-    <FormItem key={key}>
+    <FormItem key={key} className={containerClassName}>
       <FormLabel className="font-medium text-sm">{label}</FormLabel>
       <FormControl>
         <div className="text-sm font- relative flex flex-col gap-2  ">
