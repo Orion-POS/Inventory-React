@@ -31,6 +31,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
   onSubmit
 }) => {
   // const [open, setOpen] = useState(false)
+  console.log(Boolean(overideFooter), '<< CHECK OVERRIDE');
   return (
     <Dialog open={open} onOpenChange={onClose}>
       {/* <DialogTrigger asChild>

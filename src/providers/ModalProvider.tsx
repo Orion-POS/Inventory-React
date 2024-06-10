@@ -23,7 +23,9 @@ export const ModalProvider = ({ children }) => {
   const [modalContent, setModalContent] = useState<OpenModalOptions | null>(null);
 
   const openModal = (options: OpenModalOptions) => {
+    console.log(options, '<< CHECK MODAL CONTENT');
     const { content, modalOptions, title } = options;
+
     setShowModal(true);
     setModalContent({
       title,
@@ -62,7 +64,9 @@ export const ModalProvider = ({ children }) => {
         onClose={closeModal}
         title={modalContent?.title ?? ''}
         disableClickOutside={modalContent?.modalOptions?.disableClickOutside}
-        overideFooter={modalContent?.modalOptions?.overideFooter}>
+        overideFooter={modalContent?.modalOptions?.overideFooter}
+        // onSubmit={modalContent?.modalOptions?.on}
+      >
         {modalContent?.content(closeModal)}
       </BasicModal>
     </ModalContext.Provider>
