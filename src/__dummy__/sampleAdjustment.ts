@@ -7,7 +7,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
-    actual_stock: 20,
+    current_stock: 20,
     adjustment_stock: 80,
     uom: 'kg'
   },
@@ -17,7 +17,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Teh Hijau',
     in_stock: 50,
-    actual_stock: 10,
+    current_stock: 10,
     adjustment_stock: 40,
     uom: 'bks'
   },
@@ -27,7 +27,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Piring',
     in_stock: 200,
-    actual_stock: 50,
+    current_stock: 50,
     adjustment_stock: 150,
     uom: 'buah'
   },
@@ -37,7 +37,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 50,
     uom: 'kg'
   },
@@ -47,7 +47,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Kopi Bubuk',
     in_stock: 40,
-    actual_stock: 15,
+    current_stock: 15,
     adjustment_stock: 25,
     uom: 'bks'
   },
@@ -57,7 +57,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Sendok Garpu',
     in_stock: 150,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 120,
     uom: 'set'
   },
@@ -67,7 +67,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
-    actual_stock: 40,
+    current_stock: 40,
     adjustment_stock: 80,
     uom: 'butir'
   },
@@ -77,7 +77,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Air Mineral',
     in_stock: 60,
-    actual_stock: 20,
+    current_stock: 20,
     adjustment_stock: 40,
     uom: 'botol'
   },
@@ -87,7 +87,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Panci',
     in_stock: 80,
-    actual_stock: 10,
+    current_stock: 10,
     adjustment_stock: 70,
     uom: 'buah'
   },
@@ -97,7 +97,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 60,
     uom: 'kg'
   },
@@ -107,7 +107,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
-    actual_stock: 20,
+    current_stock: 20,
     adjustment_stock: 80,
     uom: 'kg'
   },
@@ -117,7 +117,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Teh Hijau',
     in_stock: 50,
-    actual_stock: 10,
+    current_stock: 10,
     adjustment_stock: 40,
     uom: 'bks'
   },
@@ -127,7 +127,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Piring',
     in_stock: 200,
-    actual_stock: 50,
+    current_stock: 50,
     adjustment_stock: 150,
     uom: 'buah'
   },
@@ -137,7 +137,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 50,
     uom: 'kg'
   },
@@ -147,7 +147,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Kopi Bubuk',
     in_stock: 40,
-    actual_stock: 15,
+    current_stock: 15,
     adjustment_stock: 25,
     uom: 'bks'
   },
@@ -157,7 +157,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Sendok Garpu',
     in_stock: 150,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 120,
     uom: 'set'
   },
@@ -167,7 +167,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
-    actual_stock: 40,
+    current_stock: 40,
     adjustment_stock: 80,
     uom: 'butir'
   },
@@ -177,7 +177,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Air Mineral',
     in_stock: 60,
-    actual_stock: 20,
+    current_stock: 20,
     adjustment_stock: 40,
     uom: 'botol'
   },
@@ -187,7 +187,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Panci',
     in_stock: 80,
-    actual_stock: 10,
+    current_stock: 10,
     adjustment_stock: 70,
     uom: 'buah'
   },
@@ -197,7 +197,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 60,
     uom: 'kg'
   },
@@ -207,7 +207,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
-    actual_stock: 20,
+    current_stock: 20,
     adjustment_stock: 80,
     uom: 'kg'
   },
@@ -217,7 +217,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Teh Hijau',
     in_stock: 50,
-    actual_stock: 10,
+    current_stock: 10,
     adjustment_stock: 40,
     uom: 'bks'
   },
@@ -227,7 +227,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Piring',
     in_stock: 200,
-    actual_stock: 50,
+    current_stock: 50,
     adjustment_stock: 150,
     uom: 'buah'
   },
@@ -237,7 +237,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 50,
     uom: 'kg'
   },
@@ -247,7 +247,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Kopi Bubuk',
     in_stock: 40,
-    actual_stock: 15,
+    current_stock: 15,
     adjustment_stock: 25,
     uom: 'bks'
   },
@@ -257,7 +257,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Sendok Garpu',
     in_stock: 150,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 120,
     uom: 'set'
   },
@@ -267,7 +267,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
-    actual_stock: 40,
+    current_stock: 40,
     adjustment_stock: 80,
     uom: 'butir'
   },
@@ -277,7 +277,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Air Mineral',
     in_stock: 60,
-    actual_stock: 20,
+    current_stock: 20,
     adjustment_stock: 40,
     uom: 'botol'
   },
@@ -287,7 +287,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Panci',
     in_stock: 80,
-    actual_stock: 10,
+    current_stock: 10,
     adjustment_stock: 70,
     uom: 'buah'
   },
@@ -297,7 +297,7 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,
-    actual_stock: 30,
+    current_stock: 30,
     adjustment_stock: 60,
     uom: 'kg'
   }

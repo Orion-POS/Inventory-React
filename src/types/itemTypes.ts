@@ -1,32 +1,33 @@
-interface BaseStockProps {
+export interface BaseStockProps {
     id: number;
-    date: Date;
     category: string;
     name: string;
     uom: string;
+    current_stock: number;
   }
   
   export interface WastedStockTypes extends BaseStockProps {
-    actual_stock: number;
     wasted: number;
     occasion: string;
+    date: Date;
   }
   
   export interface UsedStockTypes extends BaseStockProps {
     in_stock: number;
     used_stock: number;
-    current_stock: number;
+    date: Date;
   }
   
   export interface StockOpnameTypes extends BaseStockProps {
     final_stock: number;
     average_price: number;
     total_amounts: number;
+    date: Date;
   }
   
   export interface AdjustmentTypes extends BaseStockProps {
     in_stock: number;
-    actual_stock: number;
     adjustment_stock: number;
+    date: Date;
   }
   
