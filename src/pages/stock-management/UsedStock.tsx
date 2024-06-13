@@ -8,12 +8,12 @@ import { UsedStockTypes } from '@/types/itemTypes';
 import { useModal } from '@/providers/ModalProvider';
 import getUniqueOptions from '@/utils/getUniqueOption';
 import { Search } from '@carbon/icons-react';
-import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUsedStock, setUsedStock } from '@/app/services/usedStock';
 import UsedStockContent from './modal-content/UsedStockContent';
+import dayjs from 'dayjs';
 
 interface FilterFormData {
   search?: string;
@@ -46,7 +46,8 @@ const UsedStcok = () => {
 
   const handleOpenModal = () => {
     openModal({
-      title: 'Add New Used Stock',
+      title: `Add New Used Stock`,
+      subtitle: `${dayjs().format('DD MMM YYYY')}`,
       content: onCloseModal => <UsedStockContent onCloseModal={onCloseModal} />,
       modalOptions: {}
     });
@@ -149,9 +150,10 @@ const UsedStcok = () => {
               accessorKey: 'date',
               header: () => <span className="w-full text-start">Date</span>,
               cell: ({ getValue }) => {
-                const date = new Date(getValue() as string);
                 return (
-                  <span className="w-full text-nowrap">{format(date, 'dd/MM/yyyy HH:mm')}</span>
+                  <span className="w-full text-nowrap">
+                    {dayjs(getValue() as string).format('DD/MM/YYYY HH:mm')}
+                  </span>
                 );
               }
             },
@@ -170,7 +172,7 @@ const UsedStcok = () => {
             {
               id: 'in_stock',
               accessorKey: 'in_stock',
-              header: () => <span className="w-full text-start">In Stock</span>,
+              header: () => <span className="w-full text-start">Initial Stock</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
             },
             {

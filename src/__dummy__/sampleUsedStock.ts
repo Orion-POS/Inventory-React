@@ -3,7 +3,7 @@ import { UsedStockTypes } from '@/types/itemTypes';
 export const usedStocksData: UsedStockTypes[] = [
   {
     id: 1,
-    date: new Date(2022, 2, 30), // 30 Maret 2022
+    date: new Date(2022, 2, 30),
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
@@ -33,7 +33,7 @@ export const usedStocksData: UsedStockTypes[] = [
   },
   {
     id: 4,
-    date: new Date(2022, 2, 31), // 31 Maret 2022
+    date: new Date(2022, 2, 31),
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
@@ -63,7 +63,7 @@ export const usedStocksData: UsedStockTypes[] = [
   },
   {
     id: 7,
-    date: new Date(2022, 3, 1), // 1 April 2022
+    date: new Date(2022, 3, 1),
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
@@ -93,7 +93,7 @@ export const usedStocksData: UsedStockTypes[] = [
   },
   {
     id: 10,
-    date: new Date(2022, 3, 2), // 2 April 2022
+    date: new Date(2022, 3, 2),
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,

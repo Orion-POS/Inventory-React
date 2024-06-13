@@ -9,8 +9,9 @@ import { useModal } from '@/providers/ModalProvider';
 import getUniqueOptions from '@/utils/getUniqueOption';
 import { Search } from '@carbon/icons-react';
 import { useEffect, useState } from 'react';
-import {  useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import WastedStockContent from './modal-content/WastedStockContent';
+import dayjs from 'dayjs';
 
 interface FilterFormData {
   search?: string;
@@ -183,6 +184,16 @@ const WastedStock = () => {
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
+              id: 'date',
+              accessorKey: 'date',
+              header: () => <span className="w-full text-start">Date</span>,
+              cell: ({ getValue }) => (
+                <span className="w-full text-nowrap">
+                  {dayjs(getValue() as string).format('DD/MM/YYYY HH:mm')}
+                </span>
+              )
+            },
+            {
               id: 'category',
               accessorKey: 'category',
               header: () => <span className="w-full text-start">Item Category</span>,
@@ -195,19 +206,9 @@ const WastedStock = () => {
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
-              id: 'date',
-              accessorKey: 'date',
-              header: () => <span className="w-full text-start">Date</span>,
-              cell: ({ getValue }) => (
-                <span className="w-full text-nowrap">
-                  {new Date(getValue() as Date).toLocaleString()}
-                </span>
-              )
-            },
-            {
               id: 'current_stock',
               accessorKey: 'current_stock',
-              header: () => <span className="w-full text-start">Actual Stock</span>,
+              header: () => <span className="w-full text-start">Initial Stock</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
             },
             {
@@ -236,4 +237,3 @@ const WastedStock = () => {
 };
 
 export default WastedStock;
-

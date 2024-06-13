@@ -3,12 +3,12 @@ import { AdjustmentTypes } from '@/types/itemTypes';
 export const adjustmentData: AdjustmentTypes[] = [
   {
     id: 1,
-    date: new Date(2022, 2, 30), // 30 Maret 2022
+    date: new Date(2022, 2, 30),
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
-    current_stock: 20,
-    adjustment_stock: 80,
+    current_stock: 99,
+    adjustment_stock: -1,
     uom: 'kg'
   },
   {
@@ -17,8 +17,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Teh Hijau',
     in_stock: 50,
-    current_stock: 10,
-    adjustment_stock: 40,
+    current_stock: 47,
+    adjustment_stock: -3,
     uom: 'bks'
   },
   {
@@ -27,18 +27,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Piring',
     in_stock: 200,
-    current_stock: 50,
-    adjustment_stock: 150,
+    current_stock: 201,
+    adjustment_stock: 1,
     uom: 'buah'
   },
   {
     id: 4,
-    date: new Date(2022, 2, 31), // 31 Maret 2022
+    date: new Date(2022, 2, 31),
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
-    current_stock: 30,
-    adjustment_stock: 50,
+    current_stock: 76,
+    adjustment_stock: -4,
     uom: 'kg'
   },
   {
@@ -47,8 +47,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Kopi Bubuk',
     in_stock: 40,
-    current_stock: 15,
-    adjustment_stock: 25,
+    current_stock: 41,
+    adjustment_stock: 1,
     uom: 'bks'
   },
   {
@@ -57,18 +57,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Sendok Garpu',
     in_stock: 150,
-    current_stock: 30,
-    adjustment_stock: 120,
+    current_stock: 130,
+    adjustment_stock: -20,
     uom: 'set'
   },
   {
     id: 7,
-    date: new Date(2022, 3, 1), // 1 April 2022
+    date: new Date(2022, 3, 1),
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
-    current_stock: 40,
-    adjustment_stock: 80,
+    current_stock: 126,
+    adjustment_stock: 6,
     uom: 'butir'
   },
   {
@@ -77,8 +77,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Air Mineral',
     in_stock: 60,
-    current_stock: 20,
-    adjustment_stock: 40,
+    current_stock: 62,
+    adjustment_stock: 2,
     uom: 'botol'
   },
   {
@@ -87,28 +87,28 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Panci',
     in_stock: 80,
-    current_stock: 10,
-    adjustment_stock: 70,
+    current_stock: 88,
+    adjustment_stock: 8,
     uom: 'buah'
   },
   {
     id: 10,
-    date: new Date(2022, 3, 2), // 2 April 2022
+    date: new Date(2022, 3, 2),
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,
-    current_stock: 30,
-    adjustment_stock: 60,
+    current_stock: 91,
+    adjustment_stock: 1,
     uom: 'kg'
   },
   {
     id: 11,
-    date: new Date(2022, 2, 30), // 30 Maret 2022
+    date: new Date(2022, 2, 30),
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
-    current_stock: 20,
-    adjustment_stock: 80,
+    current_stock: 112,
+    adjustment_stock: 12,
     uom: 'kg'
   },
   {
@@ -117,8 +117,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Teh Hijau',
     in_stock: 50,
-    current_stock: 10,
-    adjustment_stock: 40,
+    current_stock: 53,
+    adjustment_stock: 3,
     uom: 'bks'
   },
   {
@@ -127,18 +127,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Piring',
     in_stock: 200,
-    current_stock: 50,
-    adjustment_stock: 150,
+    current_stock: 190,
+    adjustment_stock: -10,
     uom: 'buah'
   },
   {
     id: 14,
-    date: new Date(2022, 2, 31), // 31 Maret 2022
+    date: new Date(2022, 2, 31),
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
-    current_stock: 30,
-    adjustment_stock: 50,
+    current_stock: 87,
+    adjustment_stock: 7,
     uom: 'kg'
   },
   {
@@ -147,8 +147,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Kopi Bubuk',
     in_stock: 40,
-    current_stock: 15,
-    adjustment_stock: 25,
+    current_stock: 36,
+    adjustment_stock: -4,
     uom: 'bks'
   },
   {
@@ -157,18 +157,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Sendok Garpu',
     in_stock: 150,
-    current_stock: 30,
-    adjustment_stock: 120,
+    current_stock: 152,
+    adjustment_stock: 2,
     uom: 'set'
   },
   {
     id: 17,
-    date: new Date(2022, 3, 1), // 1 April 2022
+    date: new Date(2022, 3, 1),
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
-    current_stock: 40,
-    adjustment_stock: 80,
+    current_stock: 128,
+    adjustment_stock: 8,
     uom: 'butir'
   },
   {
@@ -177,8 +177,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Air Mineral',
     in_stock: 60,
-    current_stock: 20,
-    adjustment_stock: 40,
+    current_stock: 63,
+    adjustment_stock: 3,
     uom: 'botol'
   },
   {
@@ -187,28 +187,28 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Panci',
     in_stock: 80,
-    current_stock: 10,
-    adjustment_stock: 70,
+    current_stock: 84,
+    adjustment_stock: 4,
     uom: 'buah'
   },
   {
     id: 20,
-    date: new Date(2022, 3, 2), // 2 April 2022
+    date: new Date(2022, 3, 2),
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,
-    current_stock: 30,
-    adjustment_stock: 60,
+    current_stock: 91,
+    adjustment_stock: 1,
     uom: 'kg'
   },
   {
     id: 21,
-    date: new Date(2022, 2, 30), // 30 Maret 2022
+    date: new Date(2022, 2, 30),
     category: 'Makanan',
     name: 'Beras',
     in_stock: 100,
-    current_stock: 20,
-    adjustment_stock: 80,
+    current_stock: 101,
+    adjustment_stock: 1,
     uom: 'kg'
   },
   {
@@ -217,8 +217,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Teh Hijau',
     in_stock: 50,
-    current_stock: 10,
-    adjustment_stock: 40,
+    current_stock: 55,
+    adjustment_stock: 5,
     uom: 'bks'
   },
   {
@@ -227,18 +227,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Piring',
     in_stock: 200,
-    current_stock: 50,
-    adjustment_stock: 150,
+    current_stock: 189,
+    adjustment_stock: 11,
     uom: 'buah'
   },
   {
     id: 24,
-    date: new Date(2022, 2, 31), // 31 Maret 2022
+    date: new Date(2022, 2, 31),
     category: 'Makanan',
     name: 'Gula',
     in_stock: 80,
-    current_stock: 30,
-    adjustment_stock: 50,
+    current_stock: 82,
+    adjustment_stock: 2,
     uom: 'kg'
   },
   {
@@ -247,8 +247,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Kopi Bubuk',
     in_stock: 40,
-    current_stock: 15,
-    adjustment_stock: 25,
+    current_stock: 49,
+    adjustment_stock: 9,
     uom: 'bks'
   },
   {
@@ -257,18 +257,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Sendok Garpu',
     in_stock: 150,
-    current_stock: 30,
-    adjustment_stock: 120,
+    current_stock: 129,
+    adjustment_stock: -21,
     uom: 'set'
   },
   {
     id: 27,
-    date: new Date(2022, 3, 1), // 1 April 2022
+    date: new Date(2022, 3, 1),
     category: 'Makanan',
     name: 'Telur',
     in_stock: 120,
-    current_stock: 40,
-    adjustment_stock: 80,
+    current_stock: 128,
+    adjustment_stock: 8,
     uom: 'butir'
   },
   {
@@ -277,8 +277,8 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Minuman',
     name: 'Air Mineral',
     in_stock: 60,
-    current_stock: 20,
-    adjustment_stock: 40,
+    current_stock: 63,
+    adjustment_stock: 3,
     uom: 'botol'
   },
   {
@@ -287,18 +287,18 @@ export const adjustmentData: AdjustmentTypes[] = [
     category: 'Peralatan',
     name: 'Panci',
     in_stock: 80,
-    current_stock: 10,
-    adjustment_stock: 70,
+    current_stock: 82,
+    adjustment_stock: 2,
     uom: 'buah'
   },
   {
     id: 30,
-    date: new Date(2022, 3, 2), // 2 April 2022
+    date: new Date(2022, 3, 2),
     category: 'Makanan',
     name: 'Daging Sapi',
     in_stock: 90,
-    current_stock: 30,
-    adjustment_stock: 60,
+    current_stock: 91,
+    adjustment_stock: 1,
     uom: 'kg'
   }
 ];

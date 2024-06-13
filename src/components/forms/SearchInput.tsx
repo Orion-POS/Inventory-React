@@ -9,11 +9,11 @@ import { SearchLocate } from '@carbon/icons-react';
 interface SearchInputProps {
   key?: string;
   containerClassName?: string;
-  idx: number;
+  idx?: number;
   label?: string;
   placeholder?: string;
   data: BaseStockProps[];
-  onItemSelect: (item: BaseStockProps, idx: number) => void;
+  onItemSelect: (item: BaseStockProps, idx?: number) => void;
 }
 
 const SearchInput: React.FC<SearchInputProps & InputProps & ControllerRenderProps> = ({
@@ -41,7 +41,7 @@ const SearchInput: React.FC<SearchInputProps & InputProps & ControllerRenderProp
   }, [searchTerm, data]);
 
   const handleSelect = (item: BaseStockProps) => {
-    setSearchTerm(item.name);
+    setSearchTerm('');
     onItemSelect(item, idx);
     setFilteredItems([]);
   };
@@ -60,7 +60,7 @@ const SearchInput: React.FC<SearchInputProps & InputProps & ControllerRenderProp
           <span className="absolute top-0 right-0 rounded-e-md w-10 text-gray-200 flex focus-visible:text-gray-400 items-center justify-center border-l border-gray-200 h-full">
             <SearchLocate className="text-gray-400 h-6 w-6 flex-shrink-0" />
           </span>
-          {filteredItems.length > 0 && (
+          {filteredItems.length > 0 ? (
             <ul className="absolute z-[99900] w-full bg-white border border-gray-300 mt-1 max-h-40 overflow-y-auto">
               {filteredItems.map(item => (
                 <li
@@ -71,7 +71,7 @@ const SearchInput: React.FC<SearchInputProps & InputProps & ControllerRenderProp
                 </li>
               ))}
             </ul>
-          )}
+          ) : null}
         </div>
       </FormControl>
       <FormMessage className="text-xs" />

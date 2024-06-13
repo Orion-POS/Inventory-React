@@ -12,6 +12,7 @@ import { Search } from '@carbon/icons-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import AdjustmentContent from './modal-content/AdjustmentContent';
+import dayjs from 'dayjs';
 
 interface FilterFormData {
   search?: string;
@@ -36,6 +37,7 @@ const Adjustment = () => {
   const handleOpenModal = () => {
     openModal({
       title: 'Add New Adjustment',
+      subtitle: `${dayjs().format('DD MMM YYYY')}`,
       content: onCloseModal => <AdjustmentContent onCloseModal={onCloseModal} />,
       modalOptions: {}
     });
@@ -133,6 +135,16 @@ const Adjustment = () => {
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
+              id: 'date',
+              accessorKey: 'date',
+              header: () => <span className="w-full text-start">Date</span>,
+              cell: ({ getValue }) => (
+                <span className="w-full text-nowrap">
+                   {dayjs(getValue() as string).format('DD/MM/YYYY HH:mm')}
+                </span>
+              )
+            },
+            {
               id: 'category',
               accessorKey: 'category',
               header: () => <span className="w-full text-start">Item Category</span>,
@@ -145,32 +157,26 @@ const Adjustment = () => {
               cell: ({ getValue }) => <span className="w-full">{getValue() as string}</span>
             },
             {
-              id: 'date',
-              accessorKey: 'date',
-              header: () => <span className="w-full text-start">Date</span>,
-              cell: ({ getValue }) => (
-                <span className="w-full text-nowrap">
-                  {new Date(getValue() as Date).toLocaleString()}
-                </span>
-              )
-            },
-            {
               id: 'in_stock',
               accessorKey: 'in_stock',
-              header: () => <span className="w-full text-start">In Stock</span>,
+              header: () => <span className="w-full text-start">Initial Stock</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
             },
             {
               id: 'current_stock',
               accessorKey: 'current_stock',
-              header: () => <span className="w-full text-start">Actual Stock</span>,
+              header: () => <span className="w-full text-start">Current Stock</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
             },
             {
               id: 'adjustment_stock',
               accessorKey: 'adjustment_stock',
-              header: () => <span className="w-full text-start">Adjustment Stock</span>,
-              cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
+              header: () => <span className="w-full text-start">Total Adjustment</span>,
+              cell: ({ getValue }) => {
+                const adjustmentStock = getValue() as number;
+                const colorClass = adjustmentStock < 0 ? 'text-red-500' : 'text-green-500';
+                return <span className={`w-full font-semibold ${colorClass}`}>{adjustmentStock}</span>;
+              }
             },
             {
               id: 'uom',

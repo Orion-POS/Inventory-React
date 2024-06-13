@@ -1,29 +1,29 @@
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import { css } from '@emotion/react';
-import UsedStockContent from '../modal-content/UsedStockContent';
 import { useModal } from '@/providers/ModalProvider';
-import { UsedStockTypes } from '@/types/itemTypes';
+import { AdjustmentTypes } from '@/types/itemTypes';
 import dayjs from 'dayjs';
+import AdjustmentContent from '../modal-content/AdjustmentContent';
 
-interface UsedStockConfirmProps {
+interface AdjustmentConfirmProps {
   onCloseModal: () => void;
   values: {
-    properties: UsedStockTypes[];
+    properties: AdjustmentTypes[];
     notes: string;
   };
 }
 
-const UsedStockConfirm: React.FC<UsedStockConfirmProps> = ({ onCloseModal, values }) => {
+const AdjustmentConfirm: React.FC<AdjustmentConfirmProps> = ({ onCloseModal, values }) => {
   const { openModal } = useModal();
 
   const handleCancel = () => {
     onCloseModal();
     openModal({
-      title: 'Add New Used Stock',
+      title: 'Add New Adjustment',
       subtitle: `${dayjs().format('DD MMM YYYY')}`,
       content: onCloseModal => (
-        <UsedStockContent onCloseModal={onCloseModal} initialValues={values} />
+        <AdjustmentContent onCloseModal={onCloseModal} initialValues={values} />
       ),
       modalOptions: {}
     });
@@ -61,7 +61,7 @@ const UsedStockConfirm: React.FC<UsedStockConfirmProps> = ({ onCloseModal, value
             {
               id: 'in_stock',
               accessorKey: 'in_stock',
-              header: () => <span className="w-full text-start">Initial Stock</span>,
+              header: () => <span className="w-full text-start">In Stock</span>,
               cell: ({ getValue }) => <span className="w-full">{getValue() as number}</span>
             },
             {
@@ -120,4 +120,4 @@ const UsedStockConfirm: React.FC<UsedStockConfirmProps> = ({ onCloseModal, value
   );
 };
 
-export default UsedStockConfirm;
+export default AdjustmentConfirm;

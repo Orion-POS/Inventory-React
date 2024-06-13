@@ -11,38 +11,62 @@ import { BaseStockProps, UsedStockTypes } from '@/types/itemTypes';
 import UsedStockConfirm from '../modal-confirmation/UsedStockConfirm';
 import SearchInput from '@/components/forms/SearchInput';
 import { baseItem } from '@/__dummy__/sampleBaseItem';
+import Textarea from '@/components/forms/TextArea';
 
 interface UsedStockContentProps {
   onCloseModal: () => void;
-  initialValues?: UsedStockTypes[];
+  initialValues?: {
+    properties: UsedStockTypes[];
+    notes: string;
+  };
 }
 
 const UsedStockContent: React.FC<UsedStockContentProps> = ({ onCloseModal, initialValues }) => {
   const { openModal } = useModal();
 
   const formSchema = z.object({
-    properties: z.array(
-      z.object({
-        name: z.string().min(2, {
-          message: 'Item Name must be at least 2 characters.'
-        }),
-        in_stock: z.number(),
-        current_stock: z.number(),
-        used_stock: z.number().min(1, {
-          message: 'Stock Out must be at least 1.'
-        }),
-        uom: z.string(),
-        id: z.number(),
-        category: z.string(),
-        date: z.date()
-      })
-    )
+    notes: z.string(),
+    properties: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            in_stock: z.number(),
+            current_stock: z.number(),
+            used_stock: z.number().min(1, {
+              message: 'Stock Out must be at least 1.'
+            }),
+            uom: z.string(),
+            id: z.number(),
+            category: z.string(),
+            date: z.date()
+          })
+          .refine(data => data.used_stock <= data.in_stock, {
+            message: 'Used Stock must be greater than or equal to initial Stock',
+            path: ['used_stock']
+          })
+      )
+      .refine(
+        items => {
+          const itemNames = items.map(item => item.name);
+          const isUnique = new Set(itemNames).size === itemNames.length;
+          if (!isUnique) {
+            return false;
+          }
+          return true;
+        },
+        {
+          message: 'Each item must have a unique name.',
+          path: ['properties']
+        }
+      )
   });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      properties: initialValues || [
+    defaultValues: initialValues || {
+      notes: '',
+      properties: [
         {
           name: '',
           in_stock: 0,
@@ -65,21 +89,30 @@ const UsedStockContent: React.FC<UsedStockContentProps> = ({ onCloseModal, initi
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     openModal({
       title: 'Confirmation',
-      content: onCloseModal => (
-        <UsedStockConfirm onCloseModal={onCloseModal} values={values.properties} />
-      ),
+      content: onCloseModal => <UsedStockConfirm onCloseModal={onCloseModal} values={values} />,
       modalOptions: {}
     });
   };
 
-  const handleSelectChange = (selectedItem: BaseStockProps, idx: number) => {
+  const handleSelectChange = (selectedItem: BaseStockProps, idx?: number) => {
     if (selectedItem) {
-      form.setValue(`properties.${idx}.name`, selectedItem.name);
-      form.setValue(`properties.${idx}.id`, selectedItem.id);
-      form.setValue(`properties.${idx}.category`, selectedItem.category);
-      form.setValue(`properties.${idx}.uom`, selectedItem.uom);
-      form.setValue(`properties.${idx}.in_stock`, selectedItem.current_stock);
-      form.setValue(`properties.${idx}.current_stock`, selectedItem.current_stock);
+      const duplicateIndex = form.getValues().properties.findIndex((item, index) => {
+        return index !== idx && item.name === selectedItem.name;
+      });
+
+      if (duplicateIndex !== -1) {
+        const duplicateRowNumber = duplicateIndex + 1;
+        console.error(`Item '${selectedItem.name}' already exists in row ${duplicateRowNumber}.`);
+      } else {
+        if (idx !== undefined) {
+          form.setValue(`properties.${idx}.name`, selectedItem.name);
+          form.setValue(`properties.${idx}.id`, selectedItem.id);
+          form.setValue(`properties.${idx}.category`, selectedItem.category);
+          form.setValue(`properties.${idx}.uom`, selectedItem.uom);
+          form.setValue(`properties.${idx}.in_stock`, selectedItem.current_stock);
+          form.setValue(`properties.${idx}.current_stock`, selectedItem.current_stock);
+        }
+      }
     }
   };
 
@@ -89,119 +122,140 @@ const UsedStockContent: React.FC<UsedStockContentProps> = ({ onCloseModal, initi
     form.setValue(`properties.${idx}.current_stock`, currentStock);
   };
 
+  const handleRemoveItem = (idx: number) => {
+    remove(idx);
+  };
+
   return (
     <div className="bg-mary flex flex-col gap-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-3">
-            <div className="w-full max-h-[200px] flex flex-col overflow-y-auto px-1 py-2 gap-4">
-              {fields.map((item, idx) => (
-                <div className="w-full flex flex-1 gap-4 items-start" key={item.id}>
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.name`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <SearchInput
-                        containerClassName="flex-1 shrink-0 basis-[200px]"
-                        idx={idx}
-                        label={idx > 0 ? '' : 'Item Name'}
-                        key={item.id}
-                        data={baseItem}
-                        onItemSelect={handleSelectChange}
-                        {...field}
-                      />
-                    )}
-                  />
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.in_stock`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputNumber
-                        containerClassName="basis-[100px] shrink-0 grow-0"
-                        label={idx > 0 ? '' : 'In Stock'}
-                        key={item.id}
-                        disabled
-                        {...field}
-                      />
-                    )}
-                  />
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.current_stock`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputNumber
-                        containerClassName="basis-[100px] shrink-0 grow-0"
-                        label={idx > 0 ? '' : 'Actual Stock'}
-                        key={item.id}
-                        disabled
-                        {...field}
-                      />
-                    )}
-                  />
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.used_stock`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputNumber
-                        containerClassName="basis-[100px] shrink-0 grow-0"
-                        label={idx > 0 ? '' : 'Stock Out'}
-                        key={item.id}
-                        {...field}
-                        onChange={e => {
-                          field.onChange(e);
-                          handleUsedStockChange(e, idx);
-                        }}
-                      />
-                    )}
-                  />
-                  <FormField
-                    key={item.id}
-                    name={`properties.${idx}.uom`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <InputText
-                        containerClassName="basis-[100px] shrink-0 grow-0"
-                        label={idx > 0 ? '' : 'UoM'}
-                        key={item.id}
-                        disabled
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className={`h-full flex flex-col gap-3 items-center min-w-[50px]`}>
-                    {idx > 0 ? (
-                      <Button className="px-2 m-0" type="button" onClick={() => remove(idx)}>
-                        <Trash className="w-5 h-5 text-white" />
-                      </Button>
-                    ) : (
-                      <div className="w-5 h-5 m-0 p-0" />
-                    )}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col">
+              <div className="w-full max-h-[200px] flex flex-col overflow-y-auto px-1 py-2 gap-4">
+                {fields.map((item, idx) => (
+                  <div className="w-full h-full flex flex-1 gap-4 items-start" key={item.id}>
+                    <FormField
+                      key={item.id}
+                      name={`properties.${idx}.name`}
+                      control={form.control}
+                      render={({ field }) => (
+                        <SearchInput
+                          containerClassName="flex-1 shrink-0 basis-[200px]"
+                          idx={idx}
+                          label={idx > 0 ? '' : 'Item Name'}
+                          key={item.id}
+                          data={baseItem}
+                          onItemSelect={handleSelectChange}
+                          {...field}
+                        />
+                      )}
+                    />
+                    <FormField
+                      key={item.id}
+                      name={`properties.${idx}.in_stock`}
+                      control={form.control}
+                      render={({ field }) => (
+                        <InputNumber
+                          containerClassName="basis-[100px] shrink-0 grow-0"
+                          label={idx > 0 ? '' : 'In Stock'}
+                          key={item.id}
+                          disabled
+                          {...field}
+                        />
+                      )}
+                    />
+                    <FormField
+                      key={item.id}
+                      name={`properties.${idx}.current_stock`}
+                      control={form.control}
+                      render={({ field }) => (
+                        <InputNumber
+                          containerClassName="basis-[100px] shrink-0 grow-0"
+                          label={idx > 0 ? '' : 'Actual Stock'}
+                          key={item.id}
+                          disabled
+                          {...field}
+                        />
+                      )}
+                    />
+                    <FormField
+                      key={item.id}
+                      name={`properties.${idx}.used_stock`}
+                      control={form.control}
+                      render={({ field }) => (
+                        <InputNumber
+                          containerClassName="basis-[100px] shrink-0 grow-0"
+                          label={idx > 0 ? '' : 'Stock Out'}
+                          key={item.id}
+                          {...field}
+                          onChange={e => {
+                            field.onChange(e);
+                            handleUsedStockChange(e, idx);
+                          }}
+                          disabled={!form.watch(`properties.${idx}.name`)}
+                        />
+                      )}
+                    />
+                    <FormField
+                      key={item.id}
+                      name={`properties.${idx}.uom`}
+                      control={form.control}
+                      render={({ field }) => (
+                        <InputText
+                          containerClassName="basis-[100px] shrink-0 grow-0"
+                          label={idx > 0 ? '' : 'UoM'}
+                          key={item.id}
+                          disabled
+                          {...field}
+                        />
+                      )}
+                    />
+                    <div
+                      className={`w-full ${
+                        idx === 0 && 'pt-6'
+                      } flex justify-center basis-[50px] shrink-0 grow-0`}>
+                      <div className=" pt-2">
+                        <Button
+                          className="h-full px-2 m-0"
+                          type="button"
+                          onClick={() => handleRemoveItem(idx)}
+                          disabled={fields.length < 2}>
+                          <Trash className="w-5 h-5 text-white" />
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="w-full flex flex-col items-end">
+                <Button
+                  className="w-28"
+                  variant={'link'}
+                  type="button"
+                  onClick={() =>
+                    append({
+                      name: '',
+                      in_stock: 0,
+                      current_stock: 0,
+                      used_stock: 0,
+                      uom: '',
+                      id: 0,
+                      category: '',
+                      date: new Date()
+                    })
+                  }>
+                  Add item
+                </Button>
+              </div>
             </div>
-            <Button
-              className="w-28"
-              variant={'outline'}
-              type="button"
-              onClick={() =>
-                append({
-                  name: '',
-                  in_stock: 1.0,
-                  current_stock: 1.0,
-                  used_stock: 1.0,
-                  uom: '',
-                  id: 0,
-                  category: '',
-                  date: new Date()
-                })
-              }>
-              + Add UoM
-            </Button>
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <Textarea label="Notes" subLabel="Optional" className="w-full" {...field} />
+              )}
+            />
           </div>
         </form>
       </Form>

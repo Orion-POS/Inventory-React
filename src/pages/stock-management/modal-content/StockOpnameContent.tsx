@@ -8,7 +8,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Textarea from '@/components/forms/TextArea';
 import InputNumber from '@/components/forms/InputNumber';
-import { SearchLocate } from '@carbon/icons-react';
+import SearchInput from '@/components/forms/SearchInput';
+import { baseItem } from '@/__dummy__/sampleBaseItem';
+import { BaseStockProps } from '@/types/itemTypes';
 
 interface StockOpnameContentProps {
   onCloseModal: () => void;
@@ -40,6 +42,14 @@ const StockOpnameContent: React.FC<StockOpnameContentProps> = ({ onCloseModal, i
     }
   });
 
+  const handleSelectChange = (selectedItem: BaseStockProps) => {
+    if (selectedItem) {
+      form.setValue('itemName', selectedItem.name);
+      form.setValue('inStock', selectedItem.current_stock);
+      form.setValue('uom', selectedItem.uom);
+    }
+  };
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     openModal({
       title: 'Confirmation',
@@ -70,15 +80,17 @@ const StockOpnameContent: React.FC<StockOpnameContentProps> = ({ onCloseModal, i
   };
 
   useEffect(() => {
-    const subscription = form.watch(values => {
-      const inStock = values.inStock ?? 0;
-      const actualStock = values.actualStock ?? 0;
-      const difference = calculateDifference(inStock, actualStock);
-      form.setValue('difference', difference);
+    const subscription = form.watch((values, { name }) => {
+      if (name === 'inStock' || name === 'actualStock') {
+        const inStock = values.inStock ?? 0;
+        const actualStock = values.actualStock ?? 0;
+        const difference = calculateDifference(inStock, actualStock);
+        form.setValue('difference', difference, { shouldValidate: true, shouldDirty: true });
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, [form.watch, form.setValue]);
+  }, [form]);
 
   return (
     <div className="bg-mary flex flex-col gap-4">
@@ -86,13 +98,14 @@ const StockOpnameContent: React.FC<StockOpnameContentProps> = ({ onCloseModal, i
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4">
             <FormField
+              name={'itemName'}
               control={form.control}
-              name="itemName"
               render={({ field }) => (
-                <InputText
-                  label="Item name"
+                <SearchInput
                   className="w-full"
-                  iconEnd={<SearchLocate className="text-gray-400 h-6 w-6 flex-shrink-0" />}
+                  label="Item name"
+                  data={baseItem}
+                  onItemSelect={handleSelectChange}
                   {...field}
                 />
               )}
@@ -109,7 +122,12 @@ const StockOpnameContent: React.FC<StockOpnameContentProps> = ({ onCloseModal, i
                 control={form.control}
                 name="actualStock"
                 render={({ field }) => (
-                  <InputNumber label="Actual Stock" className="w-full" {...field} />
+                  <InputNumber
+                    label="Actual Stock"
+                    className="w-full"
+                    {...field}
+                    disabled={!form.watch('itemName')}
+                  />
                 )}
               />
               <FormField
