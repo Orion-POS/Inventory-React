@@ -96,7 +96,7 @@ const SideDrawer = () => {
       </div>
       <div
         className={`md:flex flex-col h-screen md:h-full  md:static absolute  shadow-lg top-0 min-w-f z-50 bg-white ${
-          expandDrawer ? 'md:w-64 w-full ' : 'md:w-20 hidden'
+          expandDrawer ? 'md:w-64 w-full flex-shrink-0 ' : 'md:w-20 hidden'
         }`}>
         <div className="flex w-full  items-center justify-between pr-2 relative">
           <div className="flex w-full h-14 overflow-clip items-center  px-4 py-3">

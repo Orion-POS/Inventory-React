@@ -1,0 +1,97 @@
+{
+  "item_categories": [
+    {
+      "id": 1,
+      "name": "Bahan baku pasar",
+      "total_item": 0,
+      "transaction_type_id": null,
+      "transaction_type_name": null,
+      "assigned_item_list": []
+    },
+    {
+      "id": 2,
+      "name": "Bahan minuman",
+      "total_item": 0,
+      "transaction_type_id": null,
+      "transaction_type_name": null,
+      "assigned_item_list": []
+    },
+    {
+      "id": 3,
+      "name": "ATK",
+      "total_item": 0,
+      "transaction_type_id": null,
+      "transaction_type_name": null,
+      "assigned_item_list": []
+    }
+  ],
+  "item_libraries": [
+    {
+      "id": 1,
+      "name": "Beras",
+      "in_stock": 5,
+      "actual_stock": 5,
+      "item_cat_id": null,
+      "item_cat_name": null,
+      "uom_id": null,
+      "uom": null,
+      "track_item": true,
+      "desc": null
+    }
+  ],
+  "transaction_types": [
+    {
+      "id": 1,
+      "name": "Belanja Bahan Pasar",
+      "transaction_category": "Belanja Hutang Bayar",
+      "desc": null
+    },
+    {
+      "id": 2,
+      "name": "Pengeluaran Event",
+      "transaction_category": "Service, Maintenance, dan lainnya",
+      "desc": null
+    },
+    {
+      "id": 3,
+      "name": "Belanja Kopi",
+      "transaction_category": "Bahan Baku dan Pendukung",
+      "desc": null
+    }
+  ],
+  "uom_categories": [
+    {
+      "id": 1,
+      "name": "Satuan beras",
+      "conversions": [
+        {
+          "id": "uom-11",
+          "name": "karung 10kg",
+          "type": "bigger",
+          "ratio": 10.00000,
+          "rounding": 0.1,
+          "active": true,
+          "default": true
+        },
+        {
+          "id": "uom-11",
+          "name": "karung 5kg",
+          "type": "bigger",
+          "ratio": 5.00000,
+          "rounding": 0.1,
+          "active": true,
+          "default": false
+        },
+        {
+          "id": "uom-12",
+          "name": "kg",
+          "type": "reference",
+          "ratio": 1.00000,
+          "rounding": 0.01,
+          "active": true,
+          "default": true
+        }
+      ]
+    }
+  ]
+}

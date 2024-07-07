@@ -1,11 +1,10 @@
 import { usedStocksData } from '@/__dummy__/sampleUsedStock';
-import { InputText } from '@/components/forms';
-import SelectDropdown from '@/components/forms/Select';
-import Textarea from '@/components/forms/TextArea';
+// import { InputText } from '@/components/forms';
+// import SelectDropdown from '@/components/forms/Select';
+// import Textarea from '@/components/forms/TextArea';
 import BasicModal from '@/components/modals/Modal';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
-import { Search } from '@carbon/icons-react';
 import { useState } from 'react';
 
 const UsedStcok = () => {
@@ -22,7 +21,7 @@ const UsedStcok = () => {
             Import / Export Data
           </Button>
         </div>
-        <div className="flex justify-between items-center ">
+        {/* <div className="flex justify-between items-center ">
           <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" />
           <div className="flex items-center gap-2">
             <SelectDropdown
@@ -39,7 +38,7 @@ const UsedStcok = () => {
               ]}
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* END OF TOOLBAR */}
@@ -123,7 +122,7 @@ const UsedStcok = () => {
         disableClickOutside
         title="Add Used Stock"
         onClose={() => setOpenModal(false)}>
-        <InputText label="Category name" className="w-full" />
+        {/* <InputText label="Category name" className="w-full" />
         <SelectDropdown
           label="Transaction Type"
           menuItems={[
@@ -137,7 +136,7 @@ const UsedStcok = () => {
             }
           ]}
         />
-        <Textarea label="Notes (optional)" placeholder="Input your notes" />
+        <Textarea label="Notes (optional)" placeholder="Input your notes" /> */}
       </BasicModal>
     </div>
   );

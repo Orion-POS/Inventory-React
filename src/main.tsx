@@ -1,5 +1,3 @@
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -10,14 +8,8 @@ import { ModalProvider } from './providers/ModalProvider.tsx';
 import ThemeProviders from './providers/ThemeProviders.tsx';
 import routes from './router.tsx';
 
-export const muiCache = createCache({
-  key: 'mui',
-  prepend: true
-});
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <CacheProvider value={muiCache}>
       <ThemeProviders>
         <ModalProvider>
           <ReduxProvider store={store}>
@@ -25,6 +17,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           </ReduxProvider>
         </ModalProvider>
       </ThemeProviders>
-    </CacheProvider>
   </React.StrictMode>
 );

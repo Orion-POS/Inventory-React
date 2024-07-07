@@ -1,11 +1,12 @@
 export interface ItemLibrariesEntity {
   id: number | string;
-  itemName: string;
-  stocks: number;
-  itemCatId: string | number;
-  itemCatName: string;
+  name: string;
+  in_stock: number;
+  actual_stock: number;
+  item_cat_id: string | null;
+  item_cat_name:  string | null;
+  uom_id: string | null
   uom: string;
-  inStock: number;
-  trackItem: boolean;
-  desc?: string;
+  track_item: boolean;
+  desc: string | null;
 }

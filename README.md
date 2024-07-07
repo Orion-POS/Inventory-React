@@ -7,11 +7,11 @@ Orion Inventory Management
 - React
 - TypeScript
 - Tailwind CSS
+- EmotionCss
 - Vite
 - redux-toolkit
-- Material UI Library
 - axios
-- 
+- shadcn
 
 ## How to use
 1. Clone the repo
@@ -32,6 +32,15 @@ or
 ``` bash
 yarn dev
 ```
+4. Start JSON server if you run this project locally
+``` bash
+npm run json-server
+```
+or
+``` bash
+yarn json-server
+```
+
 ## Contributing
 ### Semantic Branch Names
 

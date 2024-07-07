@@ -1,4 +1,6 @@
 import { earningsData } from '@/__dummy__/sampleDataTable';
+import { useGetItemCategoriesQuery } from '@/app/services/itemCategory';
+import { useAppSelector } from '@/app/store';
 import { InputText } from '@/components/forms';
 import { ComboboxForm } from '@/components/forms/ComboBox';
 // import { InputText } from '@/components/forms/InputText';
@@ -14,12 +16,24 @@ import { useForm } from 'react-hook-form';
 
 const ItemCategory = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { data: itemCategoryData, ...getItemCat} = useGetItemCategoriesQuery()
+  const selector = useAppSelector(state => state.itemCategories)
+  // const dispatch = useAppDispatch()
+  // const state = useSelector(state => state.setup)
   const formFilter = useForm({
     defaultValues: {
       search: '',
       filterCategory: []
     }
   });
+
+  console.log(selector, '<< CHECK ITEM CATEGORY DATA dbg1')
+
+  // useEffect(() => {
+  //   getCountQuery.
+  //   dispatch(fetchSetupData())
+  //   dispatch(state.addSetup(payload))
+  // }, [])
 
   return (
     <div className="w-full bg-ray-300 flex flex-col gap-3">
@@ -28,6 +42,7 @@ const ItemCategory = () => {
         <div className="w-100 flex justify-between">
           <Button size={'sm'} onClick={() => setOpenModal(true)}>
             Add New Item Category
+            
           </Button>
           <Button size={'sm'} variant={'ghost'}>
             Import / Export Data

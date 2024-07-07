@@ -1,14 +1,13 @@
 import { stockOpnameData } from '@/__dummy__/sampleStokcOpname';
-import { InputText } from '@/components/forms';
-import SelectDropdown from '@/components/forms/Select';
-import Textarea from '@/components/forms/TextArea';
+// import { InputText } from '@/components/forms';
+// import SelectDropdown from '@/components/forms/Select';
+// import Textarea from '@/components/forms/TextArea';
 import BasicModal from '@/components/modals/Modal';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
 import formatPrice from '@/utils/formatPrice';
-import { Search } from '@carbon/icons-react';
-import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 
 const StockOpname = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -38,8 +37,8 @@ const StockOpname = () => {
           </Button>
         </div>
         <div className="flex justify-between items-center ">
-          <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" />
-          <div className="flex items-center gap-3">
+          {/* <InputText iconEnd={<Search />} placeholder="Search" className=" w-64" /> */}
+          {/* <div className="flex items-center gap-3">
             <SelectDropdown placeholder="Select Month" menuItems={monthList} />
             <SelectDropdown
               placeholder="Item Category"
@@ -80,7 +79,7 @@ const StockOpname = () => {
                 }
               ]}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -135,7 +134,7 @@ const StockOpname = () => {
         disableClickOutside
         title="Add Stock Opname"
         onClose={() => setOpenModal(false)}>
-        <InputText label="Category name" className="w-full" />
+        {/* <InputText label="Category name" className="w-full" />
         <SelectDropdown
           label="Transaction Type"
           menuItems={[
@@ -149,7 +148,7 @@ const StockOpname = () => {
             }
           ]}
         />
-        <Textarea label="Notes (optional)" placeholder="Input your notes" />
+        <Textarea label="Notes (optional)" placeholder="Input your notes" /> */}
       </BasicModal>
     </div>
   );

@@ -1,8 +1,7 @@
 export interface ItemCategoryEntity {
   id: number | string;
-  itemCategoryName: string;
-  stocks: number;
-  transactionTypeId: string | number;
-  transactionTypeName: string;
-  assignedItemList?: string[]
+  name: string;
+  total_item: number;
+  transaction_type_id: string | number;
+  assigned_item_list?: string[]
 }
