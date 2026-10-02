@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -6,6 +5,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { FormControl, FormItem, FormMessage } from '../ui/form';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 
 const DatePicker = () => {
   const [date, setDate] = useState<Date>(new Date());
@@ -23,7 +23,7 @@ const DatePicker = () => {
                 'w-full justify-start font-normal',
                 !date && 'text-muted-foreground'
               )}>
-              {date ? format(date, 'dd/MM/yyyy') : null}
+            {date ? dayjs(date).format('DD/MM/YYYY') : null}
               <CalendarIcon className="ml-2 h-4 w-4" />
             </Button>
           </PopoverTrigger>

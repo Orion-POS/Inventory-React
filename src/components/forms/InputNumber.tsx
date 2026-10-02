@@ -13,6 +13,7 @@ interface InputNumberProps {
   iconEnd?: React.ReactNode;
   iconStart?: boolean;
   description?: string;
+  containerClassName?: string;
 }
 
 const InputNumber: React.FC<InputProps & InputNumberProps & ControllerRenderProps> = ({
@@ -20,14 +21,22 @@ const InputNumber: React.FC<InputProps & InputNumberProps & ControllerRenderProp
   iconEnd = null,
   placeholder,
   description,
+  containerClassName,
   ...field
 }) => {
   return (
-    <FormItem>
+    <FormItem className={containerClassName}>
       <FormLabel className="font-medium text-sm">{label}</FormLabel>
       <FormControl>
         <div className="text-sm font- relative flex flex-col gap-2  ">
-          <Input placeholder={placeholder} type="number" label={label} {...field} />
+          <Input
+            placeholder={placeholder}
+            type="number"
+            label={label}
+            {...field}
+            onChange={e => field.onChange(parseFloat(e.target.value))}
+            min={0}
+          />
           {iconEnd ? (
             <span className="absolute top-0 right-0 rounded-e-md w-10 text-gray-200 flex focus-visible:text-gray-400 items-center justify-center border-l border-gray-200 h-full">
               {iconEnd}

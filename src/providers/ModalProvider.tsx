@@ -8,6 +8,7 @@ interface ModalContextType {
 
 interface OpenModalOptions {
   title?: string;
+  subtitle?: string;
   description?: string;
   content: (cb: any) => string | JSX.Element;
   onSubmit?: () => void;
@@ -25,10 +26,11 @@ export const ModalProvider = ({ children }: any) => {
   const [modalContent, setModalContent] = useState<OpenModalOptions | null>(null);
 
   const openModal = (options: OpenModalOptions) => {
-    const { title, description, content, onSubmit, modalOptions } = options;
+    const { title, subtitle, description, content, onSubmit, modalOptions } = options;
     setShowModal(true);
     setModalContent({
       title,
+      subtitle,
       description,
       content,
       onSubmit,
@@ -48,6 +50,7 @@ export const ModalProvider = ({ children }: any) => {
         open={showModal}
         onClose={closeModal}
         title={modalContent?.title ?? ''}
+        subtitle={modalContent?.subtitle}
         description={modalContent?.description}
         disableClickOutside={modalContent?.modalOptions?.disableClickOutside}
         overideFooter={modalContent?.modalOptions?.overideFooter}

@@ -4,12 +4,13 @@ import { Label } from '../ui/label';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
+  subLabel?: string;
 }
 
-const Textarea: React.FC<TextareaProps> = ({ label, ...props }) => {
+const Textarea: React.FC<TextareaProps> = ({ label, subLabel, ...props }) => {
   return (
     <div className="flex gap-3 flex-col">
-      <Label>{label}</Label>
+      <Label>{label}<span className="text-gray-400"> ({subLabel})</span></Label>
       <ShadcnTextarea {...props} />
     </div>
   );

@@ -8,11 +8,13 @@ import {
   DialogHeader,
   DialogTitle
 } from '../ui/dialog';
+import { css } from '@emotion/react';
 
 interface BasicModalProps extends DialogProps, DialogContentProps {
   children: React.ReactNode;
   open: boolean;
   title: string;
+  subtitle?: string;
   onClose: () => void;
   onSubmit?: () => void;
   disableClickOutside?: boolean;
@@ -25,8 +27,9 @@ const BasicModal: React.FC<BasicModalProps> = ({
   onClose,
   children,
   title,
+  subtitle,
   disableClickOutside = false,
-  overideFooter,
+  overideFooter = null,
   description,
   onSubmit
 }) => {
@@ -41,10 +44,21 @@ const BasicModal: React.FC<BasicModalProps> = ({
         }}
         className="sm:max-w-[425px] md:min-w-[600px] lg:max-w-[80%]">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle>
+            <div className="w-full flex items-center gap-1">
+              {title}
+              <span
+                className="flex p-1 items-center gap-2.5"
+                css={css`
+                  color: var(--Grey-Darker, #acacac);
+                `}>
+                {subtitle}
+              </span>
+            </div>
+          </DialogTitle>
           {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
-        <div className="grid gap-3 py-4 max-h-[70vh] overflow-y-auto">{children}</div>
+        <div className="grid gap-3 px-1 max-h-[70vh] overflow-y-auto">{children}</div>
         {overideFooter === null ? null : (
           <DialogFooter>
             {Boolean(overideFooter) ? (
