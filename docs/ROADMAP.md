@@ -22,6 +22,7 @@ is part-time.
 | Customers and promos | Loyalty, vouchers, rule-based promos |
 | Back office | Multi-outlet, employees and roles, reports, tax and service charge |
 | Account and billing | Self-serve signup, plans, 30-day trial, subscription billing ([ADR 0007](./adr/0007-free-early-access-then-subscription.md)) |
+| Platform admin console | For the operator: tenant overview, billing-start schedule, module switches, subscription promo codes, audit log ([ADR 0008](./adr/0008-platform-admin-console.md)) |
 | Later | Online ordering and delivery integrations, accounting export, QR self-order |
 
 ## Releases
@@ -46,9 +47,10 @@ is part-time.
 - [ ] Retire `json-server` in favour of generated types and MSW mocks
 - [ ] Hardware spike: receipt printing and cash drawer from the PWA ([ADR 0005](./adr/0005-pwa-hardware.md))
 - [ ] Translation setup with `id-ID` as the default locale, in this app and in the cashier app
+- [ ] Operator accounts with two-factor login, the entitlements and feature-flag table, and the
+      audit log; managed by CLI or SQL for now ([ADR 0008](./adr/0008-platform-admin-console.md))
 - [ ] Operations basics: automated PostgreSQL backups with a tested restore, error tracking, a
       repeatable deploy
-- [ ] Decide where the cashier app's code lives (monorepo or separate repo) before writing it
 
 Not code, but started now because of lead time:
 
@@ -62,6 +64,8 @@ by the Go API.
 
 ### Phase 1: Pilot-ready counter cafe (10–14 weeks)
 
+- Restructure into a monorepo for the back office, the POS and the admin console, with shared UI
+  components and generated API types ([ADR 0008](./adr/0008-platform-admin-console.md))
 - Catalog with variants and modifiers: API, and the management screens in this back-office app
 - POS checkout with cash and manual QRIS (static QR; the cashier confirms the transfer)
 - Tax, service charge and cash rounding, configured per outlet
@@ -85,6 +89,8 @@ old system, and its end-of-day totals match.
 - Terms of service and a privacy policy that say the service is free early access and will become
   paid, with notice
 - Per-tenant limits (outlets, devices) to keep the free tier's hosting cost bounded
+- Minimal admin console: tenant list and metrics, suspend or reinstate, device revocation, module
+  switches, announcements, audit log ([ADR 0008](./adr/0008-platform-admin-console.md))
 
 **Done when** a cafe that has never spoken to you can sign up, import its menu, and sell.
 
@@ -108,6 +114,8 @@ difference.
 
 - Subscription billing through the payment gateway ([ADR 0007](./adr/0007-free-early-access-then-subscription.md))
 - 30-day free trial for new sign-ups, with reminders before it ends
+- Admin console: schedule the billing start date (globally and per tenant), subscription promo
+  codes, plan editing, billing status per tenant ([ADR 0008](./adr/0008-platform-admin-console.md))
 - Move early-access tenants onto a paid plan with advance notice and a founding-user price
 - Grace period and read-only mode for unpaid accounts; selling is never cut off mid-shift
 - Data export for every tenant, paid or not
@@ -157,6 +165,7 @@ difference.
 | Browser printing is unreliable | Spike in Phase 0; fallbacks in ADR 0005 |
 | Offline sync bugs lose or duplicate sales | Idempotent server, immutable records, sync tests written first |
 | Payment gateway onboarding is slow | Apply in Phase 0; manual QRIS does not depend on it |
+| An operator account is compromised | Separate admin app and accounts, required two-factor login, audit log (ADR 0008) |
 | Free users leave when billing starts | Say "free early access" from day one; notice period and founding-user price |
 | One developer: illness, burnout, lost context | ADRs, CI, backups, keeping scope cuts |
 
