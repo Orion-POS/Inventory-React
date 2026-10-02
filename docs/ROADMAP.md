@@ -9,6 +9,9 @@ Estimates are rough, in full-time weeks for one developer, and describe order an
 rather than promises. Expect real calendar time to be 1.5–2× longer, and longer still if the work
 is part-time.
 
+The rules the product must follow are in [BUSINESS_RULES.md](./BUSINESS_RULES.md). How the current
+screens compare with them is in [FLOW_REVIEW.md](./FLOW_REVIEW.md).
+
 ## Product surface
 
 | Area | Scope |
@@ -97,7 +100,8 @@ old system, and its end-of-day totals match.
 ### Phase 3: Inventory (6–8 weeks)
 
 - Stock ledger ([ADR 0006](./adr/0006-integer-money-and-stock-ledger.md))
-- Ingredients and recipes, stock opname, waste, purchasing
+- Items, units of measure and recipes; goods receipts, suppliers and payables; usage, waste and
+  adjustment; stock opname as a counting session ([BUSINESS_RULES.md](./BUSINESS_RULES.md))
 - Port the existing Setup and Stock Management pages in this repo onto the real API
 
 **Done when** selling an item deducts its recipe's ingredients, and an opname reconciles the
@@ -154,7 +158,8 @@ difference.
 - **Subscription payments:** card ownership among small merchants is low, so billing must accept
   bank transfer, virtual account and QRIS, not only card auto-debit.
 - **Language and time:** `id-ID` is the default locale with English available. Each outlet has its
-  own timezone (WIB, WITA or WIT) and the reporting day is cut at that outlet's local midnight.
+  own timezone (WIB, WITA or WIT). The reporting day is cut at an hour set per outlet (midnight by
+  default), so a venue that closes at 02:00 keeps one evening in one day.
 - **Privacy:** tenant and customer data fall under UU PDP. Publish a privacy policy with the free
   release, and plan consent and deletion before building loyalty features.
 
