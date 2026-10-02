@@ -10,7 +10,7 @@ interface OpenModalOptions {
   title?: string;
   subtitle?: string;
   description?: string;
-  content: (cb: any) => string | JSX.Element;
+  content: (cb: any) => string | React.JSX.Element;
   onSubmit?: () => void;
   modalOptions?: {
     renderCustomHeader?: ReactNode;
