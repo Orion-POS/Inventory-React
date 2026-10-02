@@ -1,114 +1,66 @@
+# Orion Inventory (back office)
 
-# Project Title
-Orion Inventory Management
+Back-office web app for **Orion POS**, a point-of-sale system for small and medium cafes and
+restaurants in Indonesia. This repository currently covers inventory and setup: items, units of
+measure, stock management, suppliers and transactions.
 
+The product plan lives in [`docs/ROADMAP.md`](docs/ROADMAP.md) and the reasoning behind the main
+technical choices in [`docs/adr`](docs/adr).
 
-## Tech Stack
-- React
-- TypeScript
-- Tailwind CSS
-- EmotionCss
-- Vite
-- redux-toolkit
-- axios
-- shadcn
+> **Status:** early stage. Most pages run on dummy data from `src/__dummy__` and a local
+> `json-server` mock. The real API is being rewritten in Go; see the roadmap.
 
-## How to use
-1. Clone the repo
-2. Install dependencies
-``` bash
-npm install
-```
-or
-``` bash
+## Tech stack
+
+- React 19, TypeScript, Vite
+- Tailwind CSS 3 with shadcn/ui-style components on Radix UI
+- Redux Toolkit and RTK Query
+- react-hook-form and zod
+- TanStack Table
+- React Router 6
+
+## Getting started
+
+Requires Node 22 (see `.nvmrc`) and Yarn 1.
+
+```bash
 yarn install
-```
-
-3. Start the dev server
-``` bash
-npm run dev
-```
-or
-``` bash
+cp .env.example .env.local   # then adjust VITE_BASE_URL_API if needed
 yarn dev
 ```
-4. Start JSON server if you run this project locally
-``` bash
-npm run json-server
+
+To run the mock API for the Item Category page:
+
+```bash
+yarn json-server             # serves src/db.json on http://localhost:3000
 ```
-or
-``` bash
-yarn json-server
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `yarn dev` | Start the Vite dev server |
+| `yarn build` | Type-check with `tsc`, then build for production |
+| `yarn lint` | Run ESLint (errors fail, warnings are reported) |
+| `yarn preview` | Serve the production build locally |
+| `yarn json-server` | Run the mock API |
+
+CI runs `yarn lint` and `yarn build` on every push and pull request.
+
+## Project layout
+
+```
+src/
+  app/          Redux store, RTK Query services and slices
+  components/   forms, modals, navs, table, and ui (shadcn-style primitives)
+  pages/        one folder per route: Summary, Setup, stock-management, ...
+  providers/    modal and theme providers
+  __dummy__/    sample data used until the real API exists
+  types/        shared domain types
 ```
 
 ## Contributing
-### Semantic Branch Names
 
-See how a minor change to your branch name style can make you a better programmer.
-
-Format: `<type>/<alias>`
-
-
-#### Example
-
-```
-feature/init
-^------^   ^---^
-|          |
-|          +---> issue's keyword
-|
-+-------> Type: or feat, chore, docs, fix, refactor, style, or test.
-```
-
-More Examples:
-- `feat` or `feature`: (new feature for the user, not a new feature for build script)
-- `fix`: (bug fix for the user, not a fix to a build script)
-- `docs`: (changes to the documentation)
-- `style`: (formatting, missing semi colons, etc; no production code change)
-- `refactor`: (refactoring production code, eg. renaming a variable)
-- `test`: (adding missing tests, refactoring tests; no production code change)
-- `chore`: (updating grunt tasks etc; no production code change)
-
-References:
-
-- https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
-
-### Semantic Commit Messages
-
-See how a minor change to your commit message style can make you a better programmer.
-
-Format: `<type>(<scope>): <subject>`
-
-`<scope>` is optional
-
-#### Example
-
-```
-feat: add hat wobble
-^--^  ^------------^
-|     |
-|     +-> Summary in present tense.
-|
-+-------> Type: chore, docs, feat, fix, refactor, style, or test.
-```
-
-More Examples:
-
-- `feat`: (new feature for the user, not a new feature for build script)
-- `fix`: (bug fix for the user, not a fix to a build script)
-- `docs`: (changes to the documentation)
-- `style`: (formatting, missing semi colons, etc; no production code change)
-- `refactor`: (refactoring production code, eg. renaming a variable)
-- `test`: (adding missing tests, refactoring tests; no production code change)
-- `chore`: (updating grunt tasks etc; no production code change)
-
-References:
-
-- https://www.conventionalcommits.org/
-- https://seesparkbox.com/foundry/semantic_commit_messages
-- http://karma-runner.github.io/1.0/dev/git-commit-msg.html
-
-## License
-This project is open source and available under the [MIT License](LICENSE).
-
-  
+Branch names use `<type>/<alias>`, for example `feature/setup-page` or `fix/modal-footer`.
+Commit messages follow `<type>(<scope>): <subject>` (scope optional), for example
+`feat(form): combo-box`. Types are `feat`, `fix`, `docs`, `style`, `refactor`, `test` and `chore`.
