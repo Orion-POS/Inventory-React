@@ -13,7 +13,7 @@ const AppHeader = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
   }, [current]);
 
   return (
-    <header className="flex h-[--header-h] shrink-0 items-center gap-2 px-3 md:px-5 md:pt-3">
+    <header className="flex h-[--header-h] shrink-0 items-center gap-2 px-3 md:px-5">
       <button
         type="button"
         onClick={onOpenMenu}

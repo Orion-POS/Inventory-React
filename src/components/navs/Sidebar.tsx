@@ -267,13 +267,10 @@ const Sidebar = ({
     <TooltipProvider delayDuration={100}>
       <aside
         className={cn(
-          'hidden shrink-0 py-3 pl-3 transition-[width] duration-200 motion-reduce:transition-none md:block',
-          collapsed
-            ? 'w-[calc(var(--sidebar-w-collapsed)+0.75rem)]'
-            : 'w-[calc(var(--sidebar-w)+0.75rem)]'
-        )}
-      >
-        <div className="h-full overflow-hidden rounded-3xl shadow-sidebar">
+          'hidden shrink-0 transition-[width] duration-200 motion-reduce:transition-none md:block',
+          collapsed ? 'w-[--sidebar-w-collapsed]' : 'w-[--sidebar-w]'
+        )}>
+        <div className="h-full overflow-hidden rounded-r-3xl shadow-sidebar">
           <SidebarContent
             collapsed={collapsed}
             onToggleCollapsed={() => onCollapsedChange(!collapsed)}
