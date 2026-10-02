@@ -4,19 +4,17 @@ interface RouteHandle {
   crumb?: (data: unknown) => string;
 }
 
+export interface Crumb {
+  label: string;
+  pathname: string;
+}
+
 const getCrumb = (handle: unknown) => (handle as RouteHandle | undefined)?.crumb;
 
-const useGetCrumbs = (): string[] => {
-  const matches = useMatches();
-
-  const crumbs = matches
-    // first get rid of any matches that don't have handle and crumb
+const useGetCrumbs = (): Crumb[] =>
+  useMatches()
+    // routes without a crumb in their handle are not shown
     .filter(match => Boolean(getCrumb(match.handle)))
-    // now map them into an array of elements, passing the loader
-    // data to each one
-    .map(match => getCrumb(match.handle)!(match.data));
+    .map(match => ({ label: getCrumb(match.handle)!(match.data), pathname: match.pathname }));
 
-  return crumbs;
-};
-
-export default useGetCrumbs
+export default useGetCrumbs;

@@ -37,14 +37,14 @@ const routes = createBrowserRouter([
             path: 'summary',
             element: <SummaryPage />,
             handle: {
-              crumb: () => 'summary'
+              crumb: () => 'Summary'
             }
           },
           {
             path: 'setup',
             element: <SetupPage />,
             handle: {
-              crumb: () => 'setup'
+              crumb: () => 'Setup'
             },
             children: [
               {

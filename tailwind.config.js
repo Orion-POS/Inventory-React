@@ -17,7 +17,15 @@ module.exports = {
       }
     },
     fontFamily: {
-      sans: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif'
+      sans: [
+        '"Inter Variable"',
+        'Inter',
+        'system-ui',
+        'Avenir',
+        'Helvetica',
+        'Arial',
+        'sans-serif'
+      ]
     },
     extend: {
       colors: {
@@ -32,6 +40,7 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        canvas: 'hsl(var(--canvas))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
@@ -61,7 +70,21 @@ module.exports = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
+        },
+        success: { DEFAULT: 'hsl(var(--success))', soft: 'hsl(var(--success-soft))' },
+        warning: { DEFAULT: 'hsl(var(--warning))', soft: 'hsl(var(--warning-soft))' },
+        danger: { DEFAULT: 'hsl(var(--danger))', soft: 'hsl(var(--danger-soft))' },
+        info: { DEFAULT: 'hsl(var(--info))', soft: 'hsl(var(--info-soft))' },
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          muted: 'hsl(var(--sidebar-muted))',
+          accent: 'hsl(var(--sidebar-accent))',
+          border: 'hsl(var(--sidebar-border))'
         }
+      },
+      boxShadow: {
+        card: '0 1px 2px hsl(201 40% 10% / 0.04), 0 4px 16px hsl(201 40% 10% / 0.05)'
       },
       borderRadius: {
         lg: 'var(--radius)',

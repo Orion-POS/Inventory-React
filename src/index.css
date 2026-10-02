@@ -3,78 +3,121 @@
 @tailwind utilities;
 
 #root {
-  @apply h-screen;
+  @apply h-dvh;
 }
- 
+
+/*
+ * Design tokens. Colours are HSL channels so Tailwind can add opacity (bg-primary/10).
+ * Brand: Orion teal on a deep night-blue "ink". Surfaces are cool greys, never pure white on white.
+ */
 @layer base {
   :root {
-    --background: 0 100% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Surfaces */
+    --canvas: 200 25% 96.5%;
+    --background: 0 0% 100%;
+    --foreground: 201 40% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
- 
-    --primary: 176 73% 45%;
-    --primary-foreground: 0 0% 98%;
- 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
- 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
- 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --card-foreground: 201 40% 10%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
- 
-    --radius: 0.5rem;
+    --popover: 0 0% 100%;
+    --popover-foreground: 201 40% 10%;
+
+    /* Brand. Ink text on teal passes AA (about 5:1); white on this teal does not (about 2:1). */
+    --primary: 176 73% 45%;
+    --primary-foreground: 201 78% 12%;
+
+    --secondary: 200 25% 94%;
+    --secondary-foreground: 201 40% 12%;
+
+    --muted: 200 25% 94%;
+    --muted-foreground: 200 12% 38%;
+
+    --accent: 200 25% 94%;
+    --accent-foreground: 201 40% 12%;
+
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Status: strong text colour on a soft background, so pills never rely on colour alone */
+    --success: 152 65% 26%;
+    --success-soft: 152 55% 92%;
+    --warning: 30 90% 26%;
+    --warning-soft: 42 95% 89%;
+    --danger: 0 70% 38%;
+    --danger-soft: 0 85% 95%;
+    --info: 205 85% 30%;
+    --info-soft: 205 90% 94%;
+
+    /* Lines and focus */
+    --border: 200 16% 90%;
+    --input: 200 12% 80%;
+    --ring: 177 80% 30%;
+
+    /* Sidebar: the same in light and dark mode */
+    --sidebar: 201 78% 12%;
+    --sidebar-foreground: 200 20% 84%;
+    --sidebar-muted: 200 14% 64%;
+    --sidebar-accent: 201 55% 19%;
+    --sidebar-border: 201 45% 20%;
+
+    --radius: 0.625rem;
+
+    /* Shell metrics */
+    --sidebar-w: 15rem;
+    --sidebar-w-collapsed: 4.5rem;
+    --header-h: 3.5rem;
   }
- 
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
- 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
- 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
- 
-    --primary: #1FC6BC;
-    --primary-foreground: 0 0% 9%;
- 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
- 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
- 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
- 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --canvas: 201 45% 7%;
+    --background: 201 40% 9%;
+    --foreground: 200 20% 94%;
+
+    --card: 201 40% 11%;
+    --card-foreground: 200 20% 94%;
+
+    --popover: 201 40% 11%;
+    --popover-foreground: 200 20% 94%;
+
+    --primary: 176 73% 45%;
+    --primary-foreground: 201 78% 10%;
+
+    --secondary: 201 30% 17%;
+    --secondary-foreground: 200 20% 94%;
+
+    --muted: 201 30% 17%;
+    --muted-foreground: 200 12% 66%;
+
+    --accent: 201 30% 17%;
+    --accent-foreground: 200 20% 94%;
+
+    --destructive: 0 70% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 55% 62%;
+    --success-soft: 152 40% 16%;
+    --warning: 40 90% 66%;
+    --warning-soft: 35 50% 16%;
+    --danger: 0 85% 72%;
+    --danger-soft: 0 45% 18%;
+    --info: 205 90% 72%;
+    --info-soft: 205 50% 17%;
+
+    --border: 201 28% 20%;
+    --input: 201 25% 28%;
+    --ring: 176 73% 50%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-canvas font-sans text-foreground antialiased;
   }
 }
