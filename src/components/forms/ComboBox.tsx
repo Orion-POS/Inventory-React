@@ -14,8 +14,8 @@ const ComboboxForm: React.FC<ComboboxFormProps & ControllerRenderProps> = ({
   label,
   data,
   placeholder = 'Select items',
-  emptyMessage = 'Item not found',
-  searchPlaceholder = 'Search item...',
+  emptyMessage: _emptyMessage,
+  searchPlaceholder: _searchPlaceholder,
   ...field
 }) => {
   return (

@@ -59,7 +59,7 @@ const MultiSelectFormField = React.forwardRef<HTMLButtonElement, MultiSelectForm
     {
       className,
       variant,
-      asChild = false,
+      asChild: _asChild,
       options,
       defaultValue,
       onValueChange,

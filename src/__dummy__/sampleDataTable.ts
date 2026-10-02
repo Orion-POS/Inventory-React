@@ -15,7 +15,7 @@ export const earningsData: EarningDataTypes[] = [
    {
     id: 23123,
     name: 'Jude Gideon',
-    date: 12376829231189813,
+    date: 12376829231189812,
     amount_paid: '560000'
   },
 ]

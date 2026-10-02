@@ -44,8 +44,6 @@ const SetupPage = () => {
   };
 
   useEffect(() => {
-    if (pathname) {
-    }
     const findInMenuItemsIdx = MENU_ITEMS.findIndex(it => it.value === pathname.split('/')?.[2]);
     setActiveIdxTabs(findInMenuItemsIdx);
   }, [pathname]);

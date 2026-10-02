@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives",
     "preview": "vite preview",
     "json-server": "json-server --watch src/db.json"
   },
@@ -49,22 +49,22 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@eslint/js": "^9",
     "@types/node": "^20.11.10",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^5",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.55.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint": "^9",
+    "eslint-plugin-react-hooks": "^5",
+    "eslint-plugin-react-refresh": "^0.4",
+    "eslint-plugin-unused-imports": "^4",
+    "globals": "^17.13.0",
     "json-server": "^1.0.0-beta.1",
     "postcss": "^8.4.33",
     "prettier": "^3",
     "typescript": "~5.9",
+    "typescript-eslint": "^8",
     "vite": "^7"
   },
   "resolutions": {

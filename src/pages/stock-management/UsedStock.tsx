@@ -125,7 +125,7 @@ const UsedStcok = () => {
               <FormField
                 name="filterDate"
                 control={formFilter.control}
-                render={({}) => <DatePicker />}
+                render={() => <DatePicker />}
               />
             </div>
           </Form>

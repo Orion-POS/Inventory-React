@@ -115,7 +115,7 @@ const Transaction = () => {
               <FormField
                 name="filterDate"
                 control={formFilter.control}
-                render={({}) => <DatePicker />}
+                render={() => <DatePicker />}
               />
               <FormField
                 name="filterType"

@@ -61,7 +61,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
         <div className="grid gap-3 px-1 max-h-[70vh] overflow-y-auto">{children}</div>
         {overideFooter === null ? null : (
           <DialogFooter>
-            {Boolean(overideFooter) ? (
+            {overideFooter ? (
               overideFooter
             ) : (
               <>
