@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-const ContentWrapper = ({ children }) => {
+const ContentWrapper = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div
       className="flex flex-col rounded-md px-3 py-4 min-h-[93%]  border-gray-200"

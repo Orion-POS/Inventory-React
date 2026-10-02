@@ -17,7 +17,7 @@ interface InputTextProps {
   containerClassName?: string;
 }
 
-const InputText: React.FC<InputProps & InputTextProps & ControllerRenderProps> = ({
+const InputText: React.FC<InputProps & InputTextProps & Partial<ControllerRenderProps>> = ({
   label,
   iconEnd = null,
   placeholder,

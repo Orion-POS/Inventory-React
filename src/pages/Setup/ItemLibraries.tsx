@@ -13,7 +13,7 @@ const ItemLibraries = () => {
   const { openModal } = useModal();
 
   const handleOpenModal = () => {
-    const handleSubmit = data => {
+    const handleSubmit = (data: unknown) => {
       console.log(data, '<< DATA SUBMITTED');
     };
     openModal({
@@ -104,7 +104,7 @@ const ItemLibraries = () => {
             header: () => <span className="text-center w-full">Track Items</span>,
             enableSorting: false,
             // size: 40,
-            cell: ({ getValue }) => (
+            cell: () => (
               <div className="w-fll flex justify-center gap-2">
                 <Checkbox />
               </div>
@@ -118,10 +118,15 @@ const ItemLibraries = () => {
 
 export default ItemLibraries;
 
-const ModalContentAddUoM = ({ onCloseModal, onSubmit }) => {
+interface ModalContentAddUoMProps {
+  onCloseModal: () => void;
+  onSubmit: (data: unknown) => void;
+}
+
+const ModalContentAddUoM = ({ onCloseModal, onSubmit }: ModalContentAddUoMProps) => {
   const [textContent, setContentText] = useState('');
 
-  const handleOnChangeText = e => {
+  const handleOnChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContentText(e.target.value);
   };
 

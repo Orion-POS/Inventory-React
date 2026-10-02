@@ -11,16 +11,30 @@ import {
   Receipt,
   Store
 } from '@carbon/icons-react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+interface MenuChild {
+  label: string;
+  key: string;
+  url: string;
+}
+
+interface MenuItem {
+  label: string;
+  key: string | number;
+  icon: ReactNode;
+  children: MenuChild[];
+  url?: string;
+}
+
 const SideDrawer = () => {
-  const [activeMenu, setActiveMenu] = useState(0);
+  const [, setActiveMenu] = useState<string | number>(0);
   const [expandDrawer, setExpandDrawer] = useState(true);
   const { pathname } = useLocation();
   const parsedPath = pathname.split('/');
 
-  const menu = [
+  const menu: MenuItem[] = [
     {
       label: 'Summary',
       key: 0,
@@ -129,6 +143,7 @@ const SideDrawer = () => {
           {menu.map(item =>
             !item.children.length ? (
               <Link
+                key={item.key}
                 onClick={() => setActiveMenu(item.key)}
                 to={item.url ?? '#'}
                 className="no-underline text-black">
@@ -154,7 +169,7 @@ const SideDrawer = () => {
                 </li>
               </Link>
             ) : (
-              <li>
+              <li key={item.key}>
                 <AccordionMenu drawerExpanded={expandDrawer} item={item} path={parsedPath} />
               </li>
             )
@@ -165,7 +180,13 @@ const SideDrawer = () => {
   );
 };
 
-const AccordionMenu = ({ item, drawerExpanded, path }) => {
+interface AccordionMenuProps {
+  item: MenuItem;
+  drawerExpanded: boolean;
+  path: string[];
+}
+
+const AccordionMenu = ({ item, drawerExpanded, path }: AccordionMenuProps) => {
   const [expanded, setExpanded] = useState(path[1] === item.key);
   console.log(path[1] === item.key, drawerExpanded, '<< cekItem');
 
@@ -191,6 +212,7 @@ const AccordionMenu = ({ item, drawerExpanded, path }) => {
         <div className="pl-4 pt-2">
           {item.children.map(child => (
             <Link
+              key={child.key}
               className={`px-4 flex py-3 hover:bg-brand-400 border-solid border-x-0 border-t-0 border-2 border-brand-100 cursor-pointer rounded-lg ${
                 path[2] === child.key ? 'bg-brand-500 text-white' : ''
               }`}

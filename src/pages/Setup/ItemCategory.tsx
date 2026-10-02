@@ -8,7 +8,7 @@ import SelectDropdown from '@/components/forms/Select';
 import BasicModal from '@/components/modals/Modal';
 import { BasicTable } from '@/components/table';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 
 const ItemCategory = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { data: itemCategoryData, ...getItemCat} = useGetItemCategoriesQuery()
+  useGetItemCategoriesQuery();
   const selector = useAppSelector(state => state.itemCategories)
   // const dispatch = useAppDispatch()
   // const state = useSelector(state => state.setup)
@@ -128,7 +128,7 @@ const ItemCategory = () => {
             header: () => <span className="text-center w-full">Actions</span>,
             enableSorting: false,
             // size: 40,
-            cell: ({ getValue }) => (
+            cell: () => (
               <div className="w-fll flex justify-center gap-2">
                 <Button size={'sm'} variant={'ghost'} className="text-gray-500">
                   Edit
@@ -149,8 +149,19 @@ const ItemCategory = () => {
 
 export default ItemCategory;
 
-const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
-  const form = useForm({
+interface NewItemCategoryForm {
+  categoryName: string;
+  transactionType: string;
+  desc: string;
+}
+
+interface ModalAddNewItemCategoryProps {
+  openModal: boolean;
+  setOpenModal: (open: boolean) => void;
+}
+
+const ModalAddNewItemCategory = ({ openModal, setOpenModal }: ModalAddNewItemCategoryProps) => {
+  const form = useForm<NewItemCategoryForm>({
     defaultValues: {
       categoryName: '',
       transactionType: '',
@@ -158,7 +169,7 @@ const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
     }
   });
 
-  const onSubmitNewCategory = data => {
+  const onSubmitNewCategory = (data: NewItemCategoryForm) => {
     console.log(data, '<< CEKDATA');
   };
   return (
@@ -204,8 +215,9 @@ const ModalAddNewItemCategory = ({ openModal, setOpenModal }) => {
           name="desc"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Description (optional)</FormLabel>
               <FormControl>
-                <Textarea label="Description (optional)" {...field} />
+                <Textarea {...field} />
               </FormControl>
             </FormItem>
           )}

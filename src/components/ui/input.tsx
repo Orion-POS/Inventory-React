@@ -10,7 +10,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   // useFormProps: UseFormReturn;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps & Omit<ControllerRenderProps, 'ref'>>(
+const Input = React.forwardRef<HTMLInputElement, InputProps & Partial<Omit<ControllerRenderProps, 'ref'>>>(
   ({ className, type, iconEnd, iconStart, ...props }, ref) => {
     return (
       <div className="text-sm font- relative flex flex-col gap-2  ">

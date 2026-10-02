@@ -15,7 +15,6 @@ import Transaction from './pages/Transaction/Transaction.tsx';
 
 const SummaryPage = React.lazy(() => import('./pages/Summary/SummaryPage.tsx'));
 const SetupPage = React.lazy(() => import('./pages/Setup/index.tsx'));
-const SetupItemCategoryPage = React.lazy(() => import('./pages/Setup/index.tsx'));
 const StockRecap = React.lazy(() => import('./pages/Summary/StockRecap/StockRecap.tsx'));
 
 const AuthGuard = () => {

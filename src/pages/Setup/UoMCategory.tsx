@@ -14,7 +14,7 @@ const UoMCategory = () => {
   // const [openModal, setOpenModal] = useState(false);
   const { openModal } = useModal();
 
-  const handleSubmit = data => {
+  const handleSubmit = (data: unknown) => {
     console.log(data, '<< DATA SUBMITTED');
   };
   const handleOpenModal = () => {
@@ -87,9 +87,9 @@ const UoMCategory = () => {
             size: 200,
             cell: ({ getValue }) => (
               <div className="flex gap-2">
-                {getValue().map(it => (
+                {(getValue() as UoMCategoryEntity['properties']).map(it => (
                   // <span>{it.unit}</span>
-                  <Badge variant={it.default ? 'default' : 'outline'}>{it.unit}</Badge>
+                  <Badge key={it.unitId} variant={it.default ? 'default' : 'outline'}>{it.unit}</Badge>
                 ))}
               </div>
             )
@@ -99,7 +99,7 @@ const UoMCategory = () => {
             header: () => <span className="text-center w-full">Actions</span>,
             enableSorting: false,
             size: 10,
-            cell: ({ getValue }) => (
+            cell: () => (
               <div className="w-fll flex justify-center gap-2">
                 <Button size={'sm'} variant={'ghost'} className="text-gray-500">
                   Edit
@@ -115,7 +115,12 @@ const UoMCategory = () => {
 
 export default UoMCategory;
 
-const ModalContentAddUoM = ({ onCloseModal, onSubmit }) => {
+interface ModalContentAddUoMProps {
+  onCloseModal: () => void;
+  onSubmit: (data: unknown) => void;
+}
+
+const ModalContentAddUoM = ({ onCloseModal, onSubmit }: ModalContentAddUoMProps) => {
   const form = useForm({
     defaultValues: {
       itemName: '',

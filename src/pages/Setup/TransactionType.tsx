@@ -13,7 +13,7 @@ const TransactionType = () => {
   const { openModal } = useModal();
 
   const handleOpenModal = () => {
-    const handleSubmit = data => {
+    const handleSubmit = (data: unknown) => {
       console.log(data, '<< DATA SUBMITTED');
     };
     openModal({
@@ -95,7 +95,7 @@ const TransactionType = () => {
             header: () => <span className="text-center w-full">Actions</span>,
             enableSorting: false,
             // size: 40,
-            cell: ({ getValue }) => (
+            cell: () => (
               <div className="w-fll flex justify-center gap-2">
                 <Button size={'sm'} variant={'ghost'} className="text-gray-500">
                   Edit
@@ -114,10 +114,15 @@ const TransactionType = () => {
 
 export default TransactionType;
 
-const ModalContentAddUoM = ({ onCloseModal, onSubmit }) => {
+interface ModalContentAddUoMProps {
+  onCloseModal: () => void;
+  onSubmit: (data: unknown) => void;
+}
+
+const ModalContentAddUoM = ({ onCloseModal, onSubmit }: ModalContentAddUoMProps) => {
   const [textContent, setContentText] = useState('');
 
-  const handleOnChangeText = e => {
+  const handleOnChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContentText(e.target.value);
   };
 

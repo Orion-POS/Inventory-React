@@ -18,9 +18,7 @@ export const setupSlice = createSlice({
   name: 'setup',
   initialState,
   reducers: {
-    addSetup: (action, payload) => {
-
-    }
+    addSetup: () => {}
   }
   // extraReducers: builder => {
   //   builder.addCase(fetchSetupData.fulfilled, (state, action) => {

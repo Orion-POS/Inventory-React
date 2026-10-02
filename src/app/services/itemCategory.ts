@@ -10,7 +10,7 @@ export const itemCategoryApi = api.injectEndpoints({
           url: 'item_categories'
         }
       },
-      transformResponse: (res: any, meta) => {
+      transformResponse: (res: any) => {
         console.log(res, '<< RESS')
         return res
       },

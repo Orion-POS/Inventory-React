@@ -14,16 +14,15 @@ interface SelectDropdownProps {
   menuItems: MenuItemsProps[];
   footer?: ReactNode;
   placeholder?: string;
-  onChange: any;
-  value: any;
+  onChange?: any;
+  value?: any;
 }
 
-const SelectDropdown: React.FC<SelectDropdownProps & ControllerRenderProps> = ({
+const SelectDropdown: React.FC<SelectDropdownProps & Partial<ControllerRenderProps>> = ({
   label,
   menuItems,
   footer,
   placeholder,
-  customFooter,
   ...field
 }) => {
   return (
@@ -37,7 +36,7 @@ const SelectDropdown: React.FC<SelectDropdownProps & ControllerRenderProps> = ({
         </FormControl>
         <SelectContent>
           {menuItems &&
-            menuItems?.map((it, idx) => (
+            menuItems?.map(it => (
               <SelectItem
                 // onCl
                 className="flex gap-2 justify-between hover:bg-brand-100 cursor-pointer border-y hover:outline-none"

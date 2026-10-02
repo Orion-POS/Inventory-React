@@ -18,7 +18,7 @@ export interface BaseStockProps {
     date: Date; // Date when the item was used
   }
   
-  export interface StockOpnameTypes extends BaseStockProps {
+  export interface StockOpnameTypes extends Omit<BaseStockProps, 'current_stock'> {
     // need to confirm about status and counted stock
     final_stock: number; // final stock after opname
     average_price: number; // average price

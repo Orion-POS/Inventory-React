@@ -19,7 +19,7 @@ const SingleCheckbox: React.FC<SingleCheckboxProps> = ({ item, field }) => {
           onCheckedChange={checked => {
             return checked
               ? field.onChange([...field.value, item.id])
-              : field.onChange(field.value?.filter(value => value !== item.id));
+              : field.onChange(field.value?.filter((value: string) => value !== item.id));
           }}
         />
       </FormControl>
@@ -29,8 +29,8 @@ const SingleCheckbox: React.FC<SingleCheckboxProps> = ({ item, field }) => {
 };
 
 interface CheckboxGroupProps {
-  items: Record<string, any>;
-  form: UseFormReturn<CheckboxGroupProps['items'], any, undefined>;
+  items: { id: string; label: string }[];
+  form: UseFormReturn<any, any, undefined>;
   name: string;
   label?: string;
   desc?: string;
