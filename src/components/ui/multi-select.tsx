@@ -203,7 +203,7 @@ const MultiSelectFormField = React.forwardRef<HTMLButtonElement, MultiSelectForm
                             'mr-2 flex h-4 w-4 items-center justify-center',
                             isSelected ? '' : 'opacity-50 [&_svg]:invisible'
                           )}>
-                          <CheckIcon className="h-4 w-4 text-primary" />
+                          <CheckIcon className="h-4 w-4 text-brand-900" />
                         </div>
                       )}
                       {option.icon && (

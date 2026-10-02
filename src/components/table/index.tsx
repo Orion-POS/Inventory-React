@@ -50,7 +50,7 @@ export function BasicTable<TData>({ data, tableColumns }: BasicTableProps<TData>
         },
         th: {
           color: theme.colors.base.black,
-          backgroundColor: '#F5FFFE',
+          backgroundColor: '#FAF8F4',
           borderTop: '1px solid #d8d8d8',
           borderBottom: '1px solid #d8d8d8',
           padding: '4px 8px',

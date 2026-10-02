@@ -1,76 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { ItemMenuProps } from '../../components/navs/TabsMenu/types';
-import ItemCategory from './ItemCategory';
-import UoMCategory from './UoMCategory';
+import RouteTabs, { type RouteTab } from '@/components/navs/RouteTabs';
+import { Outlet } from 'react-router-dom';
 
-/* THIS WAS UNUSED ANYMORE BUT KEEP IT HERE FOR A WHILE IN CASE ITS NEEDED */
+const TABS: RouteTab[] = [
+  { label: 'Item Category', to: 'item-category' },
+  { label: 'UoM Category', to: 'uom-category' },
+  { label: 'Item Libraries', to: 'item-libraries' },
+  { label: 'Transaction Type', to: 'transaction-type' }
+];
 
-const SetupPage = () => {
-  const [activeIdxTabs, setActiveIdxTabs] = useState<undefined | number>(undefined);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { pathname } = location;
-
-  const MENU_ITEMS: ItemMenuProps[] = [
-    {
-      key: 0,
-      label: 'Item Category',
-      value: 'item-category',
-      children: <ItemCategory />
-    },
-    {
-      key: 1,
-      label: 'UoM Category',
-      value: 'uom-category',
-      children: <UoMCategory />
-    },
-    {
-      key: 2,
-      label: 'Item Libraries',
-      value: 'item-libraries',
-      children: <div>Item Libraries</div>
-    },
-    {
-      key: 3,
-      label: 'Transaction Type',
-      value: 'transaction-type',
-      children: <div>Transaction Type</div>
-    }
-  ];
-
-  const handleOnChange = (indexTabs: number) => {
-    navigate(MENU_ITEMS[indexTabs].value);
-  };
-
-  useEffect(() => {
-    const findInMenuItemsIdx = MENU_ITEMS.findIndex(it => it.value === pathname.split('/')?.[2]);
-    setActiveIdxTabs(findInMenuItemsIdx);
-  }, [pathname]);
-
-  return (
-    <div className="bg-blue-00 overflow-auto h-full">
-      <div className="flex h-full w-full">
-        {/* TABS LIST MENU */}
-        <div className="flex flex-col border-r-2 w-1/6 bg-white">
-          {MENU_ITEMS.map((it, idx) => (
-            <div
-              onClick={() => handleOnChange(idx)}
-              className={`p-3 my-1 cursor-pointer hover:bg-brand-100 transition-colors ease-in rounded-s-lg ${
-                idx === activeIdxTabs
-                  ? 'bg-brand-100 font-medium text-brand-900 border-r-4 border-brand-900'
-                  : ''
-              }`}>
-              <span>{it.label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="px-3 w-full overflow-auto">
-          <Outlet />
-        </div>
-      </div>
+const SetupPage = () => (
+  <div className="flex h-full min-h-0 flex-col">
+    <RouteTabs tabs={TABS} label="Setup sections" />
+    <div className="min-h-0 flex-1 overflow-auto pt-5">
+      <Outlet />
     </div>
-  );
-};
+  </div>
+);
 
 export default SetupPage;

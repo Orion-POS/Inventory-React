@@ -11,7 +11,7 @@ import { NavLink, matchPath, useLocation } from 'react-router-dom';
 const itemBase =
   'relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-accent hover:text-white focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transition-none';
 const itemActive =
-  'bg-primary/15 text-white before:absolute before:bottom-2.5 before:left-0 before:top-2.5 before:w-[3px] before:rounded-full before:bg-primary';
+  'bg-sidebar-accent text-white before:absolute before:bottom-2.5 before:left-0 before:top-2.5 before:w-[3px] before:rounded-full before:bg-primary';
 const iconClass = 'h-5 w-5 shrink-0';
 
 interface NavProps {
@@ -152,7 +152,7 @@ const ChildLink = ({ leaf, onNavigate }: { leaf: NavLeaf; onNavigate?: () => voi
     className={({ isActive }) =>
       cn(
         'flex h-9 items-center rounded-md px-3 text-sm outline-none transition-colors hover:bg-sidebar-accent hover:text-white focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transition-none',
-        isActive ? 'bg-primary/15 font-medium text-white' : 'text-sidebar-muted'
+        isActive ? 'bg-sidebar-accent font-medium text-white' : 'text-sidebar-muted'
       )
     }
   >
@@ -165,87 +165,80 @@ interface SidebarContentProps extends NavProps {
   onClose?: () => void;
 }
 
+const headerButton =
+  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sidebar-muted outline-none transition-colors hover:bg-sidebar-accent hover:text-white focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transition-none';
+
 const SidebarContent = ({
   collapsed,
   onNavigate,
   onToggleCollapsed,
   onClose
-}: SidebarContentProps) => (
-  <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
-    <div
-      className={cn(
-        'flex h-[--header-h] shrink-0 items-center',
-        collapsed ? 'justify-center' : 'justify-between px-5'
-      )}
+}: SidebarContentProps) => {
+  const toggle = onToggleCollapsed ? (
+    <button
+      type="button"
+      onClick={onToggleCollapsed}
+      aria-expanded={!collapsed}
+      aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+      className={headerButton}
     >
-      <OrionLogo collapsed={collapsed} />
-      {onClose ? (
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close menu"
-          className="-mr-2 flex h-10 w-10 items-center justify-center rounded-lg text-sidebar-muted outline-none hover:bg-sidebar-accent hover:text-white focus-visible:ring-2 focus-visible:ring-primary"
-        >
-          <X className="h-5 w-5" aria-hidden="true" />
-        </button>
-      ) : null}
-    </div>
+      {collapsed ? (
+        <PanelLeftOpen className="h-5 w-5" aria-hidden="true" />
+      ) : (
+        <PanelLeftClose className="h-5 w-5" aria-hidden="true" />
+      )}
+    </button>
+  ) : null;
 
-    <nav aria-label="Main" className="min-h-0 flex-1 overflow-y-auto px-3 pb-4 pt-2">
-      {NAV_SECTIONS.map((section, index) => (
-        <div key={section.label ?? index} className={index > 0 ? 'mt-5' : undefined}>
-          {section.label && !collapsed ? (
-            <p className="px-3 pb-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-sidebar-muted">
-              {section.label}
-            </p>
-          ) : null}
-          {section.label && collapsed ? (
-            <div className="mx-auto mb-3 h-px w-6 bg-sidebar-border" aria-hidden="true" />
-          ) : null}
-          <ul className="space-y-1">
-            {section.items.map(item => (
-              <li key={item.label}>
-                {item.children ? (
-                  <GroupItem item={item} collapsed={collapsed} onNavigate={onNavigate} />
-                ) : (
-                  <LinkItem item={item} collapsed={collapsed} onNavigate={onNavigate} />
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </nav>
-
-    {onToggleCollapsed ? (
-      <div className="shrink-0 border-t border-sidebar-border p-3">
-        {(() => {
-          const button = (
-            <button
-              type="button"
-              onClick={onToggleCollapsed}
-              aria-expanded={!collapsed}
-              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              className={cn(
-                itemBase,
-                'w-full text-sidebar-muted',
-                collapsed && 'justify-center px-0'
-              )}
-            >
-              {collapsed ? (
-                <PanelLeftOpen className={iconClass} aria-hidden="true" />
-              ) : (
-                <PanelLeftClose className={iconClass} aria-hidden="true" />
-              )}
-              {collapsed ? null : <span>Collapse</span>}
-            </button>
-          );
-          return collapsed ? <WithTooltip label="Expand sidebar">{button}</WithTooltip> : button;
-        })()}
+  return (
+    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+      {/* Top: logo, and the collapse toggle at its right (below the logo on the narrow rail). */}
+      <div
+        className={cn(
+          'flex shrink-0 items-center',
+          collapsed ? 'flex-col gap-2 pb-1 pt-4' : 'h-[4.5rem] justify-between pl-5 pr-3'
+        )}
+      >
+        <OrionLogo collapsed={collapsed} />
+        {onClose ? (
+          <button type="button" onClick={onClose} aria-label="Close menu" className={headerButton}>
+            <X className="h-5 w-5" aria-hidden="true" />
+          </button>
+        ) : collapsed && toggle ? (
+          <WithTooltip label="Expand sidebar">{toggle}</WithTooltip>
+        ) : (
+          toggle
+        )}
       </div>
-    ) : null}
-  </div>
-);
+
+      <nav aria-label="Main" className="min-h-0 flex-1 overflow-y-auto px-3 pb-4 pt-2">
+        {NAV_SECTIONS.map((section, index) => (
+          <div key={section.label ?? index} className={index > 0 ? 'mt-5' : undefined}>
+            {section.label && !collapsed ? (
+              <p className="px-3 pb-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-sidebar-muted">
+                {section.label}
+              </p>
+            ) : null}
+            {section.label && collapsed ? (
+              <div className="mx-auto mb-3 h-px w-6 bg-sidebar-border" aria-hidden="true" />
+            ) : null}
+            <ul className="space-y-1">
+              {section.items.map(item => (
+                <li key={item.label}>
+                  {item.children ? (
+                    <GroupItem item={item} collapsed={collapsed} onNavigate={onNavigate} />
+                  ) : (
+                    <LinkItem item={item} collapsed={collapsed} onNavigate={onNavigate} />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+  );
+};
 
 interface SidebarProps {
   collapsed: boolean;
@@ -274,14 +267,18 @@ const Sidebar = ({
     <TooltipProvider delayDuration={100}>
       <aside
         className={cn(
-          'hidden shrink-0 transition-[width] duration-200 motion-reduce:transition-none md:block',
-          collapsed ? 'w-[--sidebar-w-collapsed]' : 'w-[--sidebar-w]'
+          'hidden shrink-0 py-3 pl-3 transition-[width] duration-200 motion-reduce:transition-none md:block',
+          collapsed
+            ? 'w-[calc(var(--sidebar-w-collapsed)+0.75rem)]'
+            : 'w-[calc(var(--sidebar-w)+0.75rem)]'
         )}
       >
-        <SidebarContent
-          collapsed={collapsed}
-          onToggleCollapsed={() => onCollapsedChange(!collapsed)}
-        />
+        <div className="h-full overflow-hidden rounded-3xl shadow-sidebar">
+          <SidebarContent
+            collapsed={collapsed}
+            onToggleCollapsed={() => onCollapsedChange(!collapsed)}
+          />
+        </div>
       </aside>
 
       <DialogPrimitive.Root open={mobileOpen} onOpenChange={onMobileOpenChange}>
@@ -289,7 +286,7 @@ const Sidebar = ({
           <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-black/50 data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 md:hidden" />
           <DialogPrimitive.Content
             aria-describedby={undefined}
-            className="fixed inset-y-0 left-0 z-50 w-[min(18rem,85vw)] shadow-xl outline-none duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left motion-reduce:animate-none md:hidden"
+            className="fixed inset-y-0 left-0 z-50 w-[min(18rem,85vw)] overflow-hidden rounded-r-3xl shadow-xl outline-none duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left motion-reduce:animate-none md:hidden"
           >
             <DialogPrimitive.Title className="sr-only">Main menu</DialogPrimitive.Title>
             <SidebarContent

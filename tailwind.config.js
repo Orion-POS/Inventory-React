@@ -30,12 +30,12 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          50: '#F5FFFE',
-          100: '#D1FCEA',
-          400: '#51DCC7',
-          500: '#1FC6BC',
-          600: '#16A5AA',
-          900: '#05445F'
+          50: '#FFFAEF',
+          100: '#FFF0D1',
+          400: '#FDC449',
+          500: '#F9A91F',
+          600: '#E18B09',
+          900: '#1F1D45'
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -84,7 +84,8 @@ module.exports = {
         }
       },
       boxShadow: {
-        card: '0 1px 2px hsl(201 40% 10% / 0.04), 0 4px 16px hsl(201 40% 10% / 0.05)'
+        card: '0 1px 2px hsl(243 35% 12% / 0.04), 0 4px 16px hsl(243 35% 12% / 0.05)',
+        sidebar: '0 12px 32px -12px hsl(243 42% 15% / 0.5)'
       },
       borderRadius: {
         lg: 'var(--radius)',

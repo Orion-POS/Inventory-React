@@ -2,14 +2,14 @@ import { Theme } from '@emotion/react';
 
 export const emotionTheme: Theme = {
   colors: {
-    brand: '#1FC6BC',
+    brand: '#F9A91F',
     primary: {
-      50: '#F5FFFE',
+      50: '#FFFAEF',
       100: '',
       200: '',
       300: '',
       400: '',
-      500: '#1FC6BC',
+      500: '#F9A91F',
       600: '',
       700: '',
       800: '',

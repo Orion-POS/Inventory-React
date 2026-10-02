@@ -8,33 +8,33 @@
 
 /*
  * Design tokens. Colours are HSL channels so Tailwind can add opacity (bg-primary/10).
- * Brand: Orion teal on a deep night-blue "ink". Surfaces are cool greys, never pure white on white.
+ * Brand: star gold on a deep night-indigo "ink", after the constellation. Surfaces are warm greys.
  */
 @layer base {
   :root {
     /* Surfaces */
-    --canvas: 200 25% 96.5%;
+    --canvas: 38 24% 96%;
     --background: 0 0% 100%;
-    --foreground: 201 40% 10%;
+    --foreground: 243 35% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 201 40% 10%;
+    --card-foreground: 243 35% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 201 40% 10%;
+    --popover-foreground: 243 35% 12%;
 
-    /* Brand. Ink text on teal passes AA (about 5:1); white on this teal does not (about 2:1). */
-    --primary: 176 73% 45%;
-    --primary-foreground: 201 78% 12%;
+    /* Brand: star gold. Ink text on it is about 9:1, so use primary-foreground, never white. */
+    --primary: 38 95% 55%;
+    --primary-foreground: 243 42% 14%;
 
-    --secondary: 200 25% 94%;
-    --secondary-foreground: 201 40% 12%;
+    --secondary: 38 18% 93.5%;
+    --secondary-foreground: 243 35% 14%;
 
-    --muted: 200 25% 94%;
-    --muted-foreground: 200 12% 38%;
+    --muted: 38 18% 93.5%;
+    --muted-foreground: 243 10% 38%;
 
-    --accent: 200 25% 94%;
-    --accent-foreground: 201 40% 12%;
+    --accent: 38 18% 93.5%;
+    --accent-foreground: 243 35% 14%;
 
     --destructive: 0 72% 46%;
     --destructive-foreground: 0 0% 100%;
@@ -50,16 +50,16 @@
     --info-soft: 205 90% 94%;
 
     /* Lines and focus */
-    --border: 200 16% 90%;
-    --input: 200 12% 80%;
-    --ring: 177 80% 30%;
+    --border: 38 14% 89%;
+    --input: 38 8% 78%;
+    --ring: 243 70% 52%;
 
     /* Sidebar: the same in light and dark mode */
-    --sidebar: 201 78% 12%;
-    --sidebar-foreground: 200 20% 84%;
-    --sidebar-muted: 200 14% 64%;
-    --sidebar-accent: 201 55% 19%;
-    --sidebar-border: 201 45% 20%;
+    --sidebar: 243 42% 15%;
+    --sidebar-foreground: 240 30% 87%;
+    --sidebar-muted: 240 16% 70%;
+    --sidebar-accent: 243 32% 23%;
+    --sidebar-border: 243 28% 25%;
 
     --radius: 0.625rem;
 
@@ -70,27 +70,27 @@
   }
 
   .dark {
-    --canvas: 201 45% 7%;
-    --background: 201 40% 9%;
-    --foreground: 200 20% 94%;
+    --canvas: 243 35% 8%;
+    --background: 243 30% 10%;
+    --foreground: 240 20% 94%;
 
-    --card: 201 40% 11%;
-    --card-foreground: 200 20% 94%;
+    --card: 243 30% 12%;
+    --card-foreground: 240 20% 94%;
 
-    --popover: 201 40% 11%;
-    --popover-foreground: 200 20% 94%;
+    --popover: 243 30% 12%;
+    --popover-foreground: 240 20% 94%;
 
-    --primary: 176 73% 45%;
-    --primary-foreground: 201 78% 10%;
+    --primary: 38 95% 55%;
+    --primary-foreground: 243 42% 12%;
 
-    --secondary: 201 30% 17%;
-    --secondary-foreground: 200 20% 94%;
+    --secondary: 243 25% 18%;
+    --secondary-foreground: 240 20% 94%;
 
-    --muted: 201 30% 17%;
-    --muted-foreground: 200 12% 66%;
+    --muted: 243 25% 18%;
+    --muted-foreground: 240 12% 68%;
 
-    --accent: 201 30% 17%;
-    --accent-foreground: 200 20% 94%;
+    --accent: 243 25% 18%;
+    --accent-foreground: 240 20% 94%;
 
     --destructive: 0 70% 52%;
     --destructive-foreground: 0 0% 100%;
@@ -104,9 +104,9 @@
     --info: 205 90% 72%;
     --info-soft: 205 50% 17%;
 
-    --border: 201 28% 20%;
-    --input: 201 25% 28%;
-    --ring: 176 73% 50%;
+    --border: 243 22% 22%;
+    --input: 243 20% 30%;
+    --ring: 38 95% 60%;
   }
 }
 

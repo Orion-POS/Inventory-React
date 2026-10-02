@@ -38,7 +38,7 @@ const AdjustmentConfirm: React.FC<AdjustmentConfirmProps> = ({ onCloseModal, val
       <div className="w-full flex flex-col gap-4 justify-center items-center">
         <h1
           css={css`
-            color: var(--Primary-900, #05445f);
+            color: var(--Primary-900, #1f1d45);
             font-family: Inter;
             font-size: 16px;
             font-style: normal;
@@ -86,7 +86,7 @@ const AdjustmentConfirm: React.FC<AdjustmentConfirmProps> = ({ onCloseModal, val
         />
         <h1
           css={css`
-            color: var(--Primary-900, #05445f);
+            color: var(--Primary-900, #1f1d45);
             font-family: Inter;
             font-size: 20px;
             font-style: normal;
