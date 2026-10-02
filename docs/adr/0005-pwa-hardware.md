@@ -11,8 +11,9 @@ across printer models. The cash drawer is normally opened by a pulse sent throug
 ## Decision
 
 - Support **Android tablets with Chrome only** for the first release. iPad is out of scope.
-- Before Phase 2 work starts, spend about one week on a spike with a real 58 mm or 80 mm ESC/POS
-  printer: print a receipt and open a drawer over Web Bluetooth and over WebUSB.
+- In Phase 0, before the cashier app is built, spend about one week on a spike with a real 58 mm
+  or 80 mm ESC/POS printer: print a receipt and open a drawer over Web Bluetooth and over WebUSB.
+  The pilot needs printed receipts, so the result has to be known before Phase 1.
 - Keep `window.print()` as a fallback path.
 
 If the spike fails, the fallbacks in order are a small local print agent, the RawBT app, and
