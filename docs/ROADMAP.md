@@ -10,7 +10,8 @@ rather than promises. Expect real calendar time to be 1.5–2× longer, and long
 is part-time.
 
 The rules the product must follow are in [BUSINESS_RULES.md](./BUSINESS_RULES.md). How the current
-screens compare with them is in [FLOW_REVIEW.md](./FLOW_REVIEW.md).
+screens compare with them is in [FLOW_REVIEW.md](./FLOW_REVIEW.md). How screens should look and
+behave is in [UIUX_GUIDES.md](./UIUX_GUIDES.md).
 
 ## Product surface
 
