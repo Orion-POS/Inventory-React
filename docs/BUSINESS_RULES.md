@@ -55,7 +55,7 @@ stock ledger), [ADR 0004](./adr/0004-offline-first-pos.md) (offline POS),
 | ID | Rule | Phase |
 |---|---|---|
 | BR-GEN-01 | Money is an integer number of rupiah everywhere, in storage, calculation and API. Never a float. Display as `Rp 15.000` (a space after `Rp`, a dot between thousands, no period after `Rp`, no decimals) | 0 |
-| BR-GEN-02 | Quantities are stored as integers in the item's **base unit**. A 2.5 kg bag of flour is 2500 g. The unit's precision decides how many decimals the user may enter and see | 3 |
+| BR-GEN-02 | Quantities are stored as integers in **thousandths of the item's base unit** ([ADR 0009](./adr/0009-scaled-integer-quantities-and-uom-ratios.md)), so a recipe can use 12.5 g. A 2.5 kg bag of flour is 2500 g, stored as 2,500,000. The unit's step (BR-UOM-06) decides how many decimals the user may enter and see | 3 |
 | BR-GEN-03 | Every record belongs to a tenant, and stock records also to an outlet. A user never sees another tenant's data | 0 |
 | BR-GEN-04 | Every record has a UUIDv7 id. People see a human number (`GR-JKT1-000123`, `OPN-JKT1-000007`) that is unique per outlet and never reused, even after a cancel or reversal. Gaps are allowed | 3 |
 | BR-GEN-05 | Posted records (a stock movement, a receipt, a payment) are never edited or deleted. A mistake is fixed with a **reversal** that points to the original, has a reason, and is posted by someone with permission | 3 |
